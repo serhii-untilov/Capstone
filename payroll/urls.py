@@ -9,6 +9,5 @@ router.register(r'groups', views.GroupView, 'group')
 router.register(r'companies', views.CompanyView, 'company')
 
 urlpatterns = [
-	path('admin/', admin.site.urls),
 	path('api/', include(router.urls))
 ]
