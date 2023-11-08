@@ -1,6 +1,7 @@
 // import Component from the react module
 import React, { Component } from "react";
 import Modal from "./components/Modal";
+import Navbar from "./components/Navbar"
 import axios from 'axios'; 
 
 // create a class that extends the component
@@ -153,6 +154,7 @@ editItem = (item) => {
 render() {
 	return (
 	<main className="content">
+        <Navbar className="navbar navbar-expand-sm navbar-light bg-light" />
 		<h1 className="text-success text-uppercase text-center my-4">
 		GFG Task Manager
 		</h1>
