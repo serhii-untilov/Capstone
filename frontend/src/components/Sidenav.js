@@ -12,8 +12,8 @@ import {
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
+import { Link } from "react-router-dom"
 
-import BrandLogo from './BrandLogo';
 import Delimiter from './Delimiter';
 
 function AppSidenav(args) {
@@ -31,8 +31,8 @@ function AppSidenav(args) {
                             Payroll SMB
                         </NavbarBrand>
 
-                        <NavItem><NavLink href="/login/">Login</NavLink></NavItem>
-                        <NavItem><NavLink href="/register/" >Register</NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/login">Login</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/register">Register</Link></NavLink></NavItem>
 
                         <Delimiter />
 
@@ -46,25 +46,25 @@ function AppSidenav(args) {
                             </DropdownMenu>
                         </UncontrolledDropdown>
 
-                        <NavItem><NavLink active href="/profile/" >Profile</NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/profile">Profile</Link></NavLink></NavItem>
 
                         <Delimiter />
 
-                        <NavItem><NavLink href="/dashboard/" >Dashboard</NavLink></NavItem>
-                        <NavItem><NavLink href="/staff/" >Staff list</NavLink></NavItem>
-                        <NavItem><NavLink href="/employees/" >Employees</NavLink></NavItem>
-                        <NavItem><NavLink href="/payroll-sheet/" >Payroll sheet</NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/dashboard">Dashboard</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/staff">Staff list</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/employees">Employees</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/payroll-sheet">Payroll sheet</Link></NavLink></NavItem>
 
                         <Delimiter />
 
-                        <NavItem><NavLink href="/personal-card/" >Personal card</NavLink></NavItem>
-                        <NavItem><NavLink href="/payroll/" >Payroll</NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/personal-card">Personal card</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/payroll">Payroll</Link></NavLink></NavItem>
 
                         <Delimiter />
 
-                        <NavItem><NavLink href="/settings/" >Settings</NavLink></NavItem>
-                        <NavItem><NavLink href="/language/" >Language</NavLink></NavItem>
-                        <NavItem><NavLink href="/logout/" >Logout</NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/settings">Settings</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/language">Language</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/logout">Logout</Link></NavLink></NavItem>
                     </Nav>
                 </Collapse>
             </Navbar>
