@@ -28,11 +28,11 @@ function AppSidenav(args) {
                     <Nav pills vertical className='col-12'>
                         <NavbarBrand href="/" className="brand-text text-center">
                             {/* <BrandLogo className="my-auto" /> */}
-                            Payroll SMB
+                            <Link to="/"><span className='text-body'>Payroll SMB</span></Link>
                         </NavbarBrand>
 
-                        <NavItem><NavLink><Link to="/login">Login</Link></NavLink></NavItem>
                         <NavItem><NavLink><Link to="/register">Register</Link></NavLink></NavItem>
+                        <NavItem><NavLink><Link to="/login">Login</Link></NavLink></NavItem>
 
                         <Delimiter />
 
