@@ -4,7 +4,7 @@ import PageHeader from "../components/PageHeader"
 export default function Register() {
     return (
         <>
-            <PageHeader text="User Register" />
+            <PageHeader text="User Registration" />
             <Form>
                 <FormGroup row>
                     <Label lg={2} for="email">Email</Label>
