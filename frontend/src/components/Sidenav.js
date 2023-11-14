@@ -3,16 +3,14 @@ import {
     Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
 } from 'reactstrap';
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 import Delimiter from './Delimiter';
 
@@ -33,12 +31,12 @@ function AppSidenav(args) {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav pills vertical className='col-12'>
-                    <Link to="/" className="brand-text text-center text-body">Payroll SMB</Link>
+                    <NavLink to="/" className="brand-text text-center text-body">Payroll SMB</NavLink>
 
-                    <NavItem><Link to="/">Home</Link></NavItem>
+                    <NavLink to="/" className="m-1 p-1">Home</NavLink>
 
-                    {!isAuth ? <NavItem><Link to="/register">Register</Link></NavItem> : null}
-                    {!isAuth ? <NavItem><Link to="/login">Login</Link></NavItem> : null}
+                    {!isAuth ? <NavLink to="/register" className="m-1 p-1">Register</NavLink> : null}
+                    {!isAuth ? <NavLink to="/login" className="m-1 p-1">Login</NavLink> : null}
                     {isAuth ?
                         <>
                             <Delimiter />
@@ -53,25 +51,25 @@ function AppSidenav(args) {
                                 </DropdownMenu>
                             </UncontrolledDropdown>
 
-                            <NavItem><Link to="/profile">Profile</Link></NavItem>
+                            <NavLink to="/profile" className="m-1 p-1">Profile</NavLink>
 
                             <Delimiter />
 
-                            <NavItem><Link to="/dashboard">Dashboard</Link></NavItem>
-                            <NavItem><Link to="/staff">Staff list</Link></NavItem>
-                            <NavItem><Link to="/employees">Employees</Link></NavItem>
-                            <NavItem><Link to="/payroll-sheet">Payroll sheet</Link></NavItem>
+                            <NavLink to="/dashboard" className="m-1 p-1">Dashboard</NavLink>
+                            <NavLink to="/staff" className="m-1 p-1">Staff list</NavLink>
+                            <NavLink to="/employees" className="m-1 p-1">Employees</NavLink>
+                            <NavLink to="/payroll-sheet" className="m-1 p-1">Payroll sheet</NavLink>
 
                             <Delimiter />
 
-                            <NavItem><Link to="/personal-card">Personal card</Link></NavItem>
-                            <NavItem><Link to="/payroll">Payroll</Link></NavItem>
+                            <NavLink to="/personal-card" className="m-1 p-1">Personal card</NavLink>
+                            <NavLink to="/payroll" className="m-1 p-1">Payroll</NavLink>
 
                             <Delimiter />
 
-                            <NavItem><Link to="/settings">Settings</Link></NavItem>
-                            <NavItem><Link to="/language">Language</Link></NavItem>
-                            <NavItem><Link to="/logout">Logout</Link></NavItem>
+                            <NavLink to="/settings" className="m-1 p-1">Settings</NavLink>
+                            <NavLink to="/language" className="m-1 p-1">Language</NavLink>
+                            <NavLink to="/logout" className="m-1 p-1">Logout</NavLink>
                         </>
                         : null}
                 </Nav>
