@@ -14,3 +14,7 @@ body {
 a:link, a:visited, a:hover, a:active {
   text-decoration: none;
 }
+
+.btn-fixed-width {
+  width: 100px;
+}

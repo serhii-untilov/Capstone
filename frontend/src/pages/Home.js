@@ -45,9 +45,9 @@ export default function Home() {
 
             <div class="text-center">
                 <h4>To start</h4>
-                <Link to="/register"><Button color="primary" className="bg-gradient col-1">Register</Button></Link>
-                &nbsp;or&nbsp;
-                <Link to="/login"><Button color="primary" className="bg-gradient col-1">Login</Button></Link>
+                <Link to="/register"><Button color="primary" className="bg-gradient btn-fixed-width">Register</Button></Link>
+                <span> or </span>
+                <Link to="/login"><Button color="primary" className="bg-gradient btn-fixed-width">Login</Button></Link>
             </div>
         </>
 
