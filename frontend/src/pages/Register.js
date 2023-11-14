@@ -1,5 +1,6 @@
-import { Button, Col, Form, FormGroup, Input, Label } from "reactstrap"
+import { Col, Form, FormGroup, Input, Label } from "reactstrap"
 import PageHeader from "../components/PageHeader"
+import Button from "../components/Button"
 
 export default function Register() {
     return (
@@ -42,7 +43,6 @@ export default function Register() {
                 <Col lg={{offset: 2,size: 6}}>
                     <Button color="primary">Register</Button>
                 </Col>
-
             </Form>
         </>
     )
