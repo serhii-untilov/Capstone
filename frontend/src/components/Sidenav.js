@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Collapse,
     Navbar,
@@ -18,56 +18,65 @@ import Delimiter from './Delimiter';
 
 function AppSidenav(args) {
     const [isOpen, setIsOpen] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token') !== null) {
+            setIsAuth(true);
+        }
+    }, [isAuth]);
 
     const toggle = () => setIsOpen(!isOpen);
 
     return (
-            <Navbar {...args} className={"h-100 navbar-expand-sm navbar-light bg-light flex-column " + args.className}>
-                <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={isOpen} navbar>
-                    <Nav pills vertical className='col-12'>
-                        <NavbarBrand href="/" className="brand-text text-center">
-                            {/* <BrandLogo className="my-auto" /> */}
-                            <Link to="/"><span className='text-body'>Payroll SMB</span></Link>
-                        </NavbarBrand>
+        <Navbar {...args} className={"h-100 navbar-expand-sm navbar-light bg-light flex-column " + args.className}>
+            <NavbarToggler onClick={toggle} />
+            <Collapse isOpen={isOpen} navbar>
+                <Nav pills vertical className='col-12'>
+                    <Link to="/" className="brand-text text-center text-body">Payroll SMB</Link>
 
-                        <NavItem><NavLink><Link to="/register">Register</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/login">Login</Link></NavLink></NavItem>
+                    <NavItem><Link to="/">Home</Link></NavItem>
 
-                        <Delimiter />
+                    {!isAuth ? <NavItem><Link to="/register">Register</Link></NavItem> : null}
+                    {!isAuth ? <NavItem><Link to="/login">Login</Link></NavItem> : null}
+                    {isAuth ?
+                        <>
+                            <Delimiter />
 
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret >Company name</DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem>Company 1</DropdownItem>
-                                <DropdownItem>Company 2</DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem>Register Company</DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret >Company name</DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem>Company 1</DropdownItem>
+                                    <DropdownItem>Company 2</DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem>Register Company</DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
 
-                        <NavItem><NavLink><Link to="/profile">Profile</Link></NavLink></NavItem>
+                            <NavItem><Link to="/profile">Profile</Link></NavItem>
 
-                        <Delimiter />
+                            <Delimiter />
 
-                        <NavItem><NavLink><Link to="/dashboard">Dashboard</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/staff">Staff list</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/employees">Employees</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/payroll-sheet">Payroll sheet</Link></NavLink></NavItem>
+                            <NavItem><Link to="/dashboard">Dashboard</Link></NavItem>
+                            <NavItem><Link to="/staff">Staff list</Link></NavItem>
+                            <NavItem><Link to="/employees">Employees</Link></NavItem>
+                            <NavItem><Link to="/payroll-sheet">Payroll sheet</Link></NavItem>
 
-                        <Delimiter />
+                            <Delimiter />
 
-                        <NavItem><NavLink><Link to="/personal-card">Personal card</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/payroll">Payroll</Link></NavLink></NavItem>
+                            <NavItem><Link to="/personal-card">Personal card</Link></NavItem>
+                            <NavItem><Link to="/payroll">Payroll</Link></NavItem>
 
-                        <Delimiter />
+                            <Delimiter />
 
-                        <NavItem><NavLink><Link to="/settings">Settings</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/language">Language</Link></NavLink></NavItem>
-                        <NavItem><NavLink><Link to="/logout">Logout</Link></NavLink></NavItem>
-                    </Nav>
-                </Collapse>
-            </Navbar>
+                            <NavItem><Link to="/settings">Settings</Link></NavItem>
+                            <NavItem><Link to="/language">Language</Link></NavItem>
+                            <NavItem><Link to="/logout">Logout</Link></NavItem>
+                        </>
+                        : null}
+                </Nav>
+            </Collapse>
+        </Navbar>
     );
 }
 
