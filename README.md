@@ -53,14 +53,14 @@ The user's account is connected to the personal account of the payroll register 
   - Link to Home page
   - Link to Register page
   - Link to SignIn page
-  - Link to SignOut 
+  - Link to SignOut
   - Language menu
   - Link to User's profile
 - Sidenav bar (see Site map for the Employer and Employee pages)
 
 ## To run application
 
-In the project directory, you can run application: 
+In the project directory, you can run application:
 ```
 ./start
 ```
@@ -76,3 +76,7 @@ and the Frontend application:
 ```
 cd ./frontend && npm start
 ```
+
+## Links
+
+https://medium.com/@ronakchitlangya1997/jwt-authentication-with-react-js-and-django-c034aae1e60d

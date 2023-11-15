@@ -1,3 +1,4 @@
 export default function PageHeader({...props}) {
-    return <h2 {...props} className="text-body-secondary py-2">{props.text}</h2>
+    const className = "text-body pt-3 pb-2 " + props.className
+    return <h4 {...props} className={className}>{props.text}</h4>
 }

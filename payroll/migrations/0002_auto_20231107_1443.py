@@ -5,7 +5,7 @@ from django.db import migrations
 
 def populate_groups(apps, schema_editor):
     templates = [
-        {'id': 1, 'name': 'Manager'},
+        {'id': 1, 'name': 'Employer'},
         {'id': 2, 'name': 'Employee'},
     ]
     Group = apps.get_model("auth", "group")

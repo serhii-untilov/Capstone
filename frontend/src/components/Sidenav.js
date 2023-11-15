@@ -4,7 +4,6 @@ import {
     Navbar,
     NavbarToggler,
     Nav,
-    NavItem,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -31,7 +30,7 @@ function AppSidenav(args) {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
                 <Nav pills vertical className='col-12'>
-                    <NavLink to="/" className="brand-text text-center text-body">Payroll SMB</NavLink>
+                    <NavLink to="/" className="brand-text text-center text-body"><h4>Payroll SMB</h4></NavLink>
 
                     <NavLink to="/" className="m-1 p-1">Home</NavLink>
 
