@@ -1,7 +1,7 @@
 export default function Delimiter(args) {
     return (
         // <div>
-            <br {...args}  className="mx-3 my-2" />
+            <hr {...args}  className="mx-3 my-2 text-secondary " />
         // </div>
     )
 }

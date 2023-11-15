@@ -13,8 +13,13 @@ body {
 
 a:link, a:visited, a:hover, a:active {
   text-decoration: none;
+  color: var(--bs-primary)
 }
 
 .btn-fixed-width {
   width: 100px;
+}
+
+label {
+  color: var(--bs-secondary);
 }

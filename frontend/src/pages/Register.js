@@ -1,4 +1,4 @@
-import { Col, Form, FormGroup, Input, Label } from "reactstrap"
+import { Form, FormGroup, Input, Label } from "reactstrap"
 import PageHeader from "../components/PageHeader"
 import Button from "../components/Button"
 import { useEffect, useState } from "react"
@@ -50,11 +50,12 @@ export default function Register() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`
         window.location.href = '/'
     }
+
     return (
         <>
             <PageHeader text="Register" className="col-lg-5 col-sm-11 m-auto text-center" />
-            <p className="col-lg-5 col-sm-11 m-auto text-center pb-3">Please fill in this form to create a user account</p>
-            <Form className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-auto">
+            <p className="col-lg-4 col-sm-11 m-auto text-center pb-3">Please fill in this form to create a user account</p>
+            <Form className="col-lg-4 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-auto bg-white">
                 <FormGroup>
                     <Label for="email">Email</Label>
                     <Input id="email" name="email" type="email" autoFocus
