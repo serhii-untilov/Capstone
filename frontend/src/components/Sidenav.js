@@ -35,8 +35,8 @@ function AppSidenav(args) {
             <Collapse isOpen={isOpen} navbar>
                 <Nav pills vertical className='col-12'>
                     <NavLink to="/" className="brand-text text-body my-2">
-                        <h5 className='text-primary border-bottom p-2 my-auto '>
-                            <img height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h5>
+                        <h1 className='text-primary border-bottom p-2 my-auto fs-5'>
+                            <img height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h1>
                     </NavLink>
 
                     {/* <NavLink to="/" className="m-1 p-1">Home</NavLink> */}
