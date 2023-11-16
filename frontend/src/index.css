@@ -52,8 +52,14 @@ body {
 
 a:link, a:visited, a:hover, a:active {
   text-decoration: none;
-  color: var(--bs-primary)
+  color: var(--bs-primary);
 }
+
+/* a:hover {
+  background-color: var(--bs-primary);
+  color: white;
+  border-radius: 5px;
+} */
 
 .btn-fixed-width {
   width: 100px;

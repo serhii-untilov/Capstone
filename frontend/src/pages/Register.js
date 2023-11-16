@@ -1,11 +1,14 @@
 import { Form, FormGroup, Input, Label } from "reactstrap"
-import PageHeader from "../components/PageHeader"
-import Button from "../components/Button"
 import { useEffect, useState } from "react"
-import Toast from "../components/Toast"
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import axios from "axios"
 
+import Button from "../components/Button"
+import PageHeader from "../components/PageHeader"
+import Toast from "../components/Toast"
+
 export default function Register() {
+    const history = useHistory()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -15,7 +18,7 @@ export default function Register() {
 
     useEffect(() => {
         const fetchGroups = async () => {
-            const { data } = await axios.get('groups', { headers: { 'Content-Type': 'application/json' } })
+            const { data } = await axios.get('groups/', { headers: { 'Content-Type': 'application/json' } })
             setGroups(data)
         }
         fetchGroups().catch(console.error)
@@ -43,12 +46,12 @@ export default function Register() {
             return false
         }
         const user = { email, password, group_id: userGroup };
-        const { data } = await axios.post('users', user, { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
+        const { data } = await axios.post('users/', user, { headers: { 'Content-Type': 'application/json' } })
         localStorage.clear()
         localStorage.setItem('access_token', data.access)
         localStorage.setItem('refresh_token', data.refresh)
         axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`
-        window.location.href = '/'
+        history.go(0)
     }
 
     return (

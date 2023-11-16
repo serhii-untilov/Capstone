@@ -1,7 +1,12 @@
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+
 from .models import User, Company
 from .serializers import UserSerializer, CompanySerializer, GroupSerializer
 
@@ -19,6 +24,8 @@ class UserView(viewsets.ModelViewSet):
         group = Group.objects.get(id=request.data['group_id'])
         if not group:
             return None
+        if not 'username' in request.data:
+            request.data['username'] = request.data['email']
         user = User.objects.create_user(username=request.data['username'],
                                         email=request.data['email'],
                                         password=request.data['password'])
@@ -27,10 +34,30 @@ class UserView(viewsets.ModelViewSet):
         user.groups.add(group)
         user.save()
         refresh = RefreshToken.for_user(user)
-        return {'refresh': str(refresh),
-                'access': str(refresh.access_token)
-                }
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        })
 
+@api_view(['GET', 'POST'])
+def login(request):
+
+    if request.method == 'GET':
+        return(Response(status=status.HTTP_200_OK))
+
+    elif request.method == 'POST':
+        if not 'username' in request.data:
+            request.data['username'] = request.data['email']
+        user = User.objects.filter(username=request.data['username']).get()
+        if not user:
+            return None
+        if not check_password(request.data['password'], user.password):
+            return None
+        refresh = RefreshToken.for_user(user)
+        return Response(data={
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }, status=status.HTTP_200_OK)
 
 class GroupView(viewsets.ModelViewSet):
     # permission_classes = (AllowAny, )

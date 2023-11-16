@@ -131,15 +131,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "payroll.User"
 
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:3000',    # for React
-# )
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',    # for React
+)
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000'
 ]
 
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 REST_FRAMEWORK = {
      'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -153,3 +153,5 @@ SIMPLE_JWT = {
      'ROTATE_REFRESH_TOKENS': True,
      'BLACKLIST_AFTER_ROTATION': True
 }
+
+APPEND_SLASH=True

@@ -1,13 +1,25 @@
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
+import { useEffect, useState } from "react";
 
 export default function Home() {
+    const [isAuth, setIsAuth] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('access_token') !== null) {
+            setIsAuth(true);
+        }
+    }, [isAuth]);
+
     return (
         <div className="h-100 overflow-auto">
             <h2 className="text-center pt-3 text-primary fs-4">Welcome to Payroll SMB</h2>
             <h3 className="text-center pb-1 fs-5">Payroll solutions to Small and Medium Business</h3>
             <div className="row justify-content-center">
-                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
+
+
+
+            <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
                     <h4 className="text-center text-primary p-2">What we offer</h4>
                     <img height="164" src={process.env.PUBLIC_URL + '/fat-asterisk.png'} alt=""
                         className="opacity-50 position-absolute top-0 end-0" />
@@ -39,6 +51,7 @@ export default function Home() {
                     <p>Salary is calculated automatically.</p>
                     <p>Wages are paid by transferring the lists of employees and the amount "To be paid" to bank institutions, according to the information about the payment in the employees' cards.</p>
                 </div>
+
                 <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
                     <h4 className="text-center text-primary p-2">Employees</h4>
                     <img height="164" src={process.env.PUBLIC_URL + '/payroll.png'} alt=""
@@ -46,14 +59,16 @@ export default function Home() {
                     <p>The user has the opportunity to view his personal account and salary statement.</p>
                     <p>The user's account is connected to the personal account of the payroll register after confirmation by e-mail. The key to connection is the employee's email address. Therefore, when registering, the user indicates his email.</p>
                 </div>
-            </div>
 
+            </div>
+            {!isAuth ?
             <div className="text-center mt-1 mb-3">
                 <h4>To start</h4>
                 <Link to="/register"><Button color="primary" className="bg-gradient btn-fixed-width">Register</Button></Link>
                 <span> or </span>
                 <Link to="/login"><Button color="primary" className="bg-gradient btn-fixed-width">Login</Button></Link>
             </div>
+            : null }
         </div>
 
     )

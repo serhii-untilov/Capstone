@@ -1,14 +1,17 @@
 import { Form, FormGroup, Input, Label } from "reactstrap"
-import PageHeader from "../components/PageHeader"
-import Button from "../components/Button"
-import { useEffect, useState } from "react"
-import Toast from "../components/Toast"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { useState } from "react"
 import axios from "axios"
+
+import Button from "../components/Button"
+import PageHeader from "../components/PageHeader"
+import Toast from "../components/Toast"
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [messages, setMessages] = useState([])
+    const history = useHistory();
 
     const validate = () => {
         const messages = []
@@ -26,12 +29,12 @@ export default function Login() {
             return false
         }
         const user = { email, password };
-        const { data } = await axios.post('login', user, { headers: { 'Content-Type': 'application/json' }, withCredentials: true })
+        const { data } = await axios.post('login/', user, { headers: { 'Content-Type': 'application/json' } })
         localStorage.clear()
         localStorage.setItem('access_token', data.access)
         localStorage.setItem('refresh_token', data.refresh)
         axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`
-        window.location.href = '/'
+        history.go(0)
     }
 
     return (

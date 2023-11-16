@@ -1,5 +1,12 @@
 # Getting Started with Payroll Application
 
+## To run application
+
+In the project directory, you can run application:
+```
+./start
+```
+
 ## The purpose of application
 
 The **Payroll application** is designed for **calculating wages**.
@@ -64,19 +71,3 @@ In the project directory, you can run application:
 ```
 ./start
 ```
-or execute command:
-```
-python manage.py runserver & cd ./frontend && npm start
-```
-or separately run the Backend API server:
-```
-python manage.py runserver
-```
-and the Frontend application:
-```
-cd ./frontend && npm start
-```
-
-## Links
-
-https://medium.com/@ronakchitlangya1997/jwt-authentication-with-react-js-and-django-c034aae1e60d

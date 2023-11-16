@@ -42,51 +42,51 @@ function AppSidenav(args) {
                     {/* <NavLink to="/" className="m-1 p-1">Home</NavLink> */}
 
                     {!isAuth ? <NavLink to="/register" className="m-1 p-1">
-                        <PersonPlus color="royalblue" size={24} className="me-3" />Register</NavLink> : null}
+                        <PersonPlus size={24} className="me-4" />Register</NavLink> : null}
                     {!isAuth ? <NavLink to="/login" className="m-1 p-1">
-                        <BoxArrowInRight color="royalblue" size={24} className="me-3" />Login</NavLink> : null}
+                        <BoxArrowInRight size={24} className="me-4" />Login</NavLink> : null}
                     {isAuth ?
                         <>
-                            <Delimiter />
+                            {/* <Delimiter /> */}
 
                             <NavLink to="/company" className="m-1 p-1">
-                                <Briefcase color="royalblue" size={24} className="me-3" />Company</NavLink>
+                                <Briefcase size={24} className="me-4" />Company</NavLink>
 
                             <NavLink to="/profile" className="m-1 p-1">
-                                <Person color="royalblue" size={24} className="me-3" />Profile</NavLink>
+                                <Person size={24} className="me-4" />Profile</NavLink>
 
                             <Delimiter />
 
                             <NavLink to="/dashboard" className="m-1 p-1">
-                                <Activity color="royalblue" size={24} className="me-3" />Dashboard</NavLink>
+                                <Activity size={24} className="me-4" />Dashboard</NavLink>
 
                             <NavLink to="/staff" className="m-1 p-1">
-                                <People color="royalblue" size={24} className="me-3" />Staff list</NavLink>
+                                <People size={24} className="me-4" />Staff list</NavLink>
 
                             <NavLink to="/employees" className="m-1 p-1">
-                                <PeopleFill color="royalblue" size={24} className="me-3" />Employees</NavLink>
+                                <PeopleFill size={24} className="me-4" />Employees</NavLink>
 
                             <NavLink to="/payroll-sheet" className="m-1 p-1">
-                                <FileRuled color="royalblue" size={24} className="me-3" />Payroll sheet</NavLink>
+                                <FileRuled size={24} className="me-4" />Payroll sheet</NavLink>
 
                             <Delimiter />
 
                             <NavLink to="/personal-card" className="m-1 p-1">
-                                <PersonVcard color="royalblue" size={24} className="me-3" />Personal card</NavLink>
+                                <PersonVcard size={24} className="me-4" />Personal card</NavLink>
 
                             <NavLink to="/payroll" className="m-1 p-1">
-                                <PersonVcardFill color="royalblue" size={24} className="me-3" />Payroll</NavLink>
+                                <PersonVcardFill size={24} className="me-4" />Payroll</NavLink>
 
                             <Delimiter />
 
                             <NavLink to="/settings" className="m-1 p-1">
-                                <Gear color="royalblue" size={24} className="me-3" />Settings</NavLink>
+                                <Gear size={24} className="me-4" />Settings</NavLink>
 
                             <NavLink to="/language" className="m-1 p-1">
-                            <Globe color="royalblue" size={24} className="me-3" />Language</NavLink>
+                            <Globe size={24} className="me-4" />Language</NavLink>
 
                             <NavLink to="/logout" className="m-1 p-1">
-                                <BoxArrowLeft color="royalblue" size={24} className="me-3" />Logout</NavLink>
+                                <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
                         </>
                         : null}
                 </Nav>
