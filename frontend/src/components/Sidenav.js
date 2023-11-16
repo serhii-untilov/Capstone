@@ -36,7 +36,7 @@ function AppSidenav(args) {
                 <Nav pills vertical className='col-12'>
                     <NavLink to="/" className="brand-text text-body my-2">
                         <h1 className='text-primary border-bottom p-2 my-auto fs-5'>
-                            <img height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h1>
+                            <img className="opacity-50" height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h1>
                     </NavLink>
 
                     {/* <NavLink to="/" className="m-1 p-1">Home</NavLink> */}

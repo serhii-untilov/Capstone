@@ -15,7 +15,7 @@ class App extends Component {
 				<main className="container-fluid h-100 bg-body-secondary">
 					<div className="row h-100 w-100">
 						<Sidenav className="col-sm-4 col-lg-2" />
-						<div className="col-sm-8 col-lg-10">
+						<div className="col-sm-8 col-lg-10 h-100">
 							<Routes />
 						</div>
 					</div>
