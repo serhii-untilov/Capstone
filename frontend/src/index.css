@@ -27,9 +27,9 @@ body {
   height: 3px;
 }
 
-*::-webkit-scrollbar-track {
-  /* background: gray; */
-}
+/* *::-webkit-scrollbar-track {
+  background: gray;
+} */
 
 *::-webkit-scrollbar-thumb {
   /* background-color: var(--scroll-bar-color); */
