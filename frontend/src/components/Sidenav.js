@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Collapse,
     Navbar,
     NavbarToggler,
     Nav,
 } from 'reactstrap';
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
     People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, Globe
@@ -16,68 +16,75 @@ import Delimiter from './Delimiter';
 import LogoutButton from './LogoutButton';
 
 function AppSidenav(args) {
+    const location = useLocation()
     const [isOpen, setIsOpen] = useState(false);
     const isAuth = useContext(AuthContext);
 
     const toggle = () => setIsOpen(!isOpen);
 
+    console.log(location)
+
     return (
         <Navbar {...args} className={"h-lg-100 navbar-expand-sm navbar-light bg-light flex-column shadow-sm bg-body-tertiary " + args.className}>
             <NavbarToggler onClick={toggle}></NavbarToggler>
             <Collapse isOpen={isOpen} navbar>
-                <Nav pills vertical className='col-12'>
+                <Nav pills vertical className='col-12 nav nav-pills'>
                     <NavLink to="/" className="brand-text text-body my-2">
-                        <h1 className='border-bottom p-2 my-auto fs-5'>
+                        <h1 className='p-2 my-auto fs-5'>
                             <img className="opacity-50" height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h1>
                     </NavLink>
 
-                    {!isAuth ? <NavLink to="/register" className="m-1 p-1">
-                        <PersonPlus size={24} className="me-4" />Register</NavLink> : null}
-                    {!isAuth ? <NavLink to="/login" className="m-1 p-1">
+                    {!isAuth
+                        ? <NavLink to="/register" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                            <PersonPlus size={24} className="me-4" />Register
+                        </NavLink>
+                        : null}
+
+                    {!isAuth ? <NavLink to="/login" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                         <BoxArrowInRight size={24} className="me-4" />Login</NavLink> : null}
                     {isAuth ?
                         <>
 
-                            <NavLink to="/company" className="m-1 p-1">
+                            <NavLink to="/company" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Briefcase size={24} className="me-4" />Company</NavLink>
 
-                            <NavLink to="/profile" className="m-1 p-1">
+                            <NavLink to="/profile" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Person size={24} className="me-4" />Profile</NavLink>
 
                             <Delimiter />
 
-                            <NavLink to="/dashboard" className="m-1 p-1">
+                            <NavLink to="/dashboard" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Activity size={24} className="me-4" />Dashboard</NavLink>
 
-                            <NavLink to="/staff" className="m-1 p-1">
+                            <NavLink to="/staff" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <People size={24} className="me-4" />Staff list</NavLink>
 
-                            <NavLink to="/employees" className="m-1 p-1">
+                            <NavLink to="/employees" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PeopleFill size={24} className="me-4" />Employees</NavLink>
 
-                            <NavLink to="/payroll-sheet" className="m-1 p-1">
+                            <NavLink to="/payroll-sheet" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <FileRuled size={24} className="me-4" />Payroll sheet</NavLink>
 
                             <Delimiter />
 
-                            <NavLink to="/personal-card" className="m-1 p-1">
+                            <NavLink to="/personal-card" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PersonVcard size={24} className="me-4" />Personal card</NavLink>
 
-                            <NavLink to="/payroll" className="m-1 p-1">
+                            <NavLink to="/payroll" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PersonVcardFill size={24} className="me-4" />Payroll</NavLink>
 
                             <Delimiter />
 
-                            <NavLink to="/settings" className="m-1 p-1">
+                            <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
 
-                            <NavLink to="/language" className="m-1 p-1">
-                            <Globe size={24} className="me-4" />Language</NavLink>
+                            <NavLink to="/language" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                                <Globe size={24} className="me-4" />Language</NavLink>
 
-                            <NavLink to="/logout" className="m-1 p-1">
+                            <NavLink to="/logout" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
 
-                                <LogoutButton />
+                            <LogoutButton />
                         </>
                         : null}
                 </Nav>

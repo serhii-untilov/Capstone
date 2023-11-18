@@ -55,6 +55,18 @@ a:link, a:visited, a:hover, a:active {
   color: var(--bs-body);
 }
 
+.active{
+  color: var(--bs-body) !important;
+  background-color: rgba(194, 219, 255, 0.5) !important;
+  /* border-radius: 0 50px 50px 0 !important; */
+  border-radius: 5px 5px 5px 5px !important;
+}
+
+.btn:hover {
+  color: var(--bs-body) !important;
+  background-color: rgba(194, 219, 255, 0.5) !important;
+}
+
 label {
   color: var(--bs-gray-dark);
   color: var(--bs-secondary);
