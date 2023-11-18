@@ -1,14 +1,15 @@
 import { Form, FormGroup, Input, Label } from "reactstrap"
 import { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
 import Toast from "../components/Toast"
+import { register } from "../services/userService";
+import { getGroups } from "../services/dictService";
 
 export default function Register() {
-    const history = useHistory()
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
@@ -18,8 +19,8 @@ export default function Register() {
 
     useEffect(() => {
         const fetchGroups = async () => {
-            const { data } = await axios.get('groups/', { headers: { 'Content-Type': 'application/json' } })
-            setGroups(data)
+            const groups = await getGroups()
+            setGroups(groups)
         }
         fetchGroups().catch(console.error)
     }, [])
@@ -45,13 +46,8 @@ export default function Register() {
             setMessages(messages)
             return false
         }
-        const user = { email, password, group_id: userGroup };
-        const { data } = await axios.post('users/', user, { headers: { 'Content-Type': 'application/json' } })
-        localStorage.clear()
-        localStorage.setItem('access_token', data.access)
-        localStorage.setItem('refresh_token', data.refresh)
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data['access']}`
-        history.go(0)
+        await register({ email, password, group_id: userGroup })
+        navigate('/', { replace: true })
     }
 
     return (
@@ -99,7 +95,7 @@ export default function Register() {
                     <Button color="primary" onClick={submit}>Register</Button>
                 </div>
             </Form>
-            <Toast title="Registration is not possible" messages={messages} close={() => { setMessages([]) }} />
+            <Toast title="Registration failed" messages={messages} close={() => { setMessages([]) }} />
         </>
     )
 }

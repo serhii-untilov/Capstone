@@ -1,7 +1,8 @@
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group
-from rest_framework import viewsets
 from rest_framework import status
+from rest_framework import viewsets
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -11,12 +12,13 @@ from .models import User, Company
 from .serializers import UserSerializer, CompanySerializer, GroupSerializer
 
 
-class UserView(viewsets.ModelViewSet):
-    # permission_classes = (IsAuthenticated, )
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
+@api_view(['GET', 'POST'])
+def register(request):
 
-    def create(self, request):
+    if request.method == 'GET':
+        return (Response(status=status.HTTP_200_OK))
+
+    elif request.method == 'POST':
         if not 'group_id' in request.data:
             return None
         if not request.data['group_id']:
@@ -39,11 +41,15 @@ class UserView(viewsets.ModelViewSet):
             'access': str(refresh.access_token)
         })
 
+    else:
+        return (Response(status=status.HTTP_400_BAD_REQUEST))
+
+
 @api_view(['GET', 'POST'])
 def login(request):
 
     if request.method == 'GET':
-        return(Response(status=status.HTTP_200_OK))
+        return (Response(status=status.HTTP_200_OK))
 
     elif request.method == 'POST':
         if not 'username' in request.data:
@@ -58,6 +64,33 @@ def login(request):
             'refresh': str(refresh),
             'access': str(refresh.access_token)
         }, status=status.HTTP_200_OK)
+
+    else:
+        return (Response(status=status.HTTP_400_BAD_REQUEST))
+
+
+@api_view(['GET', 'POST'])
+def logout(request):
+
+    if request.method == 'GET':
+        return (Response(status=status.HTTP_200_OK))
+
+    elif request.method == 'POST':
+        if not 'token' in request.data:
+            return (Response(status=status.HTTP_400_BAD_REQUEST))
+        token = RefreshToken(request.data['token'])
+        token.blacklist()
+        return Response(status=status.HTTP_200_OK)
+
+    else:
+        return (Response(status=status.HTTP_400_BAD_REQUEST))
+
+
+class UserView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
 
 class GroupView(viewsets.ModelViewSet):
     # permission_classes = (AllowAny, )

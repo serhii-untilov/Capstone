@@ -10,5 +10,7 @@ router.register(r'companies', views.CompanyView, 'company')
 
 urlpatterns = [
 	path('api/', include(router.urls)),
-    path('api/login/', views.login)
+    path('api/register/', views.register),
+    path('api/login/', views.login),
+    path('api/logout/', views.logout),
 ]

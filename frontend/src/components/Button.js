@@ -1,8 +1,6 @@
 import { Button } from "reactstrap"
 
 export default function _Button({...props}) {
-    if (!props.className || !props.className.includes("bg-gradient")) {
-        props.className = (props.className || "") + " bg-gradient"
-    }
-    return <Button {...props} ></Button>
+    props.className = (props.className || "") + " bg-gradient shadow-sm border"
+    return <Button {...props} color="light"></Button>
 }

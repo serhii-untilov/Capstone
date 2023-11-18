@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Collapse,
     Navbar,
     NavbarToggler,
     Nav,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
 } from 'reactstrap';
 import { NavLink } from "react-router-dom"
 import {
-    BoxArrowInRight,
-    BoxArrowLeft, PersonPlus, Person, Briefcase, Activity, People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, Globe
+    BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
+    People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, Globe
 } from 'react-bootstrap-icons';
 
+import { AuthContext } from '../context/AuthContext';
 import Delimiter from './Delimiter';
+import LogoutButton from './LogoutButton';
 
 function AppSidenav(args) {
     const [isOpen, setIsOpen] = useState(false);
-    const [isAuth, setIsAuth] = useState(false);
-
-    useEffect(() => {
-        if (localStorage.getItem('access_token') !== null) {
-            setIsAuth(true);
-        }
-    }, [isAuth]);
+    const isAuth = useContext(AuthContext);
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -35,11 +27,9 @@ function AppSidenav(args) {
             <Collapse isOpen={isOpen} navbar>
                 <Nav pills vertical className='col-12'>
                     <NavLink to="/" className="brand-text text-body my-2">
-                        <h1 className='text-primary border-bottom p-2 my-auto fs-5'>
+                        <h1 className='border-bottom p-2 my-auto fs-5'>
                             <img className="opacity-50" height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h1>
                     </NavLink>
-
-                    {/* <NavLink to="/" className="m-1 p-1">Home</NavLink> */}
 
                     {!isAuth ? <NavLink to="/register" className="m-1 p-1">
                         <PersonPlus size={24} className="me-4" />Register</NavLink> : null}
@@ -47,7 +37,6 @@ function AppSidenav(args) {
                         <BoxArrowInRight size={24} className="me-4" />Login</NavLink> : null}
                     {isAuth ?
                         <>
-                            {/* <Delimiter /> */}
 
                             <NavLink to="/company" className="m-1 p-1">
                                 <Briefcase size={24} className="me-4" />Company</NavLink>
@@ -87,6 +76,8 @@ function AppSidenav(args) {
 
                             <NavLink to="/logout" className="m-1 p-1">
                                 <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
+
+                                <LogoutButton />
                         </>
                         : null}
                 </Nav>

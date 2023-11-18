@@ -1,20 +1,18 @@
 import { Form } from "reactstrap"
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { useNavigate } from "react-router-dom"
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
+import { logout } from "../services/userService"
 
 
 export default function Logout() {
-    const history = useHistory();
+    const navigate = useNavigate()
 
     const submit = async e => {
         e.preventDefault()
-        localStorage.clear()
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
-        history.length = 0
-        history.push('/')
+        await logout()
+        navigate('/', { replace: true })
     }
 
     return (

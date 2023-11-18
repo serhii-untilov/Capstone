@@ -13,8 +13,8 @@ export default function Home() {
 
     return (
         <div className="h-100 overflow-auto">
-            <h2 className="text-center pt-3 text-primary fs-4">Welcome to Payroll SMB</h2>
-            <h3 className="text-center pb-1 fs-5">Payroll solutions to Small and Medium Business</h3>
+            <h2 className="text-center pt-3 text-body fs-4">Welcome to Payroll SMB</h2>
+            <h3 className="text-center pb-1 fs-5 fw-normal">Payroll solutions to Small and Medium Business</h3>
             <div className="row justify-content-center">
 
 
