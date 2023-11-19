@@ -66,10 +66,10 @@ a:link, a:visited, a:hover, a:active {
   background-color: rgba(194, 219, 255, 0.5);
 }
 
-label {
-  color: var(--bs-gray-dark);
+/* label {
   color: var(--bs-secondary);
-}
+  color: var(--bs-gray-dark);
+} */
 
 .btn-fixed-width {
   width: 100px;

@@ -87,7 +87,7 @@ export default function Register() {
                         defaultValue=""
                         onChange={e => setUserGroup(e.target.value)}
                     >
-                        <option value="" key="0" disabled></option>
+                        <option value="" key="0" disabled hidden></option>
                         {groups.map(group => {
                             return <option key={group.id} value={group.id}>{group.name}</option>
                         })}

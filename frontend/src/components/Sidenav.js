@@ -25,6 +25,7 @@ function AppSidenav(args) {
     const handleLogout = async (e) => {
         e.preventDefault()
         await logout()
+        authContext.setIsAuth(false)
         navigate('/', { replace: true })
         return false
     }
@@ -88,8 +89,8 @@ function AppSidenav(args) {
                         </>
                         : null}
 
-                    <NavLink to="/language" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                        <Globe size={24} className="me-4" />Language</NavLink>
+                    {/* <NavLink to="/language" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                        <Globe size={24} className="me-4" />Language</NavLink> */}
 
                     {authContext.isAuth
                         ? <NavLink to="/dummy" onClick={handleLogout} className="m-0 p-2">

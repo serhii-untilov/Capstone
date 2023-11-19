@@ -1,15 +1,10 @@
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Home() {
-    const [isAuth, setIsAuth] = useState(false);
-
-    useEffect(() => {
-        if (localStorage.getItem('access_token') !== null) {
-            setIsAuth(true);
-        }
-    }, [isAuth]);
+    const authContext = useContext(AuthContext)
 
     return (
         <div className="h-100 overflow-auto">
@@ -61,7 +56,7 @@ export default function Home() {
                 </div>
 
             </div>
-            {!isAuth ?
+            {!authContext.isAuth ?
             <div className="text-center mt-1 mb-3">
                 <h4>To start</h4>
                 <Link to="/register"><Button color="primary" className="bg-gradient btn-fixed-width">Register</Button></Link>
