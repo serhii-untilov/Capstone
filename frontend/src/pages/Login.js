@@ -1,13 +1,15 @@
 import { Form, FormGroup, Input, Label } from "reactstrap"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useContext, useState } from "react"
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
 import Toast from "../components/Toast"
-import { login } from "../services/userService"
+import { login } from "../services/authService"
+import { AuthContext } from "../context/AuthContext"
 
 export default function Login() {
+    const authContext = useContext(AuthContext)
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,7 +30,8 @@ export default function Login() {
             setMessages(messages)
             return false
         }
-        await login({ email, password })
+        const token = await login({ email, password })
+        authContext.setIsAuth(!!token)
         return navigate('/', { replace: true })
     }
 

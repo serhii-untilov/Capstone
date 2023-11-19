@@ -56,15 +56,14 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .active{
-  color: var(--bs-body) !important;
-  background-color: rgba(194, 219, 255, 0.5) !important;
-  /* border-radius: 0 50px 50px 0 !important; */
-  border-radius: 5px 5px 5px 5px !important;
+  color: var(--bs-body);
+  background-color: rgba(194, 219, 255, 0.5);
+  border-radius: 5px 5px 5px 5px;
 }
 
 .btn:hover {
-  color: var(--bs-body) !important;
-  background-color: rgba(194, 219, 255, 0.5) !important;
+  color: var(--bs-body);
+  background-color: rgba(194, 219, 255, 0.5);
 }
 
 label {
@@ -72,13 +71,6 @@ label {
   color: var(--bs-secondary);
 }
 
-/* a:hover {
-  background-color: var(--bs-primary);
-  color: white;
-  border-radius: 5px;
-} */
-
 .btn-fixed-width {
   width: 100px;
 }
-

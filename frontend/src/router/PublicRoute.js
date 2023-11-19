@@ -1,10 +1,10 @@
 import { Navigate, Route } from "react-router-dom";
 
-export const PublicRoute = ({ Component, isAuthenticated, restricted, ...rest }) => (
+export const PublicRoute = ({ Component, isAuth, restricted, ...rest }) => (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated && restricted ? (
+        isAuth && restricted ? (
           <Navigate to="/" />
         ) : (
           <Component {...props} />

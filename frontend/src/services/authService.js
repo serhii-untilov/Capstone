@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { request } from "../api"
 
 export async function register(credentials) {
@@ -5,7 +6,7 @@ export async function register(credentials) {
     const data = await request('register/', 'post', credentials)
     localStorage.setItem('access_token', data.access)
     localStorage.setItem('refresh_token', data.refresh)
-    return data
+    return data.access
 }
 
 export async function login(credentials) {
@@ -13,7 +14,7 @@ export async function login(credentials) {
     const data = await request('login/', 'post', credentials)
     localStorage.setItem('access_token', data.access)
     localStorage.setItem('refresh_token', data.refresh)
-    return data
+    return data.access
 }
 
 export async function logout() {
@@ -25,4 +26,3 @@ export async function logout() {
     }
     localStorage.clear()
 }
-

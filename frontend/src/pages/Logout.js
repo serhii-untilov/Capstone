@@ -3,15 +3,19 @@ import { useNavigate } from "react-router-dom"
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
-import { logout } from "../services/userService"
+import { logout } from "../services/authService"
+import { useContext } from "react"
+import { AuthContext } from "../context/AuthContext"
 
 
 export default function Logout() {
+    const authContext = useContext(AuthContext)
     const navigate = useNavigate()
 
     const submit = async e => {
         e.preventDefault()
         await logout()
+        authContext.setIsAuth(false)
         navigate('/', { replace: true })
     }
 

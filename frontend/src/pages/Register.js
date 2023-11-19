@@ -1,14 +1,16 @@
 import { Form, FormGroup, Input, Label } from "reactstrap"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
 import Toast from "../components/Toast"
-import { register } from "../services/userService";
+import { register } from "../services/authService";
 import { getGroups } from "../services/dictService";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Register() {
+    const authContext = useContext(AuthContext)
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -46,7 +48,8 @@ export default function Register() {
             setMessages(messages)
             return false
         }
-        await register({ email, password, group_id: userGroup })
+        const token = await register({ email, password, group_id: userGroup })
+        authContext.setIsAuth(!!token)
         navigate('/', { replace: true })
     }
 
