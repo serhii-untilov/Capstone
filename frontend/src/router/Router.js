@@ -44,7 +44,7 @@ export default function Router() {
                 : null
             }
 
-            <Route path="*" element={<Navigate to="/" replace />}
+            <Route path="*" element={<Navigate to="/login" replace />}
             />
         </Routes>
     )
