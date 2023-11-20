@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path, include
 from payroll import views
 from rest_framework import routers
@@ -11,6 +10,8 @@ router.register(r'companies', views.CompanyView, 'company')
 urlpatterns = [
 	path('api/', include(router.urls)),
     path('api/register/', views.register),
-    path('api/login/', views.login),
+    # path('api/login/', views.login),
     path('api/logout/', views.logout),
+    path('api/change_password/', views.changePassword),
+    path('api/update_profile/', views.updateProfile),
 ]

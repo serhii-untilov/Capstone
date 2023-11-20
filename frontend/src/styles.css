@@ -48,12 +48,14 @@ body {
   height: 100vh;
 }
 
-a:link, a:visited, a:hover, a:active {
+a:link, a:visited, a:hover a:active {
   text-decoration: none;
   color: var(--bs-secondary);
   color: var(--bs-gray-dark);
   color: var(--bs-body);
 }
+
+
 
 .active{
   color: var(--bs-body);

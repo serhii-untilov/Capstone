@@ -1,8 +1,6 @@
-import { useState } from "react"
 import { request } from "../api"
 
 export async function register(credentials) {
-    localStorage.clear()
     const data = await request('register/', 'post', credentials)
     localStorage.setItem('access_token', data.access)
     localStorage.setItem('refresh_token', data.refresh)
@@ -10,7 +8,6 @@ export async function register(credentials) {
 }
 
 export async function login(credentials) {
-    localStorage.clear()
     const data = await request('login/', 'post', credentials)
     localStorage.setItem('access_token', data.access)
     localStorage.setItem('refresh_token', data.refresh)
@@ -18,11 +15,12 @@ export async function login(credentials) {
 }
 
 export async function logout() {
-    const token = localStorage.getItem('access_token')
     try {
-        await request('logout/', 'post', {token})
-    } catch(error) {
+        const refresh = localStorage.getItem('refresh_token')
+        await request('logout/', 'post', { refresh })
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+    } catch (error) {
         console.log(error)
     }
-    localStorage.clear()
 }

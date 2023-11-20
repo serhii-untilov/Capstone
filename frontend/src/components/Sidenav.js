@@ -5,10 +5,11 @@ import {
     NavbarToggler,
     Nav,
 } from 'reactstrap';
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
-    People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, Globe
+    People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear,
+    // Globe
 } from 'react-bootstrap-icons';
 
 import { AuthContext } from '../context/AuthContext';

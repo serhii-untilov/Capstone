@@ -30,7 +30,7 @@ export default function Login() {
             setMessages(messages)
             return false
         }
-        const token = await login({ email, password })
+        const token = await login({ username: email, email, password })
         authContext.setIsAuth(!!token)
         return navigate('/', { replace: true })
     }

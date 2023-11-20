@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Routes, Route, Navigate } from "react-router-dom"
 
 import Company from "../pages/Company"
@@ -7,7 +7,6 @@ import Employees from "../pages/Employees"
 import Home from "../pages/Home"
 import Language from "../pages/Language"
 import Login from "../pages/Login"
-import Logout from "../pages/Logout"
 import Payroll from "../pages/Payroll"
 import PayrollSheet from "../pages/PayrollSheet"
 import PersonalCard from "../pages/PersonalCard"
@@ -41,8 +40,6 @@ export default function Router() {
                         <Route path="/personal-card" element={<PersonalCard />} />
                         <Route path="/payroll" element={<Payroll />} />
                         <Route path="/settings" element={<Settings />} />
-
-                        <Route path="/logout" element={<Logout />} />
                     </>
                 : null
             }
