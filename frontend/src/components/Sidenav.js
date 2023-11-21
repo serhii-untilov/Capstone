@@ -10,14 +10,16 @@ import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
     People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear,
     // Globe
-} from 'react-bootstrap-icons';
+} from 'react-bootstrap-icons'
 
-import { AuthContext } from '../context/AuthContext';
-import Delimiter from './Delimiter';
+import { AuthContext } from '../context/AuthContext'
+import Delimiter from './Delimiter'
 import { logout } from "../services/authService"
+import { UserContext } from '../context/UserContext'
 
 function AppSidenav(args) {
-    const authContext = useContext(AuthContext);
+    const authContext = useContext(AuthContext)
+    const userContext = useContext(UserContext)
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +55,7 @@ function AppSidenav(args) {
                         : null
                     }
 
-                    {authContext.isAuth
+                    {authContext.isAuth && userContext.user.is_employer
                         ? <>
                             <NavLink to="/company" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Briefcase size={24} className="me-4" />Company</NavLink>
@@ -74,28 +76,32 @@ function AppSidenav(args) {
 
                             <NavLink to="/payroll-sheet" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <FileRuled size={24} className="me-4" />Payroll sheet</NavLink>
+                        </>
+                        : null}
+                    <Delimiter />
 
-                            <Delimiter />
-
+                    {authContext.isAuth && userContext.user.is_employee
+                        ? <>
                             <NavLink to="/personal-card" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PersonVcard size={24} className="me-4" />Personal card</NavLink>
 
                             <NavLink to="/payroll" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PersonVcardFill size={24} className="me-4" />Payroll</NavLink>
-
-                            <Delimiter />
-
-                            <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <Gear size={24} className="me-4" />Settings</NavLink>
                         </>
                         : null}
+                    <Delimiter />
 
                     {/* <NavLink to="/language" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                         <Globe size={24} className="me-4" />Language</NavLink> */}
 
                     {authContext.isAuth
-                        ? <NavLink to="/dummy" onClick={handleLogout} className="m-0 p-2">
-                            <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
+                        ? <>
+                            <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                                <Gear size={24} className="me-4" />Settings</NavLink>
+
+                            <NavLink to="/dummy" onClick={handleLogout} className="m-0 p-2">
+                                <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
+                        </>
                         : null
                     }
 

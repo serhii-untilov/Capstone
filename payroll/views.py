@@ -43,23 +43,23 @@ def register(request):
         return (Response(status=status.HTTP_400_BAD_REQUEST))
 
 
-@api_view(['POST', 'OPTIONS'])
-def login(request):
-    if request.method == 'POST':
-        if not 'username' in request.data:
-            request.data['username'] = request.data['email']
-        user = User.objects.filter(username=request.data['username']).get()
-        if not user:
-            return None
-        if not check_password(request.data['password'], user.password):
-            return None
-        refresh = RefreshToken.for_user(user)
-        return Response(data={
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
-        }, status=status.HTTP_200_OK)
-    else:
-        return (Response(status=status.HTTP_400_BAD_REQUEST))
+# @api_view(['POST', 'OPTIONS'])
+# def login(request):
+#     if request.method == 'POST':
+#         if not 'username' in request.data:
+#             request.data['username'] = request.data['email']
+#         user = User.objects.filter(username=request.data['username']).get()
+#         if not user:
+#             return None
+#         if not check_password(request.data['password'], user.password):
+#             return None
+#         refresh = RefreshToken.for_user(user)
+#         return Response(data={
+#             'refresh': str(refresh),
+#             'access': str(refresh.access_token)
+#         }, status=status.HTTP_200_OK)
+#     else:
+#         return (Response(status=status.HTTP_400_BAD_REQUEST))
 
 
 @api_view(['POST', 'OPTIONS'])
@@ -79,6 +79,18 @@ def logout(request):
         return Response(status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST', 'OPTIONS'])
+@permission_classes([IsAuthenticated])
+def currentUser(request):
+    if request.method == 'POST':
+        if not request.user:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        user = UserSerializer(request.user).data
+        return Response(data=user, status=status.HTTP_200_OK)
+    else:
+        return (Response(status=status.HTTP_400_BAD_REQUEST))
 
 
 @api_view(['POST', 'OPTIONS'])
