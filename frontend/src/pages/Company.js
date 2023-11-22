@@ -8,10 +8,12 @@ import { getCompanies, getCompany, newCompany, postCompany, updateCompany } from
 import Button from "../components/Button";
 import PageHeader from "../components/PageHeader";
 import Toast from "../components/Toast"
+import { UserContext } from "../context/UserContext";
 
 export default function Company() {
     const { companyId } = useParams()
     const authContext = useContext(AuthContext)
+    const userContext = useContext(UserContext)
     const companyContext = useContext(CompanyContext)
     const [company, setCompany] = useState(newCompany)
     const [companies, setCompanies] = useState([])
@@ -33,19 +35,21 @@ export default function Company() {
             }
             setName(company?.name)
             setTaxId(company?.tax_id)
-            setDateFrom(company?.id ? company.dateFrom : formatDate(monthBegin(Date.now())))
+            setDateFrom(company?.id ? company?.dateFrom : formatDate(monthBegin(Date.now())))
             setCompanies(await getCompanies())
         }
         if (authContext.isAuth) {
             fetchData()
         }
-    }, [authContext, company.dateFrom, company.name, company.tax_id, companyId, company.id, companyContext])
+    }, [authContext, company.dateFrom, company.name, company.tax_id, companyId])
 
     const validate = () => {
         const warnings = []
         if (!name) warnings.push("Company name not defined.")
         if (name.length && companies.find(o => o.name === name && o.id !== company.id)) warnings.push("The same company name already exists.")
         if (taxId.length && companies.find(o => o.tax_id === taxId && o.id !== company.id)) warnings.push("The same Tax ID already exists.")
+        const companiesCount = companies.filter(o => o.owner.id === userContext.user.id).length
+        if (companiesCount > 5) warnings.push("The user has 5 companies. For more, you can upgrade your plan to Premium.")
         if (warnings.length) {
             setMessages(warnings)
             return false
