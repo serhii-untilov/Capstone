@@ -75,6 +75,7 @@ function AppSidenav(args) {
         dateToTime(o.date_to) >= today
         ) : []
     const nonActualCompanies = companies ? companies.filter(o => actualCompanies.findIndex(a => a.id === o.id) < 0) : []
+
     return (
         <Navbar {...args} className={"h-lg-100 navbar-expand-sm navbar-light bg-light flex-column shadow-sm bg-body-tertiary " + args.className}>
             <NavbarToggler onClick={toggle}></NavbarToggler>
