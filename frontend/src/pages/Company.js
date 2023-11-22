@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
-import { Form, FormGroup, Input, Label } from "reactstrap";
-import { getCompanies, getCompany, newCompany, postCompany, updateCompany } from "../services/companyService";
-import { formatDate, monthBegin } from "../services/dateService";
-import Toast from "../components/Toast"
-import Button from "../components/Button";
-import PageHeader from "../components/PageHeader";
 import { useParams } from "react-router-dom";
+import { Form, FormGroup, Input, Label } from "reactstrap";
 import { AuthContext } from "../context/AuthContext";
 import { CompanyContext } from "../context/CompanyContext";
+import { formatDate, monthBegin } from "../services/dateService";
+import { getCompanies, getCompany, newCompany, postCompany, updateCompany } from "../services/companyService";
+import Button from "../components/Button";
+import PageHeader from "../components/PageHeader";
+import Toast from "../components/Toast"
 
 export default function Company() {
+    const { companyId } = useParams()
     const authContext = useContext(AuthContext)
     const companyContext = useContext(CompanyContext)
-    const { companyId } = useParams()
     const [company, setCompany] = useState(newCompany)
     const [companies, setCompanies] = useState([])
     const [messages, setMessages] = useState([])
@@ -23,10 +23,12 @@ export default function Company() {
     useEffect(() => {
         const fetchData = async () => {
             if (companyId) {
-                if (companyId.localeCompare('new')) {
+                if (!companyId.localeCompare('new')) {
                     setCompany(newCompany)
                 } else {
-                    setCompany(await getCompany(companyId))
+                    const company = await getCompany(companyId)
+                    companyContext.setCompany(company)
+                    setCompany(company)
                 }
             }
             setName(company?.name)
@@ -37,7 +39,7 @@ export default function Company() {
         if (authContext.isAuth) {
             fetchData()
         }
-    }, [authContext, company.dateFrom, company.name, company.tax_id, companyId, company.id])
+    }, [authContext, company.dateFrom, company.name, company.tax_id, companyId, company.id, companyContext])
 
     const validate = () => {
         const warnings = []
@@ -73,6 +75,7 @@ export default function Company() {
     const onUpdateCompany = () => {
         if (!validate()) return false
         updateCompany({ id: company.id, name, tax_id: taxId, date_from: dateFrom })
+            .then(updatedCompany => {companyContext.setCompany(updatedCompany)})
             .catch(e => { setMessages([e.message || 'Error.']) })
     }
 
@@ -84,7 +87,13 @@ export default function Company() {
     return (
         <>
             <PageHeader text="Company" className="col-lg-5 col-sm-11 m-auto text-center" />
-            <p className="col-lg-4 col-sm-11 m-auto text-center pb-3">Please fill in this form to create new company</p>
+            <p className="col-lg-4 col-sm-11 m-auto text-center pb-3">
+                {company?.id && !company?.is_demo
+                    ? "Selected company for payroll processing"
+                    : company?.is_demo
+                        ? "Selected company for a payroll processing demo"
+                        : "Please fill in this form to create new company"}
+                </p>
             <Form className="col-lg-4 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-auto bg-white">
                 <h4 className="text-center text-primary p-2">{!company.id ? name ? name : "New Company" : name}</h4>
                 {/* {formDescription ?
@@ -120,7 +129,7 @@ export default function Company() {
                         : null}
                     {company.id && !company.is_demo ?
                         <>
-                            <Button color="primary" className="me-2 btn-link" outline onClick={onUpdateCompany}>Update</Button>
+                            <Button color="primary" className="me-2" onClick={onUpdateCompany}>Update</Button>
                             <Button color="light" className="me-2 btn-link danger" outline onClick={onDeleteCompany}>Delete</Button>
                         </> : null}
                     {company.is_demo ?

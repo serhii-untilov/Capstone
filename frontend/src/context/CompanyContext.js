@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { UserContext } from './UserContext';
 import { getCompanies, getCompany } from '../services/companyService';
+import { AuthContext } from './AuthContext';
 
 const CompanyContext = createContext()
 
 const CompanyProvider = ({ children }) => {
-    const userContext = useContext(UserContext);
+    const authContext = useContext(AuthContext);
     const [company, setCompany] = useState()
 
     useEffect(() => {
@@ -18,15 +18,17 @@ const CompanyProvider = ({ children }) => {
             if (company) {
                 setCompany(company)
                 localStorage.setItem('company_id', company.id)
+            } else {
+                setCompany(null)
             }
         }
         const company_id = localStorage.getItem('company_id')
-        if (company_id) {
-            fetchData(userContext.user.id, company_id).catch(console.error)
+        if (authContext.isAuth) {
+            fetchData(company_id).catch(console.error)
         } else {
             setCompany(null)
         }
-    }, [userContext])
+    }, [authContext])
 
     return <CompanyContext.Provider value={{ company, setCompany }}>{children}</CompanyContext.Provider>
 }

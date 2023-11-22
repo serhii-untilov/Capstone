@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Collapse,
     Navbar,
@@ -22,15 +22,26 @@ import { logout } from "../services/authService"
 import { UserContext } from '../context/UserContext'
 import DropdownToggle from '../components/DropdownToggle'
 import { CompanyContext } from '../context/CompanyContext';
+import { getCompanies } from '../services/companyService';
 
 function AppSidenav(args) {
     const authContext = useContext(AuthContext)
     const userContext = useContext(UserContext)
     const companyContext = useContext(CompanyContext)
     const navigate = useNavigate()
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
+    const [companies, setCompanies] = useState([])
 
     const toggle = () => setIsOpen(!isOpen);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setCompanies(await getCompanies())
+        }
+        if (authContext.isAuth) {
+            fetchData().catch(console.error)
+        }
+    }, [authContext])
 
     const onLogout = async (e) => {
         e.preventDefault()
@@ -46,7 +57,14 @@ function AppSidenav(args) {
     }
 
     const onCreateCompany = () => {
-        navigate('/company/new', { replace: true })
+       navigate('/company/new', { replace: true })
+    }
+
+    const onSelectCompany = (element) => {
+        const companyId = element.target.dataset?.id
+        if (companyId) {
+            navigate(`/company/${companyId}`, { replace: true })
+        }
     }
 
     return (
@@ -85,13 +103,16 @@ function AppSidenav(args) {
                                     </DropdownToggle>
                                     <DropdownMenu className='position-absolute top-0 end-0 shadow'>
                                         <Label className='mx-3 text-secondary'>Select company</Label>
-                                        <DropdownItem>
-                                            Option 1
-                                        </DropdownItem>
-                                        <DropdownItem>
-                                            Option 2
-                                        </DropdownItem>
-                                        <DropdownItem divider />
+                                        {companies.map(company => {
+                                            return (
+                                                <>
+                                                <DropdownItem data-id={company.id} onClick={onSelectCompany}>
+                                                    {company.name}
+                                                </DropdownItem>
+                                                </>
+                                            )
+                                        })}
+                                        {companies.length ? <DropdownItem divider /> : null}
                                         <DropdownItem onClick={onCreateCompany}>Create new</DropdownItem>
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
