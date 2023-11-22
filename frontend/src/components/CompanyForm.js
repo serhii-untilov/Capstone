@@ -32,6 +32,7 @@ export function CompanyForm(props) {
         if (!validate()) return false
         postCompany({ name, tax_id: taxId, date_from: dateFrom })
             .catch(e => { setMessages([e.message || 'Error.']) })
+        redirect('/company')
     }
 
     const submitSelectCompany = async e => {
@@ -49,7 +50,7 @@ export function CompanyForm(props) {
         <>
             <span className="col-lg-4 col-sm-11 m-auto">
                 <Form className="shadow-sm border border-light-subtle m-3 p-3 rounded-4 bg-white" key={props.index}>
-                    <h4 className="text-center text-primary p-2">{formType === 'CREATE' ? "New Company" : name}</h4>
+                    <h4 className="text-center text-primary p-2">{formType === 'CREATE' ? name ? name : "New Company" : name}</h4>
                     <FormGroup>
                         <Label for="name">Company name</Label>
                         <Input id="name" name="name" type="text"

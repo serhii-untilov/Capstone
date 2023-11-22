@@ -33,6 +33,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class CompanySerializer(serializers.ModelSerializer):
+    tax_id = serializers.CharField(allow_blank=True)
     class Meta:
         model = Company
         fields = '__all__'

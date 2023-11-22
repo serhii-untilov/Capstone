@@ -63,16 +63,20 @@ a:link, a:visited, a:hover a:active {
   border-radius: 5px 5px 5px 5px;
 }
 
-.btn:hover {
+/* .btn:hover {
   color: var(--bs-body);
   background-color: rgba(194, 219, 255, 0.5);
-}
+} */
 
-/* label {
+label {
   color: var(--bs-secondary);
   color: var(--bs-gray-dark);
-} */
+}
 
 .btn-fixed-width {
   width: 100px;
 }
+
+/* .form-control {
+  color: var(--bs-primary);
+} */
