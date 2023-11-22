@@ -63,10 +63,11 @@ a:link, a:visited, a:hover a:active {
   border-radius: 5px 5px 5px 5px;
 }
 
-/* .btn:hover {
-  color: var(--bs-body);
-  background-color: rgba(194, 219, 255, 0.5);
-} */
+/* .btn:hover { */
+  /* color: var(--bs-body); */
+  /* background-color: rgba(194, 219, 255, 0.5); */
+  /* opacity: 75%; */
+/* } */
 
 label {
   color: var(--bs-secondary);
@@ -77,6 +78,23 @@ label {
   width: 100px;
 }
 
+.btn-link {
+  text-decoration: none;
+}
+
 /* .form-control {
   color: var(--bs-primary);
+} */
+
+.danger:hover {
+  color: white;
+  background-color: var(--bs-danger);
+}
+
+/* .dropdown-toggle {
+  color: var(--bs-body);
+  background-color: white;
+  border: none;
+  margin: 0;
+  padding: 0;
 } */

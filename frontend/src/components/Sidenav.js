@@ -4,11 +4,15 @@ import {
     Navbar,
     NavbarToggler,
     Nav,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown,
+    Label,
 } from 'reactstrap';
 import { NavLink, useNavigate } from "react-router-dom"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
-    People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear,
+    People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill,
     // Globe
 } from 'react-bootstrap-icons'
 
@@ -16,21 +20,33 @@ import { AuthContext } from '../context/AuthContext'
 import Delimiter from './Delimiter'
 import { logout } from "../services/authService"
 import { UserContext } from '../context/UserContext'
+import DropdownToggle from '../components/DropdownToggle'
+import { CompanyContext } from '../context/CompanyContext';
 
 function AppSidenav(args) {
     const authContext = useContext(AuthContext)
     const userContext = useContext(UserContext)
+    const companyContext = useContext(CompanyContext)
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
 
-    const handleLogout = async (e) => {
+    const onLogout = async (e) => {
         e.preventDefault()
         await logout()
         authContext.setIsAuth(false)
         navigate('/', { replace: true })
         return false
+    }
+
+    const onDummy = async (e) => {
+        e.preventDefault()
+        return false
+    }
+
+    const onCreateCompany = () => {
+        navigate('/company/new', { replace: true })
     }
 
     return (
@@ -57,9 +73,30 @@ function AppSidenav(args) {
 
                     {authContext?.isAuth && userContext?.user?.is_employer
                         ? <>
-                            <NavLink to="/company" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <Briefcase size={24} className="me-4" />Company</NavLink>
+                            {/* <NavLink to="/company" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                                <Briefcase size={24} className="me-4" />Company</NavLink> */}
 
+                            <NavLink to="/company" className="m-0 p-2" onClick={onDummy}>
+                                <Briefcase size={24} className="me-4" />
+
+                                <UncontrolledDropdown tag="nav-link">
+                                    <DropdownToggle tag="nav-link" caret>
+                                        {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
+                                    </DropdownToggle>
+                                    <DropdownMenu className='position-absolute top-0 end-0 shadow'>
+                                        <Label className='mx-3 text-secondary'>Select company</Label>
+                                        <DropdownItem>
+                                            Option 1
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            Option 2
+                                        </DropdownItem>
+                                        <DropdownItem divider />
+                                        <DropdownItem onClick={onCreateCompany}>Create new</DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+
+                            </NavLink>
                             <NavLink to="/profile" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Person size={24} className="me-4" />Profile</NavLink>
 
@@ -99,7 +136,7 @@ function AppSidenav(args) {
                             <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
 
-                            <NavLink to="/dummy" onClick={handleLogout} className="m-0 p-2">
+                            <NavLink to="/dummy" onClick={onLogout} className="m-0 p-2">
                                 <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
                         </>
                         : null

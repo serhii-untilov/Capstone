@@ -1,6 +1,4 @@
-import React, { useContext } from 'react'
 import { Routes, Route, Navigate } from "react-router-dom"
-
 import Company from "../pages/Company"
 import Dashboard from "../pages/Dashboard"
 import Employees from "../pages/Employees"
@@ -12,10 +10,8 @@ import PayrollSheet from "../pages/PayrollSheet"
 import PersonalCard from "../pages/PersonalCard"
 import Profile from "../pages/Profile"
 import Register from "../pages/Register"
-import RegisterCompany from "../pages/RegisterCompany"
 import Settings from "../pages/Settings"
 import Staff from "../pages/Staff"
-// import { AuthContext } from '../context/AuthContext'
 
 export default function Router() {
     return (
@@ -27,8 +23,7 @@ export default function Router() {
             <Route path="/register" element={<Register />} />
             <Route path="/language" element={<Language />} />
 
-            <Route path="/company" element={<Company />} />
-            <Route path="/register-company" element={<RegisterCompany />} />
+            <Route path="/company/:id" element={<Company />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/staff" element={<Staff />} />
