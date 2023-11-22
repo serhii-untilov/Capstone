@@ -9,9 +9,11 @@ class User(AbstractUser):
 
 class Company(models.Model):
     name = models.CharField(max_length=150)
-    owner = models.ForeignKey("User", on_delete=models.CASCADE, null=True)
+    tax_id = models.CharField(max_length=10, default="", null=True)
+    owner = models.ForeignKey("User", on_delete=models.CASCADE)
     date_from = models.DateField(default=date(1900, 1, 1))
     date_to = models.DateField(default=date(9999, 12, 31))
+    is_demo = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     deleted = models.DateField(default=date(9999, 12, 31))

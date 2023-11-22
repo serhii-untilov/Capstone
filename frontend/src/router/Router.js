@@ -15,34 +15,28 @@ import Register from "../pages/Register"
 import RegisterCompany from "../pages/RegisterCompany"
 import Settings from "../pages/Settings"
 import Staff from "../pages/Staff"
-import { AuthContext } from '../context/AuthContext'
+// import { AuthContext } from '../context/AuthContext'
 
 export default function Router() {
-    const authContext = useContext(AuthContext);
-
     return (
         <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/language" element={<Language />} />
 
-            {authContext.isAuth
-                ?   <>
-                        <Route path="/company" element={<Company />} />
-                        <Route path="/register-company" element={<RegisterCompany />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/staff" element={<Staff />} />
-                        <Route path="/employees" element={<Employees />} />
-                        <Route path="/payroll-sheet" element={<PayrollSheet />} />
-                        <Route path="/personal-card" element={<PersonalCard />} />
-                        <Route path="/payroll" element={<Payroll />} />
-                        <Route path="/settings" element={<Settings />} />
-                    </>
-                : null
-            }
+            <Route path="/company" element={<Company />} />
+            <Route path="/register-company" element={<RegisterCompany />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/staff" element={<Staff />} />
+            <Route path="/employees" element={<Employees />} />
+            <Route path="/payroll-sheet" element={<PayrollSheet />} />
+            <Route path="/personal-card" element={<PersonalCard />} />
+            <Route path="/payroll" element={<Payroll />} />
+            <Route path="/settings" element={<Settings />} />
 
             <Route path="*" element={<Navigate to="/" replace />}
             />

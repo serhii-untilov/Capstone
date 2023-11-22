@@ -6,7 +6,7 @@ const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
     const authContext = useContext(AuthContext);
-    const [user, setUser] = useState(false)
+    const [user, setUser] = useState()
 
     useEffect(() => {
         const fetchData = async () => {

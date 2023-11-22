@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import Button from "../components/Button"
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Home() {

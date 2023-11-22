@@ -35,6 +35,8 @@ export default function Login() {
         return navigate('/', { replace: true })
     }
 
+    authContext.setIsAuth(false)
+
     return (
         <>
             <PageHeader text="Login" className="col-lg-5 col-sm-11 m-auto text-center" />

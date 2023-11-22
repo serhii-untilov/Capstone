@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group
 from rest_framework import status
@@ -154,3 +153,7 @@ class CompanyView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
     serializer_class = CompanySerializer
     queryset = Company.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        request.data['owner'] = request.user.id
+        return super().create(request, *args, **kwargs)
