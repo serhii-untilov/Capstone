@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group
 from rest_framework import status
@@ -155,5 +156,16 @@ class CompanyView(viewsets.ModelViewSet):
     queryset = Company.objects.all()
 
     def create(self, request, *args, **kwargs):
+        today = datetime.now()
+        companiesCount = Company.objects \
+            .filter(owner_id=request.user.id) \
+            .filter(deleted__gt=today) \
+            .filter(date_from__lte=today) \
+            .filter(date_to__gte=today) \
+            .filter(is_demo=False) \
+            .count()
+        if (companiesCount >= 2):
+            # The user has 2 companies. For more, you can upgrade your plan to Premium.
+            return Response(status=status.HTTP_409_CONFLICT)
         request.data['owner'] = request.user.id
         return super().create(request, *args, **kwargs)

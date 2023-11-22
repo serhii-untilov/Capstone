@@ -23,6 +23,7 @@ import { UserContext } from '../context/UserContext'
 import DropdownToggle from '../components/DropdownToggle'
 import { CompanyContext } from '../context/CompanyContext';
 import { getCompanies } from '../services/companyService';
+import { dateToTime } from '../services/dateService';
 
 function AppSidenav(args) {
     const authContext = useContext(AuthContext)
@@ -41,7 +42,7 @@ function AppSidenav(args) {
         if (authContext.isAuth) {
             fetchData().catch(console.error)
         }
-    }, [authContext])
+    }, [authContext, companyContext])
 
     const onLogout = async (e) => {
         e.preventDefault()
@@ -67,6 +68,13 @@ function AppSidenav(args) {
         }
     }
 
+    const today = dateToTime(Date.now())
+    const actualCompanies = companies ? companies.filter(o =>
+        dateToTime(o.deleted) > today &&
+        dateToTime(o.date_from) <= today &&
+        dateToTime(o.date_to) >= today
+        ) : []
+    const nonActualCompanies = companies ? companies.filter(o => actualCompanies.findIndex(a => a.id === o.id) < 0) : []
     return (
         <Navbar {...args} className={"h-lg-100 navbar-expand-sm navbar-light bg-light flex-column shadow-sm bg-body-tertiary " + args.className}>
             <NavbarToggler onClick={toggle}></NavbarToggler>
@@ -102,18 +110,44 @@ function AppSidenav(args) {
                                         {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
                                     </DropdownToggle>
                                     <DropdownMenu className='position-absolute top-0 end-0 shadow'>
-                                        <Label className='mx-3 text-secondary'>Select company</Label>
-                                        {companies.map(company => {
+                                        <Label className='mx-3 text-secondary fs-6'>Select company</Label>
+                                        { actualCompanies.map(company => {
                                             return (
                                                 <>
-                                                <DropdownItem data-id={company.id} onClick={onSelectCompany}>
+                                                <DropdownItem
+                                                    data-id={company.id}
+                                                    onClick={onSelectCompany}
+                                                    className='ps-4'
+                                                >
                                                     {company.name}
                                                 </DropdownItem>
                                                 </>
                                             )
                                         })}
-                                        {companies.length ? <DropdownItem divider /> : null}
-                                        <DropdownItem onClick={onCreateCompany}>Create new</DropdownItem>
+
+                                        {actualCompanies.length ? <DropdownItem divider className='mx-3'/> : null}
+
+                                        <DropdownItem onClick={onCreateCompany} className='ps-4'>Create new</DropdownItem>
+
+                                        {nonActualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
+
+                                        {nonActualCompanies.length ? <Label className='mx-3 text-secondary fs-6'>Deleted and not actual</Label> : null}
+
+                                        { nonActualCompanies.map(company => {
+                                            return (
+                                                <>
+                                                <DropdownItem
+                                                    data-id={company.id}
+                                                    onClick={onSelectCompany}
+                                                    className='ps-4'
+                                                >
+                                                    {company.name}
+                                                </DropdownItem>
+                                                </>
+                                            )
+                                        })}
+
+
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
 
