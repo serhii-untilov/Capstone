@@ -42,6 +42,7 @@ export default function Company() {
             setFormData(company)
             if (id) {
                 companyContext.setCompany(company)
+                localStorage.setItem('company_id', id)
             }
             setValidated(false)
             setMessages([])
@@ -94,6 +95,8 @@ export default function Company() {
                 setCompanyList([...companyList, newCompany])
                 companyContext.setCompany(newCompany)
                 setFormData(newCompany)
+                localStorage.setItem('company_id', newCompany.id)
+                setValidated(false)
             })
             .catch(e => {
                 setMessages([e.message || 'Error.'])
@@ -107,6 +110,8 @@ export default function Company() {
                 setCompanyList([...companyList, deletedCompany])
                 companyContext.setCompany(null)
                 setFormData(deletedCompany)
+                localStorage.removeItem('company_id')
+                setValidated(false)
             })
             .catch(e => { setMessages([e.message || 'Error.']) })
     }
@@ -118,6 +123,8 @@ export default function Company() {
                 setCompanyList([...companyList, restoredCompany])
                 companyContext.setCompany(restoredCompany)
                 setFormData(restoredCompany)
+                localStorage.setItem('company_id', restoredCompany.id)
+                setValidated(false)
             })
             .catch(e => { setMessages([e.message || 'Error.']) })
     }
@@ -129,6 +136,7 @@ export default function Company() {
                 if (isCompanyActual(updatedCompany)) {
                     companyContext.setCompany(updatedCompany)
                 }
+                setValidated(false)
             })
             .catch(e => { setMessages([e.message || 'Error.']) })
     }
@@ -136,6 +144,7 @@ export default function Company() {
     const onSelectCompany = async e => {
         e.preventDefault()
         setMessages(["Demo company selected. Just try it for payroll."])
+        setValidated(false)
     }
 
     return (
@@ -192,6 +201,7 @@ export default function Company() {
                         <Label for="tax_id">Tax ID</Label>
                         <Input id="tax_id" name="tax_id" type="text"
                             value={formData?.tax_id}
+                            valid={validated}
                             onChange={e => setFormData({ ...formData, tax_id: e.target.value })}
                         />
                     </FormGroup>
@@ -222,8 +232,13 @@ export default function Company() {
                         <Label for="date_from">Activity begin</Label>
                         <Input id="date_from" name="date_from" type="date"
                             value={formData?.date_from}
+                            invalid={validated && !formData?.date_from}
+                            valid={validated && formData?.date_from}
                             onChange={e => setFormData({ ...formData, date_from: e.target.value })}
                         />
+                        <div class="invalid-feedback">
+                            Please provide date.
+                        </div>
                     </FormGroup>
                 </div>
 
