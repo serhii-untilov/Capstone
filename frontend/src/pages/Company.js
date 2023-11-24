@@ -28,24 +28,27 @@ export default function Company() {
             setCompanyList(await getCompanies())
         }
         fetchData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         const fetchData = async () => {
-            setFormData(id ? await getCompany(id) : {
+            const company = id ? await getCompany(id) : {
                 name: '',
                 law: lawList.length ? lawList[0] : '',
                 tax_id: '',
                 accounting: accountingList.length ? accountingList[0] : '',
                 date_from: formatDate(monthBegin(Date.now()))
-            })
+            }
+            setFormData(company)
+            if (id) {
+                companyContext.setCompany(company)
+            }
             setValidated(false)
             setMessages([])
         }
         fetchData()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
+
+    }, [id, accountingList, lawList])
 
     function isCompanyActual(company) {
         if (!company) return false
