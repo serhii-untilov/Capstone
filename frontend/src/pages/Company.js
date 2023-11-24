@@ -48,7 +48,8 @@ export default function Company() {
         }
         fetchData()
 
-    }, [id, accountingList, lawList])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id, accountingList, lawList ])
 
     function isCompanyActual(company) {
         if (!company) return false
