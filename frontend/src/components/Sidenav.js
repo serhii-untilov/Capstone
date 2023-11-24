@@ -23,7 +23,7 @@ import { logout } from "../services/authService"
 import { UserContext } from '../context/UserContext'
 import DropdownToggle from '../components/DropdownToggle'
 import { CompanyContext } from '../context/CompanyContext';
-import { getCompanies, getCompany } from '../services/companyService';
+import { getCompanies } from '../services/companyService';
 import { dateToTime } from '../services/dateService';
 
 function AppSidenav(args) {
@@ -59,7 +59,7 @@ function AppSidenav(args) {
     }
 
     const onCreateCompany = () => {
-        navigate('/company/new', { replace: true })
+        navigate('/company/', { replace: true })
     }
 
     const onSelectCompany = (element) => {

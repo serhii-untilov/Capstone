@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 
-class Laws(models.Model):
+class Law(models.Model):
     name = models.CharField(max_length=50)
 
 class Accounting(models.Model):
@@ -14,7 +14,7 @@ class Accounting(models.Model):
 
 class Company(models.Model):
     name = models.CharField(max_length=150)
-    laws = models.ForeignKey("Laws", on_delete=models.SET_NULL, null=True, default='')
+    law = models.ForeignKey("Law", on_delete=models.SET_NULL, null=True, default='')
     tax_id = models.CharField(max_length=10, default="", null=True)
     accounting = models.ForeignKey("Accounting", on_delete=models.SET_NULL, null=True, default='')
     owner = models.ForeignKey("User", on_delete=models.CASCADE)

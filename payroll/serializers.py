@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import Group
-from .models import User, Laws, Accounting, Company, Person, Employee
+from .models import User, Law, Accounting, Company, Person, Employee
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -32,9 +32,9 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LawsSerializer(serializers.ModelSerializer):
+class LawSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Laws
+        model = Law
         fields = '__all__'
 
 class AccountingSerializer(serializers.ModelSerializer):

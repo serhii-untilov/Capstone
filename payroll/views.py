@@ -11,8 +11,8 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
 
-from .models import User, Laws, Accounting, Company, Person, Employee
-from .serializers import UserSerializer, GroupSerializer, LawsSerializer, AccountingSerializer, CompanySerializer, PersonSerializer, EmployeeSerializer
+from .models import User, Law, Accounting, Company, Person, Employee
+from .serializers import UserSerializer, GroupSerializer, LawSerializer, AccountingSerializer, CompanySerializer, PersonSerializer, EmployeeSerializer
 
 
 class ReadOnly(BasePermission):
@@ -155,10 +155,10 @@ class GroupView(viewsets.ModelViewSet):
     queryset = Group.objects.all()
 
 
-class LawsView(viewsets.ModelViewSet):
+class LawView(viewsets.ModelViewSet):
     # permission_classes = (ReadOnly)
-    serializer_class = LawsSerializer
-    queryset = Laws.objects.all()
+    serializer_class = LawSerializer
+    queryset = Law.objects.all()
 
 
 class AccountingView(viewsets.ModelViewSet):

@@ -1,12 +1,5 @@
 import { request } from "../api"
 
-export const newCompany = {
-    id: null,
-    name: '',
-    tax_id: '',
-    owner: null
-}
-
 export async function getCompanies() {
     return await request('companies/', 'get')
 }

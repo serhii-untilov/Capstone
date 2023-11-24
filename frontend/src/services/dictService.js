@@ -4,7 +4,7 @@ export async function getGroups() {
     return await request('groups/', 'get')
 }
 
-export async function getLawsList() {
+export async function getLawList() {
     return await request('laws/', 'get')
 }
 

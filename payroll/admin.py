@@ -5,7 +5,7 @@ from .models import User, Company, Person, Employee
 
 class CompanyAdmin(admin.ModelAdmin):
     # add the fields of the model here
-    list_display = ("name", "laws", "tax_id", "accounting",
+    list_display = ("name", "law", "tax_id", "accounting",
                     "owner", "date_from", "date_to", "is_demo")
 
 
