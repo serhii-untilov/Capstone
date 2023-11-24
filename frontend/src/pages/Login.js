@@ -39,9 +39,10 @@ export default function Login() {
 
     return (
         <>
+            <div className="col-12 h-100 bg-light pt-4">
+            <Form className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
             <PageHeader text="Login" className="col-lg-5 col-sm-11 m-auto text-center" />
-            <p className="col-lg-4 col-sm-11 m-auto text-center pb-3">Please fill in this form to login registered user</p>
-            <Form className="col-lg-4 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-auto bg-white">
+            <p className="col-lg-12 col-sm-11 m-auto text-center pb-3">Please fill in this form to login registered user</p>
                 <FormGroup>
                     <Label for="email">Email</Label>
                     <Input id="email" name="email" type="email" autoFocus
@@ -64,6 +65,7 @@ export default function Login() {
                 </div>
             </Form>
             <Toast title="Login failed" messages={messages} close={() => { setMessages([]) }} />
+            </div>
         </>
     )
 }

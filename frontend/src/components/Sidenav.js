@@ -53,6 +53,12 @@ function AppSidenav(args) {
         return false
     }
 
+    const onHome = async (e) => {
+        e.preventDefault()
+        navigate('/', { replace: true })
+        return false
+    }
+
     const onDummy = async (e) => {
         e.preventDefault()
         return false
@@ -78,14 +84,14 @@ function AppSidenav(args) {
     const nonActualCompanies = companies ? companies.filter(o => actualCompanies.findIndex(a => a.id === o.id) < 0) : []
 
     return (
-        <Navbar {...args} className={"h-lg-100 navbar-expand-sm navbar-light bg-light flex-column shadow-sm bg-body-tertiary " + args.className}>
+        <Navbar {...args} className={"h-lg-100 navbar-expand-sm navbar-light bg-light flex-column m-0 p-0 " + args.className}>
             <NavbarToggler onClick={toggle}></NavbarToggler>
             <Collapse isOpen={isOpen} navbar>
                 <Nav pills vertical className='col-12 nav nav-pills'>
-                    <NavLink to="/" className="brand-text text-body my-2">
+                    <NavLinkStrap onClick={onHome} className="brand-text text-body mx-0 px-0 mt-2 mb-0" style={{ cursor: "pointer" }}>
                         <h1 className='p-2 my-auto fs-5'>
                             <img className="opacity-50" height="48" src={process.env.PUBLIC_URL + '/payroll.png'} alt="" /> Payroll SMB</h1>
-                    </NavLink>
+                    </NavLinkStrap>
 
                     {!authContext?.isAuth
                         ? <NavLink to="/register" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
@@ -129,7 +135,7 @@ function AppSidenav(args) {
 
                                         {actualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
-                                        <DropdownItem onClick={onCreateCompany} className='ps-4'>Create new</DropdownItem>
+                                        <DropdownItem onClick={onCreateCompany} className='ps-4'>Create new company</DropdownItem>
 
                                         {nonActualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
@@ -154,10 +160,9 @@ function AppSidenav(args) {
                                 </UncontrolledDropdown>
 
                             </NavLink>
-                            <NavLink to="/profile" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <Person size={24} className="me-4" />Profile</NavLink>
 
-                            <Delimiter />
+
+                            {/* <Delimiter /> */}
 
                             <NavLink to="/dashboard" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Activity size={24} className="me-4" />Dashboard</NavLink>
@@ -193,7 +198,10 @@ function AppSidenav(args) {
                             <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
 
-                            <NavLinkStrap to="#" className="m-0 p-2 text-body" style={{cursor: "pointer"}}>
+                            <NavLink to="/profile" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                                <Person size={24} className="me-4" />Profile</NavLink>
+
+                            <NavLinkStrap to="#" className="m-0 p-2 text-body" style={{ cursor: "pointer" }}>
                                 <BoxArrowLeft size={24} className="me-4" />
                                 <UncontrolledDropdown tag="nav-link">
                                     <DropdownToggle tag="nav-link" caret>Logout

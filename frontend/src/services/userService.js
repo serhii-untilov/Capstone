@@ -42,3 +42,7 @@ export async function currentUser() {
         return anonymousUser
     }
 }
+
+export async function updateUser(user) {
+    return await request(`users/${user.id}/`, 'patch', user)
+}

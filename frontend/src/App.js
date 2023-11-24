@@ -13,10 +13,11 @@ function App() {
 			<UserProvider>
 				<CompanyProvider>
 					<BrowserRouter>
-						<main className="container-fluid h-100 bg-body-secondary">
-							<div className="row h-100 w-100">
-								<Sidenav className="col-sm-4 col-lg-2" />
-								<div className="col-sm-8 col-lg-10 h-100">
+						<main className="mx-auto h-100 w-100 row bg-light">
+							<div className="col-xl-10 col-lg-12 row h-100 mx-auto">
+								<Sidenav className="col-xl-2 col-lg-3 col-md-4 col-sm-4  bg-light" />
+								{/* <div className="col-sm-8 col-lg-10 h-100 mx-0 ps-0 bg-body-secondary"> */}
+								<div className="col-xl-10 col-lg-9 col-md-8 col-sm-8 col-lg-10 h-100 m-0 p-0 bg-light">
 									<Router />
 								</div>
 							</div>

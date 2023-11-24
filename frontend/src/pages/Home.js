@@ -14,7 +14,7 @@ export default function Home() {
 
 
 
-            <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
+            <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-3 bg-white position-relative">
                     <h4 className="text-center text-primary p-2">What we offer</h4>
                     <img height="164" src={process.env.PUBLIC_URL + '/fat-asterisk.png'} alt=""
                         className="opacity-50 position-absolute top-0 end-0" />
@@ -27,7 +27,7 @@ export default function Home() {
                     </ul>
                 </div>
 
-                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
+                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-3 bg-white position-relative">
                     <h4 className="text-center text-primary p-2">The purpose</h4>
                     <img height="164" src={process.env.PUBLIC_URL + '/point.png'} alt=""
                         className="opacity-25 position-absolute top-0 end-0" />
@@ -37,7 +37,7 @@ export default function Home() {
                     <p>According to the user's role, the program provides access to information about the input data and results of payroll, as well as the functions of calculating and paying wages to employees.</p>
                 </div>
 
-                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
+                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-3 bg-white position-relative">
                     <h4 className="text-center text-primary p-2">Employers</h4>
                     <img height="164" src={process.env.PUBLIC_URL + '/upto.png'} alt=""
                         className="opacity-25 position-absolute bottom-0 end-0" />
@@ -47,7 +47,7 @@ export default function Home() {
                     <p>Wages are paid by transferring the lists of employees and the amount "To be paid" to bank institutions, according to the information about the payment in the employees' cards.</p>
                 </div>
 
-                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-4 m-3 bg-white position-relative">
+                <div className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-3 bg-white position-relative">
                     <h4 className="text-center text-primary p-2">Employees</h4>
                     <img height="164" src={process.env.PUBLIC_URL + '/payroll.png'} alt=""
                         className="opacity-25 position-absolute bottom-0 end-0" />
