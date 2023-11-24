@@ -45,6 +45,7 @@ export default function Login() {
                 <FormGroup>
                     <Label for="email">Email</Label>
                     <Input id="email" name="email" type="email" autoFocus
+                        // className="fw-bolder"
                         value={email}
                         required
                         onChange={e => setEmail(e.target.value)}

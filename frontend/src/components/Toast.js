@@ -4,7 +4,7 @@ export default function _Toast({ ...props }) {
     return (
             <div className=" p-3 m-3 position-absolute top-0 end-0">
                 <Toast className="row p-1 m-1 rounded" isOpen={!!props.messages.length}>
-                    <ToastHeader icon={props.icon || "warning"} toggle={props.close}>
+                    <ToastHeader icon={props.icon || "danger"} toggle={props.close}>
                         {props.title || "Warning"}
                     </ToastHeader>
                     <ToastBody>

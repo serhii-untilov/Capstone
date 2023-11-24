@@ -8,11 +8,16 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authentication import TokenAuthentication, BaseAuthentication
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
 
-from .models import User, Company
-from .serializers import UserSerializer, CompanySerializer, GroupSerializer
+from .models import User, Laws, Accounting, Company, Person, Employee
+from .serializers import UserSerializer, GroupSerializer, LawsSerializer, AccountingSerializer, CompanySerializer, PersonSerializer, EmployeeSerializer
+
+
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
 
 
 @api_view(['POST', 'OPTIONS'])
@@ -138,16 +143,28 @@ def updateProfile(request, id):
 
 
 class UserView(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated, )
+    # permission_classes = (IsAuthenticated | ReadOnly)
     # authentication_classes = (TokenAuthentication, )
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
 class GroupView(viewsets.ModelViewSet):
-    # permission_classes = (AllowAny, )
+    # permission_classes = (ReadOnly)
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
+
+
+class LawsView(viewsets.ModelViewSet):
+    # permission_classes = (ReadOnly)
+    serializer_class = LawsSerializer
+    queryset = Laws.objects.all()
+
+
+class AccountingView(viewsets.ModelViewSet):
+    # permission_classes = (ReadOnly)
+    serializer_class = AccountingSerializer
+    queryset = Accounting.objects.all()
 
 
 class CompanyView(viewsets.ModelViewSet):
@@ -169,3 +186,15 @@ class CompanyView(viewsets.ModelViewSet):
             return Response(status=status.HTTP_409_CONFLICT)
         request.data['owner'] = request.user.id
         return super().create(request, *args, **kwargs)
+
+
+class PersonView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = PersonSerializer
+    queryset = Person.objects.all()
+
+
+class EmployeeView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = EmployeeSerializer
+    queryset = Employee.objects.all()

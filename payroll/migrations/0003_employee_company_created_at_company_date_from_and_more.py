@@ -56,17 +56,4 @@ class Migration(migrations.Migration):
             name='updated_at',
             field=models.DateTimeField(auto_now=True),
         ),
-        migrations.CreateModel(
-            name='PersonalCard',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_from', models.DateField(auto_now_add=True)),
-                ('date_to', models.DateField(default=datetime.date(9999, 12, 31))),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='payroll.company')),
-                ('employee', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='payroll.employee')),
-                ('user', models.ForeignKey(default='', null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
     ]

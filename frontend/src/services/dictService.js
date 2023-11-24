@@ -1,6 +1,13 @@
 import { request } from "../api"
 
 export async function getGroups() {
-    const groups = await request('groups/', 'get')
-    return groups
+    return await request('groups/', 'get')
+}
+
+export async function getLawsList() {
+    return await request('laws/', 'get')
+}
+
+export async function getAccountingList() {
+    return await request('accounting/', 'get')
 }

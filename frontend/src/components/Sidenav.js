@@ -10,6 +10,7 @@ import {
     Label,
 } from 'reactstrap';
 import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink as NavLinkStrap } from "reactstrap"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
     People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill,
@@ -22,7 +23,7 @@ import { logout } from "../services/authService"
 import { UserContext } from '../context/UserContext'
 import DropdownToggle from '../components/DropdownToggle'
 import { CompanyContext } from '../context/CompanyContext';
-import { getCompanies } from '../services/companyService';
+import { getCompanies, getCompany } from '../services/companyService';
 import { dateToTime } from '../services/dateService';
 
 function AppSidenav(args) {
@@ -58,13 +59,13 @@ function AppSidenav(args) {
     }
 
     const onCreateCompany = () => {
-       navigate('/company/new', { replace: true })
+        navigate('/company/new', { replace: true })
     }
 
     const onSelectCompany = (element) => {
-        const companyId = element.target.dataset?.id
-        if (companyId) {
-            navigate(`/company/${companyId}`, { replace: true })
+        const id = element.target.dataset?.id
+        if (id) {
+            navigate(`/company/${id}`, { replace: true })
         }
     }
 
@@ -73,7 +74,7 @@ function AppSidenav(args) {
         dateToTime(o.deleted) > today &&
         dateToTime(o.date_from) <= today &&
         dateToTime(o.date_to) >= today
-        ) : []
+    ) : []
     const nonActualCompanies = companies ? companies.filter(o => actualCompanies.findIndex(a => a.id === o.id) < 0) : []
 
     return (
@@ -110,40 +111,40 @@ function AppSidenav(args) {
                                     <DropdownToggle tag="nav-link" caret>
                                         {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
                                     </DropdownToggle>
-                                    <DropdownMenu className='position-absolute top-0 end-0 shadow'>
-                                        <Label className='mx-3 text-secondary fs-6'>Select company</Label>
-                                        { actualCompanies.map(company => {
+                                    <DropdownMenu className='position-absolute top-0 end-0 shadow-sm'>
+                                        <Label className='mx-3 text-secondary'>Select company</Label>
+                                        {actualCompanies.map(company => {
                                             return (
                                                 <>
-                                                <DropdownItem
-                                                    data-id={company.id}
-                                                    onClick={onSelectCompany}
-                                                    className='ps-4'
-                                                >
-                                                    {company.name}
-                                                </DropdownItem>
+                                                    <DropdownItem
+                                                        data-id={company.id}
+                                                        onClick={onSelectCompany}
+                                                        className='ps-4'
+                                                    >
+                                                        {company?.name}
+                                                    </DropdownItem>
                                                 </>
                                             )
                                         })}
 
-                                        {actualCompanies.length ? <DropdownItem divider className='mx-3'/> : null}
+                                        {actualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
                                         <DropdownItem onClick={onCreateCompany} className='ps-4'>Create new</DropdownItem>
 
                                         {nonActualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
-                                        {nonActualCompanies.length ? <Label className='mx-3 text-secondary fs-6'>Deleted and not actual</Label> : null}
+                                        {nonActualCompanies.length ? <Label className='mx-3 text-secondary'>Deleted and not actual</Label> : null}
 
-                                        { nonActualCompanies.map(company => {
+                                        {nonActualCompanies.map(company => {
                                             return (
                                                 <>
-                                                <DropdownItem
-                                                    data-id={company.id}
-                                                    onClick={onSelectCompany}
-                                                    className='ps-4'
-                                                >
-                                                    {company.name}
-                                                </DropdownItem>
+                                                    <DropdownItem
+                                                        data-id={company.id}
+                                                        onClick={onSelectCompany}
+                                                        className='ps-4'
+                                                    >
+                                                        {company?.name}
+                                                    </DropdownItem>
                                                 </>
                                             )
                                         })}
@@ -192,8 +193,22 @@ function AppSidenav(args) {
                             <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
 
-                            <NavLink to="/dummy" onClick={onLogout} className="m-0 p-2">
-                                <BoxArrowLeft size={24} className="me-4" />Logout</NavLink>
+                            <NavLinkStrap to="#" className="m-0 p-2 text-body" style={{cursor: "pointer"}}>
+                                <BoxArrowLeft size={24} className="me-4" />
+                                <UncontrolledDropdown tag="nav-link">
+                                    <DropdownToggle tag="nav-link" caret>Logout
+                                    </DropdownToggle>
+                                    <DropdownMenu className='position-absolute shadow-sm'>
+                                        <Label className='mx-3 text-secondary'>Are you sure?</Label>
+                                        <DropdownItem
+                                            onClick={onLogout}
+                                            className='ps-4'
+                                        >
+                                            Logout
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            </NavLinkStrap>
                         </>
                         : null
                     }

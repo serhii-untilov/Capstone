@@ -95,9 +95,6 @@ class Migration(migrations.Migration):
             name='date_from',
             field=models.DateField(auto_now_add=True),
         ),
-        migrations.DeleteModel(
-            name='PersonalCard',
-        ),
         migrations.AddField(
             model_name='employee',
             name='person',

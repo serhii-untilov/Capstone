@@ -70,8 +70,10 @@ a:link, a:visited, a:hover a:active {
 /* } */
 
 label {
-  color: var(--bs-secondary);
-  color: var(--bs-gray-dark);
+  /* color: var(--bs-gray-dark); */
+  /* color: var(--bs-secondary); */
+  color: var(--bs-gray-600);
+  /* font-size: smaller; */
 }
 
 .btn-fixed-width {

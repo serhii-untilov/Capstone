@@ -23,7 +23,7 @@ export default function Router() {
             <Route path="/register" element={<Register />} />
             <Route path="/language" element={<Language />} />
 
-            <Route path="/company/:companyId" element={<Company />} />
+            <Route path="/company/:id" element={<Company />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/staff" element={<Staff />} />

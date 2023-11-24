@@ -6,10 +6,17 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 
+class Laws(models.Model):
+    name = models.CharField(max_length=50)
+
+class Accounting(models.Model):
+    name = models.CharField(max_length=50)
 
 class Company(models.Model):
     name = models.CharField(max_length=150)
+    laws = models.ForeignKey("Laws", on_delete=models.SET_NULL, null=True, default='')
     tax_id = models.CharField(max_length=10, default="", null=True)
+    accounting = models.ForeignKey("Accounting", on_delete=models.SET_NULL, null=True, default='')
     owner = models.ForeignKey("User", on_delete=models.CASCADE)
     date_from = models.DateField(default=date(1900, 1, 1))
     date_to = models.DateField(default=date(9999, 12, 31))
