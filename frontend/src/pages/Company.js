@@ -6,7 +6,7 @@ import { dateToTime, formatDate, monthBegin } from "../services/dateService";
 import { getCompanies, getCompany, postCompany, updateCompany } from "../services/companyService";
 import Button from "../components/Button";
 import PageHeader from "../components/PageHeader";
-import Toast from "../components/Toast"
+import { Toast } from "../components/Toast"
 import { UserContext } from "../context/UserContext";
 import { getAccountingList, getLawList } from "../services/dictService";
 
@@ -190,9 +190,9 @@ export default function Company() {
                                 onChange={e => setFormData({ ...formData, law: e.target.value })}
                             >
                                 <option value="" key="0" disabled hidden></option>
-                                {lawList.map(law => {
+                                {lawList ? lawList.map(law => {
                                     return <option key={law.id} value={law.id}>{law.name}</option>
-                                })}
+                                }) : null}
                             </Input>
                             <div class="invalid-feedback">
                                 Please define laws.
@@ -222,9 +222,9 @@ export default function Company() {
                                 onChange={e => setFormData({ ...formData, accounting: e.target.value })}
                             >
                                 <option value="" key="0" disabled hidden></option>
-                                {accountingList.map(accounting => {
+                                {accountingList ? accountingList.map(accounting => {
                                     return <option key={accounting.id} value={accounting.id}>{accounting.name}</option>
-                                })}
+                                }) : null}
                             </Input>
                             <div class="invalid-feedback">
                                 Please define an accounting type.

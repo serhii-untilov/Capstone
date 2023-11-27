@@ -114,15 +114,16 @@ function AppSidenav(args) {
                                 <Briefcase size={24} className="me-4" />
 
                                 <UncontrolledDropdown tag="nav-link">
-                                    <DropdownToggle tag="nav-link" caret>
+                                    <DropdownToggle tag="nav-link" caret key={1}>
                                         {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
                                     </DropdownToggle>
                                     <DropdownMenu className='position-absolute top-0 end-0 shadow-sm'>
                                         <Label className='mx-3 text-secondary'>Select company</Label>
-                                        {actualCompanies.map(company => {
+                                        {actualCompanies.map((company, key) => {
                                             return (
                                                 <>
                                                     <DropdownItem
+                                                        key={1 + key}
                                                         data-id={company.id}
                                                         onClick={onSelectCompany}
                                                         className='ps-4'
@@ -135,16 +136,17 @@ function AppSidenav(args) {
 
                                         {actualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
-                                        <DropdownItem onClick={onCreateCompany} className='ps-4'>Create new company</DropdownItem>
+                                        <DropdownItem key={100} onClick={onCreateCompany} className='ps-4'>Create new company</DropdownItem>
 
                                         {nonActualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
                                         {nonActualCompanies.length ? <Label className='mx-3 text-secondary'>Deleted and not actual</Label> : null}
 
-                                        {nonActualCompanies.map(company => {
+                                        {nonActualCompanies.map((company, key) => {
                                             return (
                                                 <>
                                                     <DropdownItem
+                                                        key={101 + key}
                                                         data-id={company.id}
                                                         onClick={onSelectCompany}
                                                         className='ps-4'
@@ -204,13 +206,13 @@ function AppSidenav(args) {
                             <NavLinkStrap to="#" className="m-0 p-2 text-body" style={{ cursor: "pointer" }}>
                                 <BoxArrowLeft size={24} className="me-4" />
                                 <UncontrolledDropdown tag="nav-link">
-                                    <DropdownToggle tag="nav-link" caret>Logout
-                                    </DropdownToggle>
+                                    <DropdownToggle tag="nav-link" caret>Logout</DropdownToggle>
                                     <DropdownMenu className='position-absolute shadow-sm'>
                                         <Label className='mx-3 text-secondary'>Are you sure?</Label>
                                         <DropdownItem
+                                            key={1}
                                             onClick={onLogout}
-                                            className='ps-4'
+                                            className='ps-4 w-100'
                                         >
                                             Logout
                                         </DropdownItem>

@@ -1,14 +1,14 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useState } from 'react'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-    const [isAuth, setIsAuth] = useState(false)
+    const [isAuth, setIsAuth] = useState(localStorage.getItem('access_token'))
 
-    useEffect(() => {
-        const token = localStorage.getItem('access_token')
-        setIsAuth(!!token)
-    }, [])
+    // useEffect(() => {
+    //     const token = localStorage.getItem('access_token')
+    //     setIsAuth(!!token)
+    // }, [])
 
     return <AuthContext.Provider value={{ isAuth, setIsAuth }}>{children}</AuthContext.Provider>
 }

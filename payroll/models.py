@@ -31,12 +31,12 @@ class Company(models.Model):
 
 class Person(models.Model):
     first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    middle_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30, null=True, default="")
+    middle_name = models.CharField(max_length=30, null=True, default="")
     date_from = models.DateField(default=date(1900, 1, 1))
     date_to = models.DateField(default=date(9999, 12, 31))
-    tax_id = models.CharField(max_length=10)
-    email = models.EmailField(default="")
+    tax_id = models.CharField(max_length=10, null=True, default="")
+    email = models.EmailField(null=True, default="")
     user = models.ForeignKey(
         "User", on_delete=models.SET_NULL, null=True, default="")
     created = models.DateTimeField(auto_now_add=True)

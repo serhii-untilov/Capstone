@@ -4,7 +4,7 @@ import { useContext, useState } from "react"
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
-import Toast from "../components/Toast"
+import { Toast } from "../components/Toast"
 import { login } from "../services/authService"
 import { AuthContext } from "../context/AuthContext"
 
@@ -40,31 +40,31 @@ export default function Login() {
     return (
         <>
             <div className="col-12 h-100 bg-light pt-4">
-            <Form className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
-            <PageHeader text="Login" className="col-lg-5 col-sm-11 m-auto text-center" />
-            <p className="col-lg-12 col-sm-11 m-auto text-center pb-3">Please fill in this form to login registered user</p>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input id="email" name="email" type="email" autoFocus
-                        // className="fw-bolder"
-                        value={email}
-                        required
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input id="password" name="password" type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </FormGroup>
+                <Form className="col-lg-4 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
+                    <PageHeader text="Login" className="col-lg-4 col-sm-11 m-auto text-center" />
+                    <p className="col-lg-12 col-sm-11 m-auto text-center p-3">Please fill in this form to login registered user</p>
+                    <FormGroup>
+                        <Label for="email">Email</Label>
+                        <Input id="email" name="email" type="email" autoFocus
+                            // className="fw-bolder"
+                            value={email}
+                            required
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password">Password</Label>
+                        <Input id="password" name="password" type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                    </FormGroup>
 
-                <div className="d-flex justify-content-center">
-                    <Button color="primary" onClick={submit}>Login</Button>
-                </div>
-            </Form>
-            <Toast title="Login failed" messages={messages} close={() => { setMessages([]) }} />
+                    <div className="d-flex justify-content-center">
+                        <Button color="primary" onClick={submit}>Login</Button>
+                    </div>
+                </Form>
+                <Toast title="Login failed" messages={messages} close={() => { setMessages([]) }} />
             </div>
         </>
     )

@@ -4,7 +4,7 @@ import { Form } from "reactstrap";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { getGroups } from "../services/dictService";
 import { updateUser } from "../services/userService";
-import Toast from "../components/Toast"
+import { Toast } from "../components/Toast"
 
 export default function Profile() {
     const [formData, setFormData] = useState({})

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import Button from "../components/Button"
 import PageHeader from "../components/PageHeader"
-import Toast from "../components/Toast"
+import { Toast } from "../components/Toast"
 import { register } from "../services/authService";
 import { getGroups } from "../services/dictService";
 import { AuthContext } from "../context/AuthContext";
@@ -21,8 +21,9 @@ export default function Register() {
 
     useEffect(() => {
         const fetchGroups = async () => {
-            const groups = await getGroups()
-            setGroups(groups)
+            localStorage.removeItem('refresh_token')
+            localStorage.removeItem('access_token')
+            setGroups(await getGroups())
         }
         fetchGroups().catch(console.error)
     }, [])
@@ -55,51 +56,56 @@ export default function Register() {
 
     return (
         <>
-            <PageHeader text="Register" className="col-lg-5 col-sm-11 m-auto text-center" />
-            <p className="col-lg-5 col-sm-11 m-auto text-center pb-3">Please fill in this form to create a user account</p>
-            <Form className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input id="email" name="email" type="email" autoFocus
-                        // className="fw-bolder"
-                        value={email}
-                        required
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="password">Password</Label>
-                    <Input id="password" name="password" type="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="repeat-password">Repeat password</Label>
-                    <Input id="repeat-password" name="repeat-password" type="password"
-                        value={repeatPassword}
-                        onChange={e => setRepeatPassword(e.target.value)}
-                    />
-                </FormGroup>
+            <div className="col-12 h-100 bg-light pt-4">
+                <Form className="col-lg-4 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
+                    <PageHeader text="Register" className="col-lg-4 col-sm-11 m-auto text-center" />
+                    <p className="col-lg-12 col-sm-11 m-auto text-center p-3">Please fill in this form to create a user account</p>
+                    <FormGroup>
+                        <Label for="email">Email</Label>
+                        <Input id="email" name="email" type="email" autoFocus
+                            // className="fw-bolder"
+                            value={email}
+                            required
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password">Password</Label>
+                        <Input id="password" name="password" type="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="repeat-password">Repeat password</Label>
+                        <Input id="repeat-password" name="repeat-password" type="password"
+                            value={repeatPassword}
+                            onChange={e => setRepeatPassword(e.target.value)}
+                        />
+                    </FormGroup>
 
-                <FormGroup className="mb-3">
-                    <Label for="group">User role</Label>
-                    <select id="group" name="group" className="form-select"
-                        defaultValue=""
-                        onChange={e => setUserGroup(e.target.value)}
-                    >
-                        <option value="" key="0" disabled hidden></option>
-                        {groups.map(group => {
-                            return <option key={group.id} value={group.id}>{group.name}</option>
-                        })}
-                    </select>
-                </FormGroup>
+                    <FormGroup className="mb-3">
+                        <Label for="group">User role</Label>
+                        <select id="group" name="group" className="form-select"
+                            defaultValue=""
+                            onChange={e => setUserGroup(e.target.value)}
+                        >
+                            <option value="" key="0" disabled hidden></option>
+                            {groups
+                                ? groups.map(group => {
+                                    return <option key={group.id} value={group.id}>{group.name}</option>
+                                })
+                                : null
+                            }
+                        </select>
+                    </FormGroup>
 
-                <div className="d-flex justify-content-center">
-                    <Button color="primary" onClick={submit}>Register</Button>
-                </div>
-            </Form>
-            <Toast title="Registration failed" messages={messages} close={() => { setMessages([]) }} />
+                    <div className="d-flex justify-content-center">
+                        <Button color="primary" onClick={submit}>Register</Button>
+                    </div>
+                </Form>
+                <Toast title="Registration failed" messages={messages} close={() => { setMessages([]) }} />
+            </div>
         </>
     )
 }

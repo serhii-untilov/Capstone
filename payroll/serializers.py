@@ -37,23 +37,37 @@ class LawSerializer(serializers.ModelSerializer):
         model = Law
         fields = '__all__'
 
+
 class AccountingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Accounting
         fields = '__all__'
 
+
 class CompanySerializer(serializers.ModelSerializer):
     tax_id = serializers.CharField(allow_blank=True)
+
     class Meta:
         model = Company
         fields = '__all__'
 
+
 class PersonSerializer(serializers.ModelSerializer):
+    tax_id = serializers.CharField(allow_blank=True)
+    last_name = serializers.CharField(allow_blank=True)
+    middle_name = serializers.CharField(allow_blank=True)
+    email = serializers.CharField(allow_blank=True)
     class Meta:
         model = Person
         fields = '__all__'
 
+
 class EmployeeSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField('get_name')
+
+    def get_name(self, obj):
+        return obj.person.first_name + ' ' + obj.person.last_name
+
     class Meta:
         model = Employee
         fields = '__all__'

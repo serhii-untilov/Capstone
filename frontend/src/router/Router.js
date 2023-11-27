@@ -12,8 +12,11 @@ import Profile from "../pages/Profile"
 import Register from "../pages/Register"
 import Settings from "../pages/Settings"
 import Staff from "../pages/Staff"
+import { RequireAuth } from "./RequireAuth"
+import { Employee } from "../pages/Employee"
 
 export default function Router() {
+
     return (
         <Routes>
             <Route index element={<Home />} />
@@ -23,19 +26,19 @@ export default function Router() {
             <Route path="/register" element={<Register />} />
             <Route path="/language" element={<Language />} />
 
-            <Route path="/company/" element={<Company />} />
-            <Route path="/company/:id" element={<Company />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/staff" element={<Staff />} />
-            <Route path="/employees" element={<Employees />} />
-            <Route path="/payroll-sheet" element={<PayrollSheet />} />
-            <Route path="/personal-card" element={<PersonalCard />} />
-            <Route path="/payroll" element={<Payroll />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/company/" element={<RequireAuth children={<Company />} />} />
+            <Route path="/company/:id" element={<RequireAuth children={<Company />} />} />
+            <Route path="/profile" element={<RequireAuth children={<Profile />} />} />
+            <Route path="/dashboard" element={<RequireAuth children={<Dashboard />} />} />
+            <Route path="/staff" element={<RequireAuth children={<Staff />} />} />
+            <Route path="/employees" element={<RequireAuth children={<Employees />} />} />
+            <Route path="/employee" element={<RequireAuth children={<Employee />} />} />
+            <Route path="/payroll-sheet" element={<RequireAuth children={<PayrollSheet />} />} />
+            <Route path="/personal-card" element={<RequireAuth children={<PersonalCard />} />} />
+            <Route path="/payroll" element={<RequireAuth children={<Payroll />} />} />
+            <Route path="/settings" element={<RequireAuth children={<Settings />} />} />
 
-            <Route path="*" element={<Navigate to="/" replace />}
-            />
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     )
 }

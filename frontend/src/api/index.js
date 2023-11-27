@@ -35,6 +35,8 @@ instance.interceptors.response.use(
                 return response
             } catch (error) {
                 // Handle refresh token error or redirect to login
+                localStorage.removeItem('access_token')
+                delete originalRequest.headers.Authorization
                 return redirect('/login')
             }
         }
