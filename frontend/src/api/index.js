@@ -30,7 +30,7 @@ instance.interceptors.response.use(
                 const token = await request('login/refresh/', 'post', { refresh });
                 localStorage.setItem('access_token', token.access);
                 // Retry the original request with the new token
-                originalRequest.headers.Authorization = `${AUTH_HEADER_TYPE} ${token.data.access}`;
+                originalRequest.headers.Authorization = `${AUTH_HEADER_TYPE} ${token.access}`;
                 const response = await axios(originalRequest)
                 return response
             } catch (error) {

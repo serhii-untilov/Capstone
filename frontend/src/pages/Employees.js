@@ -5,6 +5,7 @@ import Pagination from "../components/Pagination"
 import { useEffect, useState } from "react";
 import { getEmployees } from "../services/employeeService";
 import { redirect, useNavigate } from "react-router-dom";
+import { TableToolbar } from "../components/TableToolbar";
 
 export default function Employees() {
     const navigate = useNavigate()
@@ -14,13 +15,18 @@ export default function Employees() {
     const [tableData, setTableData] = useState([])
     const rowData = [(row) => row.name, (row) => row.tax_id, (row) => row.dateFrom, (row) => row.dateTo]
 
+    const fetchData = async () => {
+        const employees = await getEmployees()
+        setTableData(employees)
+    }
+
     useEffect(() => {
-        const fetchData = async () => {
-            const employees = await getEmployees()
-            setTableData(employees)
-        }
         fetchData()
     }, [])
+
+    const onRefreshTable = () => {
+        fetchData()
+    }
 
     const onNewEmployee = () => {
         navigate('/employee')
@@ -31,26 +37,15 @@ export default function Employees() {
             {!tableData ? <h3>Loading...</h3> :
                 <div className="col-12 h-100 bg-light py-4">
                     <div className="col-12 h-100 bg-white rounded-1 p-3 shadow-sm border border-light-subtle position-relative ">
-                        <PageHeader text="Employees" className="text-center pb-3" />
 
-                        <dev className="position-absolute top-0 start-0 m-3">
-                            <Button color="primary" outline size="sm" className="me-2"><ArrowClockwise size={24} /></Button>
-                            <Button color="primary" outline size="sm" className="me-2" onClick={onNewEmployee}><Plus size={24} /></Button>
+                        <div className="d-flex justify-content-between flex-wrap">
+                            <TableToolbar onRefresh={onRefreshTable} onAdd={onNewEmployee} className="col-4" />
+                            <PageHeader text="Employees" className="col-4 pb-3" />
 
-                            {/* <Input
-                                id="search"
-                                name="search"
-                                placeholder="Search"
-                                type="search"
-                                className="display-inline align-middle"
-                                style={{width:'300px'}}
-                            /> */}
-
-                        </dev>
-
-                        <ButtonGroup className="position-absolute top-0 end-0 m-3">
-                            <Pagination />
-                        </ButtonGroup>
+                            <ButtonGroup className="col-4 d-flex justify-content-end">
+                                <Pagination />
+                            </ButtonGroup>
+                        </div>
 
 
                         <Table
