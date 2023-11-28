@@ -111,8 +111,8 @@ label {
 }
 
 .t-button {
-  color: var(--bs-body);
-  border-color: var(--bs-body);
+  color: var(--bs-gray-dark);
+  border-color: var(--bs-gray);
 }
 
 .t-button:hover {

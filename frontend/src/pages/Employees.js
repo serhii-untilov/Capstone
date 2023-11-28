@@ -1,16 +1,13 @@
-import { Button, ButtonGroup, Table } from "reactstrap";
-import PageHeader from "../components/PageHeader";
-import { ArrowClockwise, Plus } from "react-bootstrap-icons";
-import Pagination from "../components/Pagination"
+import { ButtonGroup, Table } from "reactstrap";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { PageHeader } from "../components/PageHeader";
+import { Pagination } from "../components/Pagination"
 import { getEmployees } from "../services/employeeService";
-import { redirect, useNavigate } from "react-router-dom";
 import { TableToolbar } from "../components/TableToolbar";
 
 export default function Employees() {
     const navigate = useNavigate()
-    const [filterVisible, setFilterVisible] = useState(false)
-    const [filterParams, setFilterParams] = useState('')
     const tableHead = [{ name: 'Name', class: '' }, { name: 'Tax ID', class: '' }, { name: 'Begin', class: '' }, { name: 'End', class: '' }]
     const [tableData, setTableData] = useState([])
     const rowData = [(row) => row.name, (row) => row.tax_id, (row) => row.dateFrom, (row) => row.dateTo]

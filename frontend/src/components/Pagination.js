@@ -1,40 +1,40 @@
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Pagination as RsPagination, PaginationItem, PaginationLink } from "reactstrap";
 
-export default function _Pagination() {
+export function Pagination() {
     return (
         <>
-            <Pagination aria-label="Page navigation example">
-                <PaginationItem disabled>
+            <RsPagination aria-label="Page navigation example">
+                <PaginationItem disabled className="bg-gradient shadow-sm">
                     <PaginationLink
                         first
                         href="#"
                     />
                 </PaginationItem>
-                <PaginationItem disabled>
+                <PaginationItem disabled className="bg-gradient shadow-sm">
                     <PaginationLink
                         href="#"
                         previous
                     />
                 </PaginationItem>
-                <PaginationItem active>
+                <PaginationItem active className="bg-gradient shadow-sm">
                     <PaginationLink href="#">
                         1
                     </PaginationLink>
                 </PaginationItem>
 
-                <PaginationItem disabled>
+                <PaginationItem disabled className="bg-gradient shadow-sm">
                     <PaginationLink
                         href="#"
                         next
                     />
                 </PaginationItem>
-                <PaginationItem disabled>
+                <PaginationItem disabled className="bg-gradient shadow-sm">
                     <PaginationLink
                         href="#"
                         last
                     />
                 </PaginationItem>
-            </Pagination>
+            </RsPagination>
         </>
     )
 }

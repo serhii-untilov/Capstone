@@ -4,8 +4,8 @@ import { Form, FormGroup, Input, Label } from "reactstrap";
 import { CompanyContext } from "../context/CompanyContext";
 import { dateToTime, formatDate, monthBegin } from "../services/dateService";
 import { getCompanies, getCompany, postCompany, updateCompany } from "../services/companyService";
-import Button from "../components/Button";
-import PageHeader from "../components/PageHeader";
+import { Button } from "../components/Button";
+import { PageHeader } from "../components/PageHeader";
 import { Toast } from "../components/Toast"
 import { UserContext } from "../context/UserContext";
 import { getAccountingList, getLawList } from "../services/dictService";

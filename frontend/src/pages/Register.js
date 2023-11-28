@@ -2,8 +2,8 @@ import { Form, FormGroup, Input, Label } from "reactstrap"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-import Button from "../components/Button"
-import PageHeader from "../components/PageHeader"
+import { Button } from "../components/Button"
+import { PageHeader } from "../components/PageHeader"
 import { Toast } from "../components/Toast"
 import { register } from "../services/authService";
 import { getGroups } from "../services/dictService";

@@ -1,8 +1,8 @@
-import { Button } from "reactstrap"
+import { Button as RsButton } from "reactstrap"
 
-export default function _Button({...props}) {
+export function Button({...props}) {
     const className = (props.className || "") + " bg-gradient shadow-sm border"
     // return <Button {...props} color="primary"></Button>
-    return <Button {...props} className={className}></Button>
+    return <RsButton {...props} className={className}></RsButton>
 }
 

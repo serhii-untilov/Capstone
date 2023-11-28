@@ -1,5 +1,5 @@
 import { Button, Form, FormGroup, Input, Label } from "reactstrap"
-import PageHeader from "../components/PageHeader"
+import { PageHeader } from "../components/PageHeader"
 import { Toast } from "../components/Toast"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"

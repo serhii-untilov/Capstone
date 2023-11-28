@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import PageHeader from "../components/PageHeader";
+import { PageHeader } from "../components/PageHeader";
 import { Form } from "reactstrap";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { getGroups } from "../services/dictService";
