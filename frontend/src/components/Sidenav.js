@@ -169,8 +169,8 @@ function AppSidenav(args) {
                             <NavLink to="/dashboard" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Activity size={24} className="me-4" />Dashboard</NavLink>
 
-                            <NavLink to="/staff" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <People size={24} className="me-4" />Staff list</NavLink>
+                            {/* <NavLink to="/staff" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                                <People size={24} className="me-4" />Staff list</NavLink> */}
 
                             <NavLink to="/employees" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PeopleFill size={24} className="me-4" />Employees</NavLink>
@@ -200,7 +200,7 @@ function AppSidenav(args) {
                             <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
 
-                            <NavLink to="/profile" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                            <NavLink to="/profile/" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Person size={24} className="me-4" />Profile</NavLink>
 
                             <NavLinkStrap to="#" className="m-0 p-2 text-body" style={{ cursor: "pointer" }}>

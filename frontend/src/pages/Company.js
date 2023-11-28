@@ -173,7 +173,7 @@ export default function Company() {
                             valid={validated && formData?.name}
                             onChange={e => setFormData({ ...formData, name: e.target.value })}
                         />
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                             Please provide a company name.
                         </div>
                     </FormGroup>
@@ -194,7 +194,7 @@ export default function Company() {
                                     return <option key={law.id} value={law.id}>{law.name}</option>
                                 }) : null}
                             </Input>
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Please define laws.
                             </div>
                         </FormGroup>
@@ -226,7 +226,7 @@ export default function Company() {
                                     return <option key={accounting.id} value={accounting.id}>{accounting.name}</option>
                                 }) : null}
                             </Input>
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Please define an accounting type.
                             </div>
                         </FormGroup>
@@ -238,7 +238,7 @@ export default function Company() {
                                 valid={validated && formData?.date_from}
                                 onChange={e => setFormData({ ...formData, date_from: e.target.value })}
                             />
-                            <div class="invalid-feedback">
+                            <div className="invalid-feedback">
                                 Please provide date.
                             </div>
                         </FormGroup>

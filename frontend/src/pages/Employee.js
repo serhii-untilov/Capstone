@@ -70,8 +70,8 @@ export function Employee() {
                     <PageHeader text="Employee" className="col-lg-5 col-sm-11 m-auto text-center" />
                     <p className="col-lg-12 col-sm-11 m-auto text-center my-0 p-3">
                         {id
-                            ? "Update person and employee data, link a user account"
-                            : "Create a card for new employee"}
+                            ? "Update personal and employee data, and link the user account"
+                            : "Creating a card for the new employee"}
                     </p>
                     <h4 className="text-center text-primary m-0 p-0">{!id ? getFullName() ? getFullName() : "New Employee" : getFullName()}</h4>
                     <FormGroup>

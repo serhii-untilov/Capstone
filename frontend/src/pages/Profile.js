@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import { Form } from "reactstrap";
 import { Button, FormGroup, Input, Label } from "reactstrap";
 import { getGroups } from "../services/dictService";
 import { updateUser } from "../services/userService";
 import { Toast } from "../components/Toast"
+import { UserContext } from "../context/UserContext";
 
 export default function Profile() {
+    const userContext = useContext(UserContext)
     const [formData, setFormData] = useState({})
     const [validated, setValidated] = useState(false)
     const [messages, setMessages] = useState([])
@@ -20,16 +22,20 @@ export default function Profile() {
         fetchGroups().catch(console.error)
     }, [])
 
+    useEffect(() => {
+        setFormData(userContext.user)
+    }, [userContext])
+
     const validate = () => {
         setValidated(true)
         const warnings = []
-        if (!formData?.name) warnings.push("User name not defined.")
+        if (!formData?.username) warnings.push("User name not defined.")
         if (!formData?.first_name) warnings.push("First name not defined.")
         if (!formData?.last_name) warnings.push("Last name not defined.")
         if (!formData?.email) warnings.push("Email not defined.")
-        if (!formData?.group) warnings.push("Role not defined.")
+        if (!formData?.groups[0]) warnings.push("Role not defined.")
         if (warnings.length) {
-            setMessages(warnings)
+            // setMessages(warnings)
             return false
         }
         return true
@@ -37,9 +43,17 @@ export default function Profile() {
 
     const onUpdateUser = () => {
         if (!validate()) return false
+        setValidated(false)
+        setMessages([])
         updateUser(formData)
-            .then(() => { setValidated(false) })
+            .then((updatedUser) => userContext.setUser(updatedUser))
             .catch(e => { setMessages([e.message || 'Error.']) })
+    }
+
+    const getCombinedUserName = () => {
+        return formData ? formData.first_name ? `${formData.first_name} ${formData.last_name}` :
+            formData.last_name ? `${formData.last_name}` :
+            formData.email ? formData.email : '' : ''
     }
 
     return (
@@ -48,21 +62,22 @@ export default function Profile() {
                 {/* <p className="col-lg-4 col-sm-11 m-auto text-center pb-3">User profile</p> */}
                 <Form className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
                     <PageHeader text="User profile" className="text-center" />
-                    {/* <h4 className="text-center text-primary p-2">"User profile</h4> */}
+                    <p className="col-lg-12 col-sm-11 m-auto text-center my-0 pb-3">Updating personal user data and choosing a role</p>
+                    <h4 className="text-center text-primary m-0 p-0">{getCombinedUserName()}</h4>
 
-                    <FormGroup>
-                        <Label for="name">Name</Label>
-                        <Input id="name" name="name" type="text"
-                            value={formData?.name}
+                    {/* <FormGroup>
+                        <Label for="username">Login</Label>
+                        <Input id="username" name="username" type="text"
+                            value={formData?.username}
                             required
-                            invalid={validated && !formData?.name}
-                            valid={validated && formData?.name}
-                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                            invalid={validated && !formData?.username}
+                            valid={validated && formData?.username}
+                            onChange={e => setFormData({ ...formData, username: e.target.value })}
                         />
-                        <div class="invalid-feedback">
-                            Please provide a user's name.
+                        <div className="invalid-feedback">
+                            Please provide a user's login.
                         </div>
-                    </FormGroup>
+                    </FormGroup> */}
 
                     <FormGroup>
                         <Label for="first_name">First name</Label>
@@ -73,13 +88,13 @@ export default function Profile() {
                             valid={validated && formData?.first_name}
                             onChange={e => setFormData({ ...formData, first_name: e.target.value })}
                         />
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                             Please provide a user's first name.
                         </div>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="last_name">Name</Label>
+                        <Label for="last_name">Last name</Label>
                         <Input id="last_name" name="last_name" type="text"
                             value={formData?.last_name}
                             required
@@ -87,13 +102,13 @@ export default function Profile() {
                             valid={validated && formData?.last_name}
                             onChange={e => setFormData({ ...formData, last_name: e.target.value })}
                         />
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                             Please provide a user's last name.
                         </div>
                     </FormGroup>
 
                     <FormGroup>
-                        <Label for="email">Name</Label>
+                        <Label for="email">Email</Label>
                         <Input id="email" name="email" type="text"
                             value={formData?.email}
                             required
@@ -101,7 +116,7 @@ export default function Profile() {
                             valid={validated && formData?.email}
                             onChange={e => setFormData({ ...formData, email: e.target.value })}
                         />
-                        <div class="invalid-feedback">
+                        <div className="invalid-feedback">
                             Please provide a user's email.
                         </div>
                     </FormGroup>
@@ -111,10 +126,10 @@ export default function Profile() {
                         <Input type="select" id="group" name="group" className="form-select"
                             default=""
                             required
-                            invalid={validated && !formData?.group}
-                            valid={validated && formData?.group}
-                            value={formData?.group}
-                            onChange={e => setFormData({ ...formData, group: e.target.value })}
+                            invalid={validated && !(formData?.groups?.length ? formData.groups[0] : null)}
+                            valid={validated && !!(formData?.groups?.length ? formData.groups[0] : null)}
+                            value={formData?.groups?.length ? formData.groups[0] : ''}
+                            onChange={e => setFormData({ ...formData, groups: [e.target.value] })}
                         >
                             <option value="" key="0" disabled hidden></option>
                             {groups ?
@@ -123,8 +138,8 @@ export default function Profile() {
                                 })
                                 : null}
                         </Input>
-                        <div class="invalid-feedback">
-                            Please define laws.
+                        <div className="invalid-feedback">
+                            Please define a user's role.
                         </div>
                     </FormGroup>
 

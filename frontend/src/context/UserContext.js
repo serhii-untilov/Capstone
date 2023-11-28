@@ -10,14 +10,16 @@ const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const user = await currentUser()
-            setUser(user)
+            currentUser()
+                .then(user => setUser(user))
+                .catch(e => console.log(e))
         }
         if (authContext.isAuth) {
-            fetchData().catch(console.error)
+            fetchData()
         } else {
             setUser(getAnonymousUser())
         }
+        console.log(authContext.isAuth, user)
     }, [authContext])
 
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>

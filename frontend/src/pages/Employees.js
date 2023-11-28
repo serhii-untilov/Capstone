@@ -55,7 +55,7 @@ export default function Employees() {
                             className="m-0 p-0"
 
                         >
-                            <thead class="table-light">
+                            <thead className="table-light">
                                 <tr>
                                     {tableHead.map(col => (<th className={col.class}>{col.name}</th>))}
                                 </tr>
