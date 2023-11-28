@@ -104,7 +104,7 @@ function AppSidenav(args) {
                         : null
                     }
 
-
+                    {authContext?.isAuth ?
                     <NavLink to="/company" className="m-0 p-2" onClick={onDummy}>
                         <Briefcase size={24} className="me-4" />
 
@@ -159,6 +159,8 @@ function AppSidenav(args) {
                         </UncontrolledDropdown>
 
                     </NavLink>
+                    : null }
+
                     {authContext?.isAuth && userContext?.user?.is_employer
                         ? <>
 

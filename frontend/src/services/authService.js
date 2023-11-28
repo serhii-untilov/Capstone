@@ -9,18 +9,15 @@ export async function register(credentials) {
 
 export async function login(credentials) {
     const data = await request('login/', 'post', credentials)
+    if (!data.access) throw new Error(`Error: Login failed`)
     localStorage.setItem('access_token', data.access)
     localStorage.setItem('refresh_token', data.refresh)
-    return data.access
+    return true
 }
 
 export async function logout() {
-    try {
-        const refresh = localStorage.getItem('refresh_token')
-        await request('logout/', 'post', { refresh })
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
-    } catch (error) {
-        console.log(error)
-    }
+    const refresh = localStorage.getItem('refresh_token')
+    await request('logout/', 'post', { refresh })
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
 }

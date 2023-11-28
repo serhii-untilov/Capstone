@@ -109,3 +109,13 @@ label {
 .display-inline {
   display: inline-block;
 }
+
+.t-button {
+  color: var(--bs-body);
+  border-color: var(--bs-body);
+}
+
+.t-button:hover {
+  color: white;
+  border-color: var(--bs-primary);
+}

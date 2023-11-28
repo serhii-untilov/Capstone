@@ -16,10 +16,10 @@ export function TableToolbar({...props}) {
             {/* <dev className="position-absolute top-0 start-0 m-3"> */}
             <dev className={className}>
                 {onRefresh ?
-                <Button color="primary" outline size="sm" className="me-2" onClick={onRefresh}><ArrowClockwise size={22} /></Button>
+                <Button color="primary" outline size="sm" className="me-2 t-button" onClick={onRefresh}><ArrowClockwise size={22} /></Button>
                 : null }
                 {onAdd ?
-                <Button color="primary" outline size="sm" className="me-2" onClick={onAdd}><Plus size={22} /></Button>
+                <Button color="primary" outline size="sm" className="me-2 t-button" onClick={onAdd}><Plus size={22} /></Button>
                 : null }
 
                 {onSearch ? <Input

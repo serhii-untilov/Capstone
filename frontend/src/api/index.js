@@ -26,13 +26,15 @@ instance.interceptors.response.use(
             originalRequest.url.localeCompare('login/refresh/')) {
             originalRequest._retry = true;
             try {
-                const refresh = localStorage.getItem('refresh_token');
-                const token = await request('login/refresh/', 'post', { refresh });
-                localStorage.setItem('access_token', token.access);
-                // Retry the original request with the new token
-                originalRequest.headers.Authorization = `${AUTH_HEADER_TYPE} ${token.access}`;
-                const response = await axios(originalRequest)
-                return response
+                const refresh = localStorage.getItem('refresh_token')
+                if (refresh) {
+                    const token = await request('login/refresh/', 'post', { refresh })
+                    localStorage.setItem('access_token', token.access)
+                    // Retry the original request with the new token
+                    originalRequest.headers.Authorization = `${AUTH_HEADER_TYPE} ${token.access}`
+                    const response = await axios(originalRequest)
+                    return response
+                }
             } catch (error) {
                 // Handle refresh token error or redirect to login
                 localStorage.removeItem('access_token')

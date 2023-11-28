@@ -13,26 +13,27 @@ export default function Login() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [validated, setValidated] = useState(false)
     const [messages, setMessages] = useState([])
 
     const validate = () => {
-        const messages = []
-        if (!email) {
-            messages.push("Email not defined.")
-        }
-        return messages
+        setValidated(true)
+        if (!email) return false
+        if (!password) return false
+        return true
     }
 
     const submit = async e => {
         e.preventDefault()
-        const messages = validate()
-        if (messages.length) {
-            setMessages(messages)
-            return false
+        if (!validate()) return false
+        try {
+            const isAuth = await login({ username: email, email, password })
+            authContext.setIsAuth(isAuth)
+            if (isAuth) return navigate('/', { replace: true })
+            setMessages(["Login failed."])
+        } catch (error) {
+            setMessages([error.message || 'Error'])
         }
-        const token = await login({ username: email, email, password })
-        authContext.setIsAuth(!!token)
-        return navigate('/', { replace: true })
     }
 
     authContext.setIsAuth(false)
@@ -47,17 +48,27 @@ export default function Login() {
                         <Label for="email">Email</Label>
                         <Input id="email" name="email" type="email" autoFocus
                             // className="fw-bolder"
-                            value={email}
                             required
+                            invalid={validated && !email}
+                            valid={validated && email}
+                            value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
+                        <div className="invalid-feedback">
+                            Enter your email.
+                        </div>
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>
                         <Input id="password" name="password" type="password"
                             value={password}
+                            invalid={validated && !password}
+                            valid={validated && password}
                             onChange={e => setPassword(e.target.value)}
                         />
+                        <div className="invalid-feedback">
+                            Enter password.
+                        </div>
                     </FormGroup>
 
                     <div className="d-flex justify-content-center">

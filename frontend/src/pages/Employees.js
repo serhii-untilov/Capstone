@@ -39,7 +39,7 @@ export default function Employees() {
                     <div className="col-12 h-100 bg-white rounded-1 p-3 shadow-sm border border-light-subtle position-relative ">
 
                         <div className="d-flex justify-content-between flex-wrap">
-                            <TableToolbar onRefresh={onRefreshTable} onAdd={onNewEmployee} className="col-4" />
+                            <TableToolbar onRefresh={onRefreshTable} onAdd={onNewEmployee} className="col-4 align-bottom" />
                             <PageHeader text="Employees" className="col-4 pb-3" />
 
                             <ButtonGroup className="col-4 d-flex justify-content-end">
