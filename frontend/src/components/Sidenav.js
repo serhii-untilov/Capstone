@@ -13,7 +13,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { NavLink as NavLinkStrap } from "reactstrap"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
-    PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill
+    PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill, People
 } from 'react-bootstrap-icons'
 
 import { AuthContext } from '../context/AuthContext'
@@ -171,7 +171,7 @@ function AppSidenav(args) {
                                 <People size={24} className="me-4" />Staff list</NavLink> */}
 
                             <NavLink to="/employees" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <PeopleFill size={24} className="me-4" />Employees</NavLink>
+                                <People size={24} className="me-4" />Employees</NavLink>
 
                             <NavLink to="/payroll-sheet" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <FileRuled size={24} className="me-4" />Payroll sheet</NavLink>
@@ -185,7 +185,7 @@ function AppSidenav(args) {
                                 <PersonVcard size={24} className="me-4" />Personal card</NavLink>
 
                             <NavLink to="/payroll" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <PersonVcardFill size={24} className="me-4" />Payroll</NavLink>
+                                <FileRuled size={24} className="me-4" />Payroll</NavLink>
                         </>
                         : null}
                     <Delimiter />
@@ -193,11 +193,15 @@ function AppSidenav(args) {
                     {/* <NavLink to="/language" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                         <Globe size={24} className="me-4" />Language</NavLink> */}
 
-                    {authContext?.isAuth
+                    {authContext?.isAuth && userContext?.user?.is_employer
                         ? <>
                             <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
+                        </>
+                        : null}
 
+                    {authContext?.isAuth
+                        ? <>
                             <NavLink to="/profile/" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Person size={24} className="me-4" />Profile</NavLink>
 
