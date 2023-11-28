@@ -1,7 +1,7 @@
-import { DropdownToggle } from "reactstrap"
+import { DropdownToggle as RsDropdownToggle } from "reactstrap"
 
-export default function _DropdownToggle({...props}) {
+export function DropdownToggle({...props}) {
     const className = (props.className || "") + " bg-gradient shadow-sm border"
-    return <DropdownToggle {...props} className={className} />
+    return <RsDropdownToggle {...props} className={className} />
 }
 

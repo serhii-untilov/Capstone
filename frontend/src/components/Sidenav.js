@@ -1,26 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    Nav,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    Label,
+    Collapse, Navbar, NavbarToggler, Nav, DropdownMenu, DropdownItem, UncontrolledDropdown, Label,
 } from 'reactstrap';
 import { NavLink, useNavigate } from "react-router-dom"
 import { NavLink as NavLinkStrap } from "reactstrap"
 import {
-    BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
-    PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill, People
+    BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase,
+    FileRuled, PersonVcard, Gear, CaretDownFill, People
 } from 'react-bootstrap-icons'
 
 import { AuthContext } from '../context/AuthContext'
-import Delimiter from './Delimiter'
+import { Delimiter } from './Delimiter'
 import { logout } from "../services/authService"
 import { UserContext } from '../context/UserContext'
-import DropdownToggle from '../components/DropdownToggle'
+import { DropdownToggle } from '../components/DropdownToggle'
 import { CompanyContext } from '../context/CompanyContext';
 import { getCompanies } from '../services/companyService';
 import { dateToTime } from '../services/dateService';
@@ -105,61 +98,61 @@ function AppSidenav(args) {
                     }
 
                     {authContext?.isAuth ?
-                    <NavLink to="/company" className="m-0 p-2" onClick={onDummy}>
-                        <Briefcase size={24} className="me-4" />
+                        <NavLink to="/company" className="m-0 p-2" onClick={onDummy}>
+                            <Briefcase size={24} className="me-4" />
 
-                        <UncontrolledDropdown tag="nav-link">
-                            <DropdownToggle tag="nav-link" caret key={1}>
-                                {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
-                            </DropdownToggle>
-                            <DropdownMenu className='position-absolute top-0 end-0 shadow-sm'>
-                                <Label className='mx-3 text-secondary'>Select company</Label>
-                                {actualCompanies.map((company, key) => {
-                                    return (
+                            <UncontrolledDropdown tag="nav-link">
+                                <DropdownToggle tag="nav-link" caret key={1}>
+                                    {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
+                                </DropdownToggle>
+                                <DropdownMenu className='position-absolute top-0 end-0 shadow-sm'>
+                                    <Label className='mx-3 text-secondary'>Select company</Label>
+                                    {actualCompanies.map((company, key) => {
+                                        return (
+                                            <>
+                                                <DropdownItem
+                                                    key={1 + key}
+                                                    data-id={company.id}
+                                                    onClick={onSelectCompany}
+                                                    className='ps-4'
+                                                >
+                                                    {company?.name}
+                                                </DropdownItem>
+                                            </>
+                                        )
+                                    })}
+
+                                    {authContext?.isAuth && userContext?.user?.is_employer ?
                                         <>
-                                            <DropdownItem
-                                                key={1 + key}
-                                                data-id={company.id}
-                                                onClick={onSelectCompany}
-                                                className='ps-4'
-                                            >
-                                                {company?.name}
-                                            </DropdownItem>
-                                        </>
-                                    )
-                                })}
+                                            {actualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
-                                {authContext?.isAuth && userContext?.user?.is_employer ?
-                                    <>
-                                        {actualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
+                                            <DropdownItem key={100} onClick={onCreateCompany} className='ps-4'>Create new company</DropdownItem>
 
-                                        <DropdownItem key={100} onClick={onCreateCompany} className='ps-4'>Create new company</DropdownItem>
+                                            {nonActualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
-                                        {nonActualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
+                                            {nonActualCompanies.length ? <Label className='mx-3 text-secondary'>Deleted and not actual</Label> : null}
 
-                                        {nonActualCompanies.length ? <Label className='mx-3 text-secondary'>Deleted and not actual</Label> : null}
+                                            {nonActualCompanies.map((company, key) => {
+                                                return (
+                                                    <>
+                                                        <DropdownItem
+                                                            key={101 + key}
+                                                            data-id={company.id}
+                                                            onClick={onSelectCompany}
+                                                            className='ps-4'
+                                                        >
+                                                            {company?.name}
+                                                        </DropdownItem>
+                                                    </>
+                                                )
+                                            })}
+                                        </> : null}
 
-                                        {nonActualCompanies.map((company, key) => {
-                                            return (
-                                                <>
-                                                    <DropdownItem
-                                                        key={101 + key}
-                                                        data-id={company.id}
-                                                        onClick={onSelectCompany}
-                                                        className='ps-4'
-                                                    >
-                                                        {company?.name}
-                                                    </DropdownItem>
-                                                </>
-                                            )
-                                        })}
-                                    </> : null}
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
 
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-
-                    </NavLink>
-                    : null }
+                        </NavLink>
+                        : null}
 
                     {authContext?.isAuth && userContext?.user?.is_employer
                         ? <>

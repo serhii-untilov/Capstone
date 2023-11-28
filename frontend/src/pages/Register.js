@@ -14,10 +14,10 @@ export default function Register() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
     const [userGroup, setUserGroup] = useState();
-    const [messages, setMessages] = useState([])
     const [groups, setGroups] = useState([])
+    const [validated, setValidated] = useState(false)
+    const [messages, setMessages] = useState([])
 
     useEffect(() => {
         const fetchGroups = async () => {
@@ -29,29 +29,23 @@ export default function Register() {
     }, [])
 
     const validate = () => {
-        const messages = []
-        if (!email) {
-            messages.push("Email not defined.")
-        }
-        if (password.localeCompare(repeatPassword)) {
-            messages.push("Passwords not equal.")
-        }
-        if (!userGroup) {
-            messages.push("User group not defined.")
-        }
-        return messages
+        setValidated(true)
+        if (!email) return false
+        if (!userGroup) return false
+        return true
     }
 
     const submit = async e => {
         e.preventDefault()
-        const messages = validate()
-        if (messages.length) {
-            setMessages(messages)
-            return false
+        if (!validate()) return false
+        try {
+            const isAuth = register({ email, password, group_id: userGroup })
+            authContext.setIsAuth(isAuth)
+            if (isAuth) return navigate('/', { replace: true })
+            setMessages([...messages, "Registration failed."])
+        } catch (error) {
+            setMessages([error.message || 'Error'])
         }
-        const token = await register({ email, password, group_id: userGroup })
-        authContext.setIsAuth(!!token)
-        navigate('/', { replace: true })
     }
 
     return (
@@ -63,32 +57,38 @@ export default function Register() {
                     <FormGroup>
                         <Label for="email">Email</Label>
                         <Input id="email" name="email" type="email" autoFocus
-                            // className="fw-bolder"
-                            value={email}
                             required
+                            value={email}
+                            invalid={validated && !email}
+                            valid={validated && email}
                             onChange={e => setEmail(e.target.value)}
                         />
+                        <div className="invalid-feedback">
+                            Enter your email.
+                        </div>
                     </FormGroup>
                     <FormGroup>
                         <Label for="password">Password</Label>
                         <Input id="password" name="password" type="password"
+                            required
                             value={password}
+                            invalid={validated && !password}
+                            valid={validated && password}
                             onChange={e => setPassword(e.target.value)}
                         />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="repeat-password">Repeat password</Label>
-                        <Input id="repeat-password" name="repeat-password" type="password"
-                            value={repeatPassword}
-                            onChange={e => setRepeatPassword(e.target.value)}
-                        />
+                        <div className="invalid-feedback">
+                            Enter password.
+                        </div>
                     </FormGroup>
 
                     <FormGroup className="mb-3">
                         <Label for="group">User role</Label>
-                        <select id="group" name="group" className="form-select"
+                        <Input type="select" id="group" name="group" className="form-select"
+                            required
                             defaultValue=""
                             onChange={e => setUserGroup(e.target.value)}
+                            invalid={validated && !userGroup}
+                            valid={validated && userGroup}
                         >
                             <option value="" key="0" disabled hidden></option>
                             {groups
@@ -97,7 +97,8 @@ export default function Register() {
                                 })
                                 : null
                             }
-                        </select>
+                        </Input>
+                        <div className="invalid-feedback">Define user group.</div>
                     </FormGroup>
 
                     <div className="d-flex justify-content-center">
