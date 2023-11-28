@@ -81,7 +81,7 @@ export default function Company() {
             if (companiesCount >= 2) warnings.push("The user has 2 companies. For more, you can upgrade your plan to Premium.")
         }
         if (warnings.length) {
-            setMessages(warnings)
+            // setMessages(warnings)
             return false
         }
         return true
@@ -90,13 +90,14 @@ export default function Company() {
     const onCreateCompany = async e => {
         e.preventDefault()
         if (!validate()) return false
+        setValidated(false)
+        setMessages([])
         postCompany({ name: formData?.name, law: formData?.name, tax_id: formData?.tax_id, accounting: formData?.accounting, date_from: formData?.date_from })
             .then(newCompany => {
                 setCompanyList([...companyList, newCompany])
                 companyContext.setCompany(newCompany)
                 setFormData(newCompany)
                 localStorage.setItem('company_id', newCompany.id)
-                setValidated(false)
             })
             .catch(e => {
                 setMessages([e.message || 'Error.'])
@@ -105,38 +106,42 @@ export default function Company() {
 
     const onDeleteCompany = async e => {
         e.preventDefault()
+        setValidated(false)
+        setMessages([])
         updateCompany({ id: formData?.id, deleted: formatDate(monthBegin(Date.now())) })
             .then(deletedCompany => {
                 setCompanyList([...companyList, deletedCompany])
                 companyContext.setCompany(null)
                 setFormData(deletedCompany)
                 localStorage.removeItem('company_id')
-                setValidated(false)
+
             })
             .catch(e => { setMessages([e.message || 'Error.']) })
     }
 
     const onRestoreCompany = async e => {
         e.preventDefault()
+        setValidated(false)
+        setMessages([])
         updateCompany({ id: formData?.id, deleted: '9999-12-31' })
             .then(restoredCompany => {
                 setCompanyList([...companyList, restoredCompany])
                 companyContext.setCompany(restoredCompany)
                 setFormData(restoredCompany)
                 localStorage.setItem('company_id', restoredCompany.id)
-                setValidated(false)
             })
             .catch(e => { setMessages([e.message || 'Error.']) })
     }
 
     const onUpdateCompany = () => {
         if (!validate()) return false
+        setValidated(false)
+        setMessages([])
         updateCompany({ id: formData?.id, name: formData?.name, law: formData?.law, tax_id: formData?.tax_id, accounting: formData?.accounting, date_from: formData?.date_from })
             .then(updatedCompany => {
                 if (isCompanyActual(updatedCompany)) {
                     companyContext.setCompany(updatedCompany)
                 }
-                setValidated(false)
             })
             .catch(e => { setMessages([e.message || 'Error.']) })
     }

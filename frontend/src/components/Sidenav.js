@@ -13,8 +13,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { NavLink as NavLinkStrap } from "reactstrap"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase, Activity,
-    People, PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill,
-    // Globe
+    PeopleFill, FileRuled, PersonVcard, PersonVcardFill, Gear, CaretDownFill
 } from 'react-bootstrap-icons'
 
 import { AuthContext } from '../context/AuthContext'
@@ -105,35 +104,33 @@ function AppSidenav(args) {
                         : null
                     }
 
-                    {authContext?.isAuth && userContext?.user?.is_employer
-                        ? <>
-                            {/* <NavLink to="/company" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <Briefcase size={24} className="me-4" />Company</NavLink> */}
 
-                            <NavLink to="/company" className="m-0 p-2" onClick={onDummy}>
-                                <Briefcase size={24} className="me-4" />
+                    <NavLink to="/company" className="m-0 p-2" onClick={onDummy}>
+                        <Briefcase size={24} className="me-4" />
 
-                                <UncontrolledDropdown tag="nav-link">
-                                    <DropdownToggle tag="nav-link" caret key={1}>
-                                        {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
-                                    </DropdownToggle>
-                                    <DropdownMenu className='position-absolute top-0 end-0 shadow-sm'>
-                                        <Label className='mx-3 text-secondary'>Select company</Label>
-                                        {actualCompanies.map((company, key) => {
-                                            return (
-                                                <>
-                                                    <DropdownItem
-                                                        key={1 + key}
-                                                        data-id={company.id}
-                                                        onClick={onSelectCompany}
-                                                        className='ps-4'
-                                                    >
-                                                        {company?.name}
-                                                    </DropdownItem>
-                                                </>
-                                            )
-                                        })}
+                        <UncontrolledDropdown tag="nav-link">
+                            <DropdownToggle tag="nav-link" caret key={1}>
+                                {companyContext.company ? companyContext.company.name : 'Company'} <CaretDownFill size={12} className="me-4" />
+                            </DropdownToggle>
+                            <DropdownMenu className='position-absolute top-0 end-0 shadow-sm'>
+                                <Label className='mx-3 text-secondary'>Select company</Label>
+                                {actualCompanies.map((company, key) => {
+                                    return (
+                                        <>
+                                            <DropdownItem
+                                                key={1 + key}
+                                                data-id={company.id}
+                                                onClick={onSelectCompany}
+                                                className='ps-4'
+                                            >
+                                                {company?.name}
+                                            </DropdownItem>
+                                        </>
+                                    )
+                                })}
 
+                                {authContext?.isAuth && userContext?.user?.is_employer ?
+                                    <>
                                         {actualCompanies.length ? <DropdownItem divider className='mx-3' /> : null}
 
                                         <DropdownItem key={100} onClick={onCreateCompany} className='ps-4'>Create new company</DropdownItem>
@@ -156,18 +153,19 @@ function AppSidenav(args) {
                                                 </>
                                             )
                                         })}
+                                    </> : null}
 
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
 
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-
-                            </NavLink>
-
+                    </NavLink>
+                    {authContext?.isAuth && userContext?.user?.is_employer
+                        ? <>
 
                             {/* <Delimiter /> */}
 
-                            <NavLink to="/dashboard" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <Activity size={24} className="me-4" />Dashboard</NavLink>
+                            {/* <NavLink to="/dashboard" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                                <Activity size={24} className="me-4" />Dashboard</NavLink> */}
 
                             {/* <NavLink to="/staff" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <People size={24} className="me-4" />Staff list</NavLink> */}
@@ -179,7 +177,7 @@ function AppSidenav(args) {
                                 <FileRuled size={24} className="me-4" />Payroll sheet</NavLink>
                         </>
                         : null}
-                    <Delimiter />
+                    {/* <Delimiter /> */}
 
                     {authContext?.isAuth && userContext?.user?.is_employee
                         ? <>
