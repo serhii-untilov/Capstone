@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Form, FormGroup, Input, Label } from "reactstrap";
 import { CompanyContext } from "../context/CompanyContext";
-import { dateToTime, formatDate, monthBegin } from "../services/dateService";
+import { dateToTime, formatDate, monthBegin, monthEnd } from "../services/dateService";
 import { getCompanies, getCompany, postCompany, updateCompany } from "../services/companyService";
 import { Button } from "../components/Button";
 import { PageHeader } from "../components/PageHeader";
@@ -37,7 +37,9 @@ export default function Company() {
                 law: lawList.length ? lawList[0] : '',
                 tax_id: '',
                 accounting: accountingList.length ? accountingList[0] : '',
-                date_from: formatDate(monthBegin(Date.now()))
+                date_from: formatDate(monthBegin(Date.now())),
+                pay_period: formatDate(monthBegin(Date.now())),
+                check_date: formatDate(monthEnd(Date.now())),
             }
             setFormData(company)
             if (id) {
@@ -92,7 +94,7 @@ export default function Company() {
         if (!validate()) return false
         setValidated(false)
         setMessages([])
-        postCompany({ name: formData?.name, law: formData?.name, tax_id: formData?.tax_id, accounting: formData?.accounting, date_from: formData?.date_from })
+        postCompany({ ...formData })
             .then(newCompany => {
                 setCompanyList([...companyList, newCompany])
                 companyContext.setCompany(newCompany)
@@ -137,7 +139,7 @@ export default function Company() {
         if (!validate()) return false
         setValidated(false)
         setMessages([])
-        updateCompany({ id: formData?.id, name: formData?.name, law: formData?.law, tax_id: formData?.tax_id, accounting: formData?.accounting, date_from: formData?.date_from })
+        updateCompany({ ...formData })
             .then(updatedCompany => {
                 if (isCompanyActual(updatedCompany)) {
                     companyContext.setCompany(updatedCompany)
@@ -156,8 +158,8 @@ export default function Company() {
         <>
             <div className="col-12 h-100 bg-light pt-4">
 
-                <Form className="col-lg-5 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
-                    <PageHeader text="Company" className="text-center" />
+                <Form className="col-lg-6 col-sm-11 shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
+                    <PageHeader text="Company" className="text-center p-0 m-0" />
                     <p className="col-lg-12 col-sm-11 m-auto text-center my-0 pb-3">
                         {isCompanyDeleted(formData)
                             ? "Restore deleted company"
@@ -241,10 +243,78 @@ export default function Company() {
                                 value={formData?.date_from}
                                 invalid={validated && !formData?.date_from}
                                 valid={validated && formData?.date_from}
-                                onChange={e => setFormData({ ...formData, date_from: e.target.value })}
+                                onChange={e => {
+                                    const date_from = formatDate(e.target.value)
+                                    const pay_period = dateToTime(date_from) > dateToTime(formData.pay_period) ? date_from :
+                                        dateToTime(monthEnd(date_from)) < dateToTime(formData.pay_period) ? date_from : formData.pay_period
+                                    const check_date = dateToTime(date_from) > dateToTime(formData.check_date) ? formatDate(monthEnd(date_from)) :
+                                        dateToTime(monthEnd(date_from)) < dateToTime(formData.pay_period) ? formatDate(monthEnd(date_from)) : formData.check_date
+
+                                    setFormData({
+                                        ...formData,
+                                        date_from,
+                                        pay_period,
+                                        check_date
+                                    })
+                                }
+                                }
                             />
                             <div className="invalid-feedback">
-                                Please provide date.
+                                Please provide date of activity begin.
+                            </div>
+                        </FormGroup>
+                    </div>
+
+                    <div className="row">
+                        <FormGroup className="mb-3 col-6">
+                            <Label for="pay_period">Current pay period</Label>
+                            <Input id="pay_period" name="pay_period" type="date"
+                                value={formData?.pay_period}
+                                invalid={validated && !formData?.pay_period}
+                                valid={validated && formData?.pay_period}
+                                onChange={e => {
+                                    let pay_period = formatDate(monthBegin(e.target.value))
+                                    const date_from = formatDate(monthBegin(formData.date_from))
+                                    if (dateToTime(pay_period) < dateToTime(date_from)) {
+                                        pay_period = date_from
+                                    }
+                                    let check_date = formatDate(formData.check_date)
+                                    if (dateToTime(check_date) < dateToTime(pay_period)) {
+                                        check_date = formatDate(monthEnd(pay_period))
+                                    }
+                                    setFormData({
+                                        ...formData,
+                                        pay_period,
+                                        check_date
+                                    })
+                                }}
+                            />
+                            <small id="emailHelp" class="form-text text-muted">The timeframe in which your employee worked.</small>
+                            <div className="invalid-feedback">
+                                Please provide pay period.
+                            </div>
+                        </FormGroup>
+                        <FormGroup className="mb-3 col-6">
+                            <Label for="check_date">Next check date</Label>
+                            <Input id="check_date" name="check_date" type="date"
+                                value={formData?.check_date}
+                                invalid={validated && !formData?.check_date}
+                                valid={validated && formData?.check_date}
+                                onChange={e => {
+                                    const pay_period = formatDate(formData.pay_period)
+                                    let check_date = formatDate(e.target.value)
+                                    if (dateToTime(check_date) < dateToTime(pay_period))
+                                        check_date = formatDate(monthEnd(pay_period))
+                                    setFormData({
+                                        ...formData,
+                                        check_date
+                                    })
+                                }
+                                }
+                            />
+                            <small id="emailHelp" class="form-text text-muted">The date that the paycheck will be made.</small>
+                            <div className="invalid-feedback">
+                                Please provide the next check date.
                             </div>
                         </FormGroup>
                     </div>

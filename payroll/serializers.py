@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import Group
-from .models import User, Law, Accounting, Company, Person, Employee
+from .models import User, Law, Accounting, Company, Person, Employee, Department, Job
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -63,11 +63,29 @@ class PersonSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    name = serializers.SerializerMethodField('get_name')
+    full_name = serializers.SerializerMethodField('get_full_name')
+    tax_id = serializers.SerializerMethodField('get_tax_id')
+    email = serializers.SerializerMethodField('get_email')
 
-    def get_name(self, obj):
+    def get_full_name(self, obj):
         return obj.person.first_name + ' ' + obj.person.last_name
+
+    def get_tax_id(self, obj):
+        return obj.person.tax_id
+
+    def get_email(self, obj):
+        return obj.person.email
 
     class Meta:
         model = Employee
+        fields = '__all__'
+
+class DepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = '__all__'
+
+class JobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Job
         fields = '__all__'

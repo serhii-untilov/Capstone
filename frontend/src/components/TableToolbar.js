@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowClockwise, Plus } from "react-bootstrap-icons";
 import { Button, Input } from "reactstrap";
 
-export function TableToolbar({...props}) {
+export function TableToolbar({ ...props }) {
     const { onRefresh, onAdd, onSearch, className } = props
     const [search, setSearch] = useState('')
 
@@ -16,23 +16,23 @@ export function TableToolbar({...props}) {
             {/* <dev className="position-absolute top-0 start-0 m-3"> */}
             <dev className={className}>
                 {onRefresh ?
-                <Button color="primary" outline size="sm" className="me-2 t-button bg-gradient shadow-sm" onClick={onRefresh}><ArrowClockwise size={22} /></Button>
-                : null }
+                    <Button color="primary" outline size="sm" className="me-2 t-button bg-gradient shadow-sm" onClick={onRefresh}><ArrowClockwise size={22} /></Button>
+                    : null}
                 {onAdd ?
-                <Button color="primary" outline size="sm" className="me-2 t-button bg-gradient shadow-sm" onClick={onAdd}><Plus size={22} /></Button>
-                : null }
+                    <Button color="primary" outline size="sm" className="me-2 t-button bg-gradient shadow-sm" onClick={onAdd}><Plus size={22} /></Button>
+                    : null}
 
                 {onSearch ? <Input
-                                id="search"
-                                name="search"
-                                placeholder="Search"
-                                type="search"
-                                value={search || ''}
-                                onChange={onChangeSearch}
-                                className="display-inline align-middle"
-                                style={{width:'300px'}}
-                            />
-                        : null }
+                    id="search"
+                    name="search"
+                    placeholder="Search"
+                    type="search"
+                    value={search || ''}
+                    onChange={onChangeSearch}
+                    className="display-inline align-middle"
+                    style={{ width: '300px' }}
+                />
+                    : null}
 
             </dev>
             {/* </dev> */}

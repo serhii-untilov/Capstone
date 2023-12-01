@@ -169,7 +169,7 @@ function AppSidenav(args) {
                                 <People size={24} className="me-4" />Employees</NavLink>
 
                             <NavLink to="/payroll-sheet" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
-                                <FileRuled size={24} className="me-4" />Payroll sheet</NavLink>
+                                <FileRuled size={24} className="me-4" />Payroll</NavLink>
                         </>
                         : null}
                     {/* <Delimiter /> */}

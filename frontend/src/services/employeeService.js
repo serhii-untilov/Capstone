@@ -1,11 +1,15 @@
 import { request } from "../api"
 
-export async function getEmployees() {
-    return await request('employees/', 'get')
+export const newEmployee = {
+    person_id: null
+}
+
+export async function getEmployees(company_id) {
+    return await request(`employees/?company=${company_id}`, 'get')
 }
 
 export async function getEmployee(id) {
-    return await request(`employees/${id}`, 'get' )
+    return await request(`employees/${id}/`, 'get' )
 }
 
 export function postEmployee(employee) {

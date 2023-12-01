@@ -46,3 +46,7 @@ export async function currentUser() {
 export async function updateUser(user) {
     return await request(`users/${user.id}/`, 'patch', user)
 }
+
+export async function getUserByEmail(email) {
+    return await request(`users/?email=${email}`, 'get')
+}

@@ -85,6 +85,10 @@ label {
   width: 100px;
 }
 
+.btn-fixed-width-75 {
+  width: 75px;
+}
+
 .btn-link {
   text-decoration: none;
 }
@@ -118,4 +122,12 @@ label {
 .t-button:hover {
   color: white;
   border-color: var(--bs-primary);
+}
+
+.text-shadow {
+  text-shadow: 1px 1px 2px lightgray;
+}
+
+.cursor-pointer {
+  cursor: "pointer";
 }

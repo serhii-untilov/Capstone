@@ -33,6 +33,7 @@ export default function Router() {
             <Route path="/staff" element={<RequireAuth children={<Staff />} />} />
             <Route path="/employees" element={<RequireAuth children={<Employees />} />} />
             <Route path="/employee" element={<RequireAuth children={<Employee />} />} />
+            <Route path="/employee/:id" element={<RequireAuth children={<Employee />} />} />
             <Route path="/payroll-sheet" element={<RequireAuth children={<PayrollSheet />} />} />
             <Route path="/personal-card" element={<RequireAuth children={<PersonalCard />} />} />
             <Route path="/payroll" element={<RequireAuth children={<Payroll />} />} />

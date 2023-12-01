@@ -11,8 +11,9 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
 
-from .models import User, Law, Accounting, Company, Person, Employee
-from .serializers import UserSerializer, GroupSerializer, LawSerializer, AccountingSerializer, CompanySerializer, PersonSerializer, EmployeeSerializer
+from .models import User, Law, Accounting, Company, Person, Employee, Department, Job
+from .serializers import UserSerializer, GroupSerializer, LawSerializer, AccountingSerializer, \
+    CompanySerializer, PersonSerializer, EmployeeSerializer, DepartmentSerializer, JobSerializer
 
 
 class ReadOnly(BasePermission):
@@ -148,6 +149,13 @@ class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
+    def get_queryset(self):
+        email = self.request.query_params.get('email')
+        if email:
+            res = User.objects.filter(email=email, is_active=True).first()
+            return [res] if res else []
+        return User.objects.all()
+
 
 class GroupView(viewsets.ModelViewSet):
     # permission_classes = (ReadOnly)
@@ -199,3 +207,32 @@ class EmployeeView(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all()
 
+    def get_queryset(self):
+        company = self.request.query_params.get('company')
+        if company:
+            return Employee.objects.filter(company_id=company)
+        return Employee.objects.all()
+
+
+class DepartmentView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = DepartmentSerializer
+    queryset = Department.objects.all()
+
+    def get_queryset(self):
+        company = self.request.query_params.get('company')
+        if company:
+            return Department.objects.filter(company_id=company).order_by('name')
+        return Department.objects.all().order_by('name')
+
+
+class JobView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = JobSerializer
+    queryset = Group.objects.all()
+
+    def get_queryset(self):
+        user = self.request.query_params.get('user')
+        if user:
+            return Job.objects.filter(user_id=user).order_by('name')
+        return Job.objects.all().order_by('name')

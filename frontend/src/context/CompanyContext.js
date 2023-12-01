@@ -6,7 +6,7 @@ const CompanyContext = createContext()
 
 const CompanyProvider = ({ children }) => {
     const authContext = useContext(AuthContext);
-    const [company, setCompany] = useState()
+    const [company, setCompany] = useState(null)
 
     useEffect(() => {
         const fetchData = async (companyId) => {

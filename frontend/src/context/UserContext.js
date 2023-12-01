@@ -19,7 +19,6 @@ const UserProvider = ({ children }) => {
         } else {
             setUser(getAnonymousUser())
         }
-        console.log(authContext.isAuth, user)
     }, [authContext])
 
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>

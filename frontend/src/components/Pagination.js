@@ -3,7 +3,7 @@ import { Pagination as RsPagination, PaginationItem, PaginationLink } from "reac
 export function Pagination() {
     return (
         <>
-            <RsPagination aria-label="Page navigation example">
+            <RsPagination className="m-0 p-0">
                 <PaginationItem disabled className="bg-gradient shadow-sm">
                     <PaginationLink
                         first

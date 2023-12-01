@@ -20,6 +20,7 @@ export default function Login() {
         setValidated(true)
         if (!email) return false
         if (!password) return false
+        setValidated(false)
         return true
     }
 
