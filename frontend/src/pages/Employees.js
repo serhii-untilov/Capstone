@@ -20,8 +20,8 @@ export default function Employees() {
         { title: 'Name', class: '', field: 'full_name' },
         { title: 'Tax ID', class: '', field: 'tax_id' },
         { title: 'Start Date', class: '', field: 'date_from' },
+        { title: 'Dismissal Date', class: '', field: 'date_to', view: ['dismissed'] },
         { title: 'Email', class: '', field: 'email' },
-        { title: 'End Date', class: '', field: 'date_to', view: ['dismissed', 'deleted'] }
     ]
 
     const fetchData = async () => {
@@ -83,7 +83,7 @@ export default function Employees() {
         }
     }
 
-    const countActiveTeamMembers = () => {
+    const countActiveEmployees = () => {
         return dataSet.filter(row => !row.is_deleted &&
             dateToTime(row.date_to) >= dateToTime(companyContext.company.pay_period) &&
             dateToTime(row.date_from) <= dateToTime(monthEnd(companyContext.company.pay_period))).length
@@ -110,7 +110,7 @@ export default function Employees() {
                             </div>
                             <div className="d-flex justify-content-center flex-wrap p-0 m-0">
                                 {dataSet
-                                    ? <p className="p-0 m-0">You have {countActiveTeamMembers()} active employees</p>
+                                    ? <p className="p-0 m-0">You have {countActiveEmployees()} active employees</p>
                                     : null
                                 }
                             </div>
@@ -118,7 +118,7 @@ export default function Employees() {
                                 <ul class="nav block mb-2">
                                     <li class="nav-item">
                                         <a href="#" className={view === 'active' ? "nav-link active" : 'nav-link'} onClick={() => { onSetView('active') }}>
-                                            Active
+                                            Active {countActiveEmployees() ? <Badge color="secondary">{countActiveEmployees()}</Badge> : null}
                                         </a>
                                     </li>
                                     <li class="nav-item">
