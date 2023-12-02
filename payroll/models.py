@@ -38,12 +38,20 @@ class Job(models.Model):
     user = models.ForeignKey("User", on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
 
+class EmploymentStatus(models.Model):
+    name = models.CharField(max_length=150)
+
+class EmployeeType(models.Model):
+    name = models.CharField(max_length=150)
+
+class WagePer(models.Model):
+    name = models.CharField(max_length=150)
+
 class Person(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, null=True, default="", blank=True)
     middle_name = models.CharField(max_length=30, null=True, default="", blank=True)
-    date_from = models.DateField(default=date(1900, 1, 1))
-    date_to = models.DateField(default=date(9999, 12, 31))
+    birth_date = models.DateField(null=True, default=None, blank=True)
     tax_id = models.CharField(max_length=10, null=True, default="", blank=True)
     email = models.EmailField(null=True, default="", blank=True)
     user = models.ForeignKey(
@@ -64,6 +72,10 @@ class Employee(models.Model):
     date_to = models.DateField(default=date(9999, 12, 31))
     department = models.ForeignKey("Department", on_delete=models.PROTECT, null=True, default=None, blank=True)
     job = models.ForeignKey("Job", on_delete=models.PROTECT, null=True, default=None, blank=True)
+    status = models.ForeignKey("EmploymentStatus", on_delete=models.PROTECT, null=True, default=None, blank=True)
+    type = models.ForeignKey("EmployeeType", on_delete=models.PROTECT, null=True, default=None, blank=True)
+    wage = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=0.00, blank=True)
+    wage_per = models.ForeignKey("WagePer", on_delete=models.PROTECT, null=True, default=None, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)

@@ -1,14 +1,12 @@
-import { Badge, ButtonGroup, Table } from "reactstrap";
+import { Badge, Table } from "reactstrap";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageHeader } from "../components/PageHeader";
-import { Pagination } from "../components/Pagination"
 import { getEmployees } from "../services/employeeService";
-import { TableToolbar } from "../components/TableToolbar";
 import { CompanyContext } from "../context/CompanyContext";
 import { Toast } from "../components/Toast";
 import { dateToTime, monthEnd } from "../services/dateService";
-import { Plus, PlusLg } from "react-bootstrap-icons";
+import { Plus } from "react-bootstrap-icons";
 import { Button } from "../components/Button";
 
 export default function Employees() {
@@ -21,8 +19,8 @@ export default function Employees() {
     const rowData = [
         { title: 'Name', class: '', field: 'full_name' },
         { title: 'Tax ID', class: '', field: 'tax_id' },
-        { title: 'Email', class: '', field: 'email' },
         { title: 'Start Date', class: '', field: 'date_from' },
+        { title: 'Email', class: '', field: 'email' },
         { title: 'End Date', class: '', field: 'date_to', view: ['dismissed', 'deleted'] }
     ]
 
@@ -108,7 +106,6 @@ export default function Employees() {
                     <div className="col-12 h-100 bg-white rounded-1 p-3 shadow-sm border border-light-subtle position-relative d-flex flex-column justify-content-between">
                         <div className="header position-relative">
                             <div className="d-flex justify-content-center flex-wrap">
-                                {/* <TableToolbar onRefresh={onRefreshTable} onAdd={onNewEmployee} className="col-4" /> */}
                                 <PageHeader text="Employees" className="col-4 p-0 m-0" />
                             </div>
                             <div className="d-flex justify-content-center flex-wrap p-0 m-0">
@@ -120,16 +117,20 @@ export default function Employees() {
                             <div className="d-flex flex-row justify-content-between">
                                 <ul class="nav block mb-2">
                                     <li class="nav-item">
-                                        <a href="#" className={view === 'active' ? "nav-link active" : 'nav-link'} onClick={() => { onSetView('active') }}>Active</a>
+                                        <a href="#" className={view === 'active' ? "nav-link active" : 'nav-link'} onClick={() => { onSetView('active') }}>
+                                            Active
+                                        </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" className={view === 'dismissed' ? "nav-link active" : 'nav-link'} onClick={() => onSetView('dismissed')}>
-                                            Dismissed <Badge>{countDismissedEmployees()}</Badge>
+                                            Dismissed {countDismissedEmployees() ? <Badge color="secondary">{countDismissedEmployees()}</Badge> : null}
                                         </a>
                                     </li>
                                     {dataSet && countDeletedEmployees() ?
                                         <li class="nav-item">
-                                            <a href="#" className={view === 'deleted' ? "nav-link active" : 'nav-link'} onClick={() => onSetView('deleted')}>Deleted</a>
+                                            <a href="#" className={view === 'deleted' ? "nav-link active" : 'nav-link'} onClick={() => onSetView('deleted')}>
+                                                Deleted <Badge color="secondary">{countDeletedEmployees()}</Badge>
+                                            </a>
                                         </li> : null
                                     }
                                 </ul>
@@ -170,17 +171,6 @@ export default function Employees() {
                                 </tbody>
                             </Table>
                         </div>
-
-                        {/* <div className="footer position-relative d-flex justify-content-between">
-                            {dataSet
-                                ? <p>You have {countActiveTeamMembers()} active team members</p>
-                                : null
-                            }
-                            <ButtonGroup className="d-flex justify-content-end">
-                                <Pagination className="d-flex flex-column align-bottom justify-content-end" />
-                            </ButtonGroup>
-                        </div> */}
-
                     </div>
                     <Toast title="Error" messages={messages} close={() => { setMessages([]) }} />
 

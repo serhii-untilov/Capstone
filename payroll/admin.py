@@ -20,7 +20,7 @@ class JobAdmin(admin.ModelAdmin):
 class PersonAdmin(admin.ModelAdmin):
     # add the fields of the model here
     list_display = ("first_name", "last_name", "middle_name",
-                    "date_from", "date_to", "tax_id", "email", "user")
+                    "birth_date", "tax_id", "email", "user")
 
 
 class EmployeeAdmin(admin.ModelAdmin):
