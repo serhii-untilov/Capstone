@@ -10,10 +10,15 @@ from rest_framework.authentication import TokenAuthentication, BaseAuthenticatio
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
+from payroll.lib.run_payroll import run_payroll_company
 
-from .models import User, Law, Accounting, Company, Person, Employee, Department, Job
+from .models import User, Law, Accounting, Company, Person, Employee, Department, Job, \
+    EmploymentStatus, EmployeeType, WagePer, \
+    PaymentType, Payroll, PayrollDetails
 from .serializers import UserSerializer, GroupSerializer, LawSerializer, AccountingSerializer, \
-    CompanySerializer, PersonSerializer, EmployeeSerializer, DepartmentSerializer, JobSerializer
+    CompanySerializer, PersonSerializer, EmployeeSerializer, DepartmentSerializer, JobSerializer, \
+    EmploymentStatusSerializer, EmployeeTypeSerializer, WagePerSerializer, \
+    PaymentTypeSerializer, PayrollSerializer, PayrollDetailsSerializer
 
 
 class ReadOnly(BasePermission):
@@ -236,3 +241,59 @@ class JobView(viewsets.ModelViewSet):
         if user:
             return Job.objects.filter(user_id=user).order_by('name')
         return Job.objects.all().order_by('name')
+
+
+class EmploymentStatusView(viewsets.ModelViewSet):
+    # permission_classes = (ReadOnly)
+    serializer_class = EmploymentStatusSerializer
+    queryset = EmploymentStatus.objects.all()
+
+
+class EmployeeTypeView(viewsets.ModelViewSet):
+    # permission_classes = (ReadOnly)
+    serializer_class = EmployeeTypeSerializer
+    queryset = EmployeeType.objects.all()
+
+
+class WagePerView(viewsets.ModelViewSet):
+    # permission_classes = (ReadOnly)
+    serializer_class = WagePerSerializer
+    queryset = WagePer.objects.all()
+
+
+class PaymentTypeView(viewsets.ModelViewSet):
+    # permission_classes = (ReadOnly)
+    serializer_class = PaymentTypeSerializer
+    queryset = PaymentType.objects.all()
+
+
+class PayrollView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = PayrollSerializer
+    queryset = Payroll.objects.all()
+
+    def get_queryset(self):
+        employee = self.request.query_params.get('employee')
+        company = self.request.query_params.get('company')
+        pay_period = self.request.query_params.get('period')
+        if company:
+            run_payroll_company(company, pay_period)
+            return Payroll.objects.filter(employee__company_id=company, pay_period=pay_period).order_by('employee_id')
+        if employee:
+            return Payroll.objects.filter(employee_id=employee).order_by('pay_period')
+        return Payroll.objects.all()
+
+
+class PayrollDetailsView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = PayrollDetailsSerializer
+    queryset = PayrollDetails.objects.all()
+
+    def get_queryset(self):
+        employee = self.request.query_params.get('employee')
+        pay_period = self.request.query_params.get('period')
+        if employee:
+            return PayrollDetails.objects.filter(employee_id=employee, pay_period=pay_period).order_by('payment_type_id')
+        return PayrollDetails.objects.all()
+
+

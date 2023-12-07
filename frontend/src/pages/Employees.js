@@ -24,26 +24,19 @@ export default function Employees() {
         { title: 'Email', class: '', field: 'email' },
     ]
 
-    const fetchData = async () => {
-        if (!companyContext.company?.id) {
-            setDataSet([])
-            return
-        }
-        getEmployees(companyContext.company?.id).then(employees => {
-            setDataSet(employees)
-        }).catch(error => {
-            setMessages([error.message || 'Error'])
-        })
-
-    }
-
     useEffect(() => {
-        fetchData(companyContext.company?.id)
+        const fetchData = async (company) => {
+            getEmployees(company.id)
+            .then(employees => {
+                console.log(employees)
+                setDataSet(employees)
+            })
+            .catch(error => setMessages([error.message || 'Error']))
+        }
+        if (companyContext?.company?.id) {
+            fetchData(companyContext.company)
+        }
     }, [companyContext])
-
-    const onRefreshTable = () => {
-        fetchData(companyContext.company?.id)
-    }
 
     const onNewEmployee = () => {
         navigate('/employee')
@@ -104,7 +97,7 @@ export default function Employees() {
             {!dataSet ? <h3>Loading...</h3> :
                 <div className="col-12 h-100 bg-light py-4 position-relative">
                     <div className="col-12 h-100 bg-white rounded-1 p-3 shadow-sm border border-light-subtle position-relative d-flex flex-column justify-content-between">
-                        <div className="header position-relative">
+                        <div className="header position-relative ">
                             <div className="d-flex justify-content-center flex-wrap">
                                 <PageHeader text="Employees" className="col-4 p-0 m-0" />
                             </div>
@@ -118,7 +111,8 @@ export default function Employees() {
                                 <ul class="nav block mb-2">
                                     <li class="nav-item">
                                         <a href="#" className={view === 'active' ? "nav-link active" : 'nav-link'} onClick={() => { onSetView('active') }}>
-                                            Active {countActiveEmployees() ? <Badge color="secondary">{countActiveEmployees()}</Badge> : null}
+                                            Active
+                                            {/* {countActiveEmployees() ? <Badge color="secondary">{countActiveEmployees()}</Badge> : null} */}
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -140,13 +134,12 @@ export default function Employees() {
                                         <Plus size={24} /> Add a new employee</Button>
                                 </div>
                             </div>
-
+                            {/* <div className="py-5 my-5"> */}
                             <Table
-                                bordered
+                                // bordered
                                 hover
                                 responsive
                                 className="m-0 p-0"
-
                             >
                                 <thead className="table-light">
                                     <tr>
@@ -170,6 +163,7 @@ export default function Employees() {
                                         })}
                                 </tbody>
                             </Table>
+                            {/* </div> */}
                         </div>
                     </div>
                     <Toast title="Error" messages={messages} close={() => { setMessages([]) }} />

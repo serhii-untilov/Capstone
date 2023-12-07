@@ -12,6 +12,12 @@ router.register(r'persons', views.PersonView, 'person')
 router.register(r'employees', views.EmployeeView, 'employee')
 router.register(r'departments', views.DepartmentView, 'department')
 router.register(r'jobs', views.JobView, 'job')
+router.register(r'employment-statuses', views.EmploymentStatusView, 'employment-status')
+router.register(r'employee-types', views.EmployeeTypeView, 'employee-type')
+router.register(r'wage-per-list', views.WagePerView, 'wage-per')
+router.register(r'payment-types', views.PaymentTypeView, 'payment-type')
+router.register(r'payroll', views.PayrollView, 'payroll')
+router.register(r'payroll-details', views.PayrollDetailsView, 'payroll-details')
 
 urlpatterns = [
 	path('api/', include(router.urls)),

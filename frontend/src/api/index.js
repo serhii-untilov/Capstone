@@ -48,7 +48,9 @@ instance.interceptors.response.use(
 
 export const request = (url, method, data) => {
     return instance.request({ url, method, data })
-        .then((response) => response.data)
+        .then((response) => {
+            return response.data
+        })
         .catch((error) => {
             // console.log(error.config);
             // throw error.response?.data;

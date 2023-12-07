@@ -11,3 +11,19 @@ export async function getLawList() {
 export async function getAccountingList() {
     return await request('accounting/', 'get')
 }
+
+export async function getEmploymentStatuses() {
+    return await request('employment-statuses/', 'get')
+}
+
+export async function getEmployeeTypes() {
+    return await request('employee-types/', 'get')
+}
+
+export async function getWagePerList() {
+    return await request('wage-per-list/', 'get')
+}
+
+export async function getPaymentTypes() {
+    return await request('payment-types/', 'get')
+}

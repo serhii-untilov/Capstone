@@ -14,6 +14,7 @@ import { getJobs } from "../services/jobService"
 import { Spinner } from "../components/Spinner"
 import { Plus } from "react-bootstrap-icons"
 import { dateToTime } from "../services/dateService"
+import { getEmployeeTypes, getEmploymentStatuses, getWagePerList } from "../services/dictService"
 
 export function Employee() {
     const { id } = useParams()
@@ -26,8 +27,23 @@ export function Employee() {
     const [user, setUser] = useState()
     const [departments, setDepartments] = useState([])
     const [jobs, setJobs] = useState([])
+    const [employmentStatuses, setEmploymentStatuses] = useState([])
+    const disabledEmploymentStatuses = [2, 3, 5]
+    const [employeeTypes, setEmployeeTypes] = useState([])
+    const disabledEmployeeTypes = [2, 4, 5]
+    const [wagePerList, setWagePerList] = useState([])
+    const disabledWagePerList = [2, 4]
     const [validated, setValidated] = useState(false)
     const [messages, setMessages] = useState([])
+
+    useEffect(() => {
+        const fetchData = () => {
+            getEmploymentStatuses().then(data => setEmploymentStatuses(data)).catch(error => setMessages([...messages, error.message || 'Error']))
+            getEmployeeTypes().then(data => setEmployeeTypes(data)).catch(error => setMessages([...messages, error.message || 'Error']))
+            getWagePerList().then(data => setWagePerList(data)).catch(error => setMessages([...messages, error.message || 'Error']))
+        }
+        fetchData()
+    }, [])
 
     useEffect(() => {
         const fetchEmployee = async () => {
@@ -48,18 +64,6 @@ export function Employee() {
         }
         fetchEmployee()
     }, [id])
-
-    // useEffect(() => {
-    //     const fetchPerson = async () => {
-    //         if (employee?.person) {
-    //             setPerson(await getPerson(employee.person))
-    //         } else {
-    //             setPerson({})
-    //         }
-    //     }
-    //     fetchPerson()
-    // }, [employee])
-
 
     useEffect(() => {
         const fetchDepartments = () => {
@@ -277,7 +281,7 @@ export function Employee() {
 
                         </div>
 
-                        <div className="row">
+                        {/* <div className="row">
                             <FormGroup className="col-6">
                                 {employee ?
                                     <>
@@ -329,7 +333,7 @@ export function Employee() {
                                     </> : null}
                             </FormGroup>
 
-                        </div>
+                        </div> */}
 
                         <div className="row">
 
@@ -353,7 +357,102 @@ export function Employee() {
 
                         </div>
 
-                        <div className="d-flex justify-content-center">
+                        <div className="row">
+                            <FormGroup className="col-6">
+                                {employee ?
+                                    <>
+                                        <Label for="status">Employment Status</Label>
+                                        <div class="input-group">
+                                            <Input type="select" id="status" name="status" className="form-select"
+                                                default="1"
+                                                valid={validated}
+                                                value={employee?.status}
+                                                onChange={e => setEmployee({ ...employee, status: e.target.value })}
+                                            >
+                                                <option value="" key="0" disabled hidden></option>
+                                                {employmentStatuses ? employmentStatuses.map(status => {
+                                                    return <option
+                                                        disabled={disabledEmploymentStatuses.includes(status.id)}
+                                                        key={status.id}
+                                                        value={status.id}>
+                                                        {status.name}
+                                                    </option>
+                                                }) : null}
+
+                                            </Input>
+                                            <a href="#" className="input-group-text" id="edit-departments" onClick={onEditDepartments}><Plus size={24} /></a>
+                                        </div>
+                                    </> : null}
+                            </FormGroup>
+
+                            <FormGroup className="col-6">
+                                {employee ?
+                                    <>
+                                        <Label for="type">Employee type</Label>
+                                        <Input type="select" id="type" name="type" className="form-select"
+                                            default="1"
+                                            valid={validated && employee?.type}
+                                            invalid={validated && !employee?.type}
+                                            value={employee?.type}
+                                            onChange={e => setEmployee({ ...employee, type: e.target.value })}
+                                        >
+                                            <option value="" key="0" disabled hidden></option>
+                                            {employeeTypes ? employeeTypes.map(type => {
+                                                return <option
+                                                    disabled={disabledEmployeeTypes.includes(type.id)}
+                                                    key={type.id}
+                                                    value={type.id}
+                                                >{type.name}</option>
+                                            }) : null}
+                                        </Input>
+                                        <div className="invalid-feedback">
+                                            Please define an employee type.
+                                        </div>
+                                    </> : null}
+                            </FormGroup>
+
+                        </div>
+
+                        <div className="row">
+                            <FormGroup className="col-6">
+                                {employee ?
+                                    <>
+                                        <Label for="type">Wage</Label>
+                                        <Input type="number" id="wage" name="wage"
+                                            valid={validated}
+                                            value={employee?.wage}
+                                            onChange={e => setEmployee({ ...employee, wage: e.target.value })}
+                                        />
+                                    </> : null}
+                            </FormGroup>
+
+                            <FormGroup className="col-6">
+                                {employee ?
+                                    <>
+                                        <Label for="wage_per">Wage Per</Label>
+                                        <Input type="select" id="wage_per" name="wage_per" className="form-select"
+                                            default="3"
+                                            valid={validated}
+                                            value={employee?.wage_per}
+                                            onChange={e => setEmployee({ ...employee, wage_per: e.target.value })}
+                                        >
+                                            <option value="" key="0" disabled hidden></option>
+                                            {wagePerList ? wagePerList.map(wage_per => {
+                                                return <option
+                                                    disabled={disabledWagePerList.includes(wage_per.id)}
+                                                    key={wage_per.id}
+                                                    value={wage_per.id}>
+                                                    {wage_per.name}
+                                                </option>
+                                            }) : null}
+
+                                        </Input>
+                                    </> : null}
+                            </FormGroup>
+
+                        </div>
+
+                        <div className="d-flex justify-content-center mt-3">
                             <Button color="primary" onClick={onSaveForm} className="me-2 btn-fixed-width-75">Save</Button>
                             <Button color="primary" onClick={onCancel} outline className="btn-fixed-width-75">Cancel</Button>
                         </div>
@@ -362,7 +461,9 @@ export function Employee() {
 
                 {employee && employee.id ?
                     <div className="p-3 m-0 col-lg-4 col-sm-11">
-                        <div className="d-flex flex-column flex-wrap justify-content-center row shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white">
+                        <div className="d-flex flex-column flex-wrap justify-content-center row
+                            shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white"
+                        >
                             <div>
                                 <h5 className="text-center mb-1">Additional actions</h5>
                                 <p className="text-center">Save the main form to provide changes after performing additional actions</p>
