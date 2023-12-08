@@ -18,11 +18,11 @@ export default function Payroll() {
         { title: 'Name', class: '', field: 'full_name' },
         // { title: 'Days', class: '', field: 'days' },
         // { title: 'Hours', class: '', field: 'hours' },
-        { title: 'Wage', class: '', field: 'wage' },
-        { title: 'Bonus', class: '', field: 'bonus' },
-        { title: 'Taxes', class: '', field: 'taxes' },
-        { title: 'Deductions', class: '', field: 'deductions' },
-        { title: 'Payments', class: '', field: 'payments' },
+        { title: 'Wage', class: 'text-end', field: 'wage', total: true },
+        { title: 'Bonus', class: 'text-end', field: 'bonus', total: true },
+        { title: 'Taxes', class: 'text-end', field: 'taxes', total: true },
+        { title: 'Deductions', class: 'text-end', field: 'deductions', total: true },
+        { title: 'Payments', class: 'text-end', field: 'payments', total: true },
     ]
 
     const fetchPayroll = async (company_id, period) => {
@@ -113,10 +113,17 @@ export default function Payroll() {
                                                     onDoubleClickCapture={onEdit}
                                                     onContextMenu={onRightClick}
                                                 >
-                                                    {rowData.map((col) => { return <td>{row[col.field]}</td> })}
+                                                    {rowData.map((col) => { return <td className={col.class}>{row[col.field]}</td> })}
                                                 </tr>
                                             })}
                                     </tbody>
+                                    <thead sticky-top className="table-light sticky-top">
+                                        <tr>
+                                            {rowData.map(col => (<th className={col.class}>{
+                                                col.total ? dataSet.reduce((a, b) => a + parseInt(b[col.field] || 0), 0) || '' : ''
+                                            }</th>))}
+                                        </tr>
+                                    </thead>
                                 </Table>
                             </div>
                         </div>
