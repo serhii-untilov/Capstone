@@ -2,7 +2,7 @@
 
 ## Distinctiveness
 
-Payroll SMB application provide a **solution for employers and employees to calculate salary** and taxes based on Ukrainian laws.
+The Payroll SMB application provides a **solution for employers and employees to calculate salary** and taxes based on laws for chosen country.
 
 ## Complexity
 
@@ -89,14 +89,13 @@ npm install
 npm start
 ```
 
-
 ## Scenario
 
-1. Register as a new user.
+### 1. Register as a new user
 
    In the Register form enter *email*, *password*, select the *user role: Employer* and push the Register button.
 
-2. Create a Company
+### 2. Create a Company
 
   In the left side bar choose *Company - Create a new company*.
   On the new company form enter
