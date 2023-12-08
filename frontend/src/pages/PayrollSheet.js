@@ -97,7 +97,7 @@ export default function Payroll() {
                                     : <p className="p-0 m-0">Salary not accrued.</p>
                                 }
                                 <div>
-                                    <Button color="primary" onClick={onRunPayroll}>
+                                    <Button color="primary" className="mb-1" onClick={onRunPayroll}>
                                         <ArrowClockwise size={24} /> Run Payroll</Button>
                                 </div>
                             </div>

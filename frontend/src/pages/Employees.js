@@ -106,9 +106,9 @@ export default function Employees() {
                     <div className="col-12 h-100 bg-white rounded-1 p-3 shadow-sm border border-light-subtle position-relative d-flex flex-column justify-content-between">
                         <div className="header position-relative ">
                             <div className="d-flex justify-content-center flex-wrap">
-                                <PageHeader text="Employees" className="col-4 p-0 m-0" />
+                                <PageHeader text="Employees" className="col-4 p-0 mb-2" />
                             </div>
-                            <div className="d-flex justify-content-center flex-wrap p-0 m-0">
+                            <div className="d-flex justify-content-center flex-wrap p-0 mb-2">
                                 {dataSet
                                     ? <p className="p-0 m-0">You have {countActiveEmployees()} active employees</p>
                                     : null
