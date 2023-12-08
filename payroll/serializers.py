@@ -141,6 +141,22 @@ class PayrollSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PayrollDetailsSerializer(serializers.ModelSerializer):
+    payment_name = serializers.SerializerMethodField('get_payment_name')
+    payment_class = serializers.SerializerMethodField('get_payment_class')
+    payment_group = serializers.SerializerMethodField('get_payment_group')
+    payment_method = serializers.SerializerMethodField('get_payment_method')
+
+    def get_payment_name(self, obj):
+        return obj.payment_type.name
+
+    def get_payment_class(self, obj):
+        return obj.payment_type.class_name
+
+    def get_payment_group(self, obj):
+        return obj.payment_type.group
+
+    def get_payment_method(self, obj):
+        return obj.payment_type.method
     class Meta:
         model = PayrollDetails
         fields = '__all__'

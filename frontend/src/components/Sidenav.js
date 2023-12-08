@@ -188,12 +188,12 @@ function AppSidenav(args) {
                     {/* <NavLink to="/language" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                         <Globe size={24} className="me-4" />Language</NavLink> */}
 
-                    {authContext?.isAuth && userContext?.user?.is_employer
+                    {/* {authContext?.isAuth && userContext?.user?.is_employer
                         ? <>
                             <NavLink to="/settings" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <Gear size={24} className="me-4" />Settings</NavLink>
                         </>
-                        : null}
+                        : null} */}
 
                     {authContext?.isAuth
                         ? <>

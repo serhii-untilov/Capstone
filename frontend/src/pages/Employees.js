@@ -6,7 +6,7 @@ import { getEmployees } from "../services/employeeService";
 import { CompanyContext } from "../context/CompanyContext";
 import { Toast } from "../components/Toast";
 import { dateToTime, monthEnd } from "../services/dateService";
-import { Plus } from "react-bootstrap-icons";
+import { FileRuled, Pen, Person, Plus } from "react-bootstrap-icons";
 import { Button } from "../components/Button";
 
 export default function Employees() {
@@ -43,8 +43,15 @@ export default function Employees() {
     }
 
     const onEditEmployee = (e) => {
-        const id = e.target.parentElement.dataset.id
+        const id = e.target.dataset.id || e.target.parentElement.dataset.id
         navigate(`/employee/${id}`)
+    }
+
+    const onPayrollDetails = (e) => {
+        e.preventDefault()
+        const id = e.target.dataset.id || e.target.parentElement.dataset.id
+        const period = companyContext.company.pay_period
+        navigate(`/payroll-details/${id}/${period}`)
     }
 
     const onRightClick = (e) => {
@@ -145,7 +152,9 @@ export default function Employees() {
                                     <tr>
                                         {rowData
                                             .filter(col => !col.view || col.view.includes(view))
-                                            .map(col => (<th className={col.class}>{col.title}</th>))}
+                                            .map(col => (<th className={col.class}>{col.title}</th>))
+                                        }
+                                        <th className="text-center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -158,7 +167,12 @@ export default function Employees() {
                                             >
                                                 {rowData
                                                     .filter(col => !col.view || col.view.includes(view))
-                                                    .map((col) => { return <td>{row[col.field]}</td> })}
+                                                    .map((col) => { return <td>{row[col.field]}</td> })
+                                                }
+                                                <td className="text-center" data-id={row.id}>
+                                                        <Pen className="mx-2 action" size={24} data-id={row.id} onClick={onEditEmployee}/>
+                                                        {/* <FileRuled className="mx-2 action" size={24} data-id={row.id} onClick={onPayrollDetails} /> */}
+                                                    </td>
                                             </tr>
                                         })}
                                 </tbody>

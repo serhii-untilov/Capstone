@@ -6,47 +6,61 @@ import { dateMin, dateToTime, getPeriodName, formatDateTime } from "../services/
 import { Table } from "reactstrap";
 import { Toast } from "../components/Toast";
 import { Button } from "../components/Button";
-import { ArrowClockwise, FileRuled, Pen, Person, PersonGear } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom";
+import { ArrowClockwise } from "react-bootstrap-icons";
+import { useParams } from "react-router-dom";
+import { getPayrollDetails } from "../services/payrollDetailsService";
+import { getEmployee } from "../services/employeeService";
+import { getPerson } from "../services/personService";
 
-export default function Payroll() {
+export default function PayrollDetails() {
+    const { id, period } = useParams()
     const companyContext = useContext(CompanyContext)
-    const [period, setPeriod] = useState()
+    const [pay_period, setPayPeriod] = useState(period)
+    const [employee, setEmployee] = useState()
+    const [person, setPerson] = useState()
     const [dataSet, setDataSet] = useState([])
     const [messages, setMessages] = useState([])
-    const navigate = useNavigate()
 
     const rowData = [
-        { title: 'Name', class: '', field: 'full_name' },
+        { title: 'Payment type', class: '', field: 'payment_name' },
         // { title: 'Days', class: '', field: 'days' },
         // { title: 'Hours', class: '', field: 'hours' },
-        { title: 'Wage', class: 'text-end', field: 'wage', total: true },
-        { title: 'Bonus', class: 'text-end', field: 'bonus', total: true },
-        { title: 'Taxes', class: 'text-end', field: 'taxes', total: true },
-        { title: 'Deductions', class: 'text-end', field: 'deductions', total: true },
-        { title: 'Payments', class: 'text-end', field: 'payments', total: true },
+        { title: 'Amount', class: 'text-end', field: 'amount', total: true },
+        // { title: 'Date from', class: '', field: 'date_from' },
+        // { title: 'Date to', class: '', field: 'date_to' },
     ]
 
-    const fetchPayroll = async (company_id, period) => {
-        getPayroll({ company_id, period })
-            .then(payroll => {
-                console.log(payroll)
-                setDataSet(payroll)
-            })
+    const fetchPayrollDetails = async (employee_id, period) => {
+        getPayrollDetails({ employee_id, period })
+            .then(dataSet => setDataSet(dataSet))
             .catch(error => setMessages([error.message || 'Error']))
     }
 
     useEffect(() => {
-        if (companyContext?.company?.id && period) {
-            fetchPayroll(companyContext?.company?.id, period)
+        if (id && pay_period) {
+            fetchPayrollDetails(id, pay_period)
         }
-    }, [companyContext, period])
+    }, [id, pay_period])
 
     useEffect(() => {
-        if (companyContext?.company?.id) {
-            setPeriod(companyContext.company.pay_period)
+        const fetchEmployee = async () => {
+            if (id) {
+                getEmployee(id)
+                    .then((employee) => {
+                        setEmployee(employee)
+                        return getPerson(employee.person)
+                    }).then((person) => {
+                        setPerson(person)
+                    }).catch(error => {
+                        setMessages([error.message || 'Error'])
+                    })
+            } else {
+                setEmployee({})
+                setPerson({})
+            }
         }
-    }, [companyContext])
+        fetchEmployee()
+    }, [id])
 
     const salaryAccruedDate = () => {
         return dataSet && dataSet.length ? dataSet.reduce((a, b) => {
@@ -55,16 +69,9 @@ export default function Payroll() {
             : null
     }
 
-    const onPayrollDetails = (e) => {
+    const onEdit = (e) => {
         e.preventDefault()
-        const id = e.target.dataset.id || e.target.parentElement.dataset.id
-        navigate(`/payroll-details/${id}/${period}`)
-    }
-
-    const onEditEmployee = (e) => {
-        e.preventDefault()
-        const id = e.target.dataset.id || e.target.parentElement.dataset.id
-        navigate(`/employee/${id}`)
+        // TODO
     }
 
     const onRightClick = (e) => {
@@ -72,9 +79,9 @@ export default function Payroll() {
         // TODO
     }
 
-    const onRunPayroll = (e) => {
+    const onRefresh = (e) => {
         e.preventDefault()
-        fetchPayroll(companyContext?.company?.id, period)
+        fetchPayrollDetails(id, pay_period)
     }
 
     return (
@@ -84,21 +91,23 @@ export default function Payroll() {
                     <div className="col-12 h-100 bg-white rounded-1 p-3 shadow-sm border border-light-subtle position-relative d-flex flex-column justify-content-between">
                         <div className="h-100 position-relative">
                             <div className="d-flex justify-content-center flex-wrap">
-                                <PageHeader text="Payroll" className="col-4 p-0 mb-2" />
+                                <PageHeader text="Payroll" className="col-12 p-0 mb-2" />
                             </div>
-                            {/* <h4 className="text-center text-primary mb-2 p-0">{companyContext?.company?.name}</h4> */}
+                            <h4 className="text-center text-primary mb-2 p-0">{employee?.full_name}</h4>
                             <div className="d-flex justify-content-center flex-wrap p-0 m-0">
-                                {period ? <p className="">Pay period: {getPeriodName(period, 'my')}</p> : null}
+                                {pay_period ? <p className="">Pay period: {getPeriodName(pay_period, 'my')}</p> : null}
                             </div>
 
                             <div className="d-flex flex-row justify-content-between">
-                            {dataSet && salaryAccruedDate()
-                                    ? <p className="p-0 m-0">Salary accrued on {formatDateTime(salaryAccruedDate())}.</p>
-                                    : <p className="p-0 m-0">Salary not accrued.</p>
-                                }
+                                <div className="nav block mb-2">
+                                    {dataSet && salaryAccruedDate()
+                                        ? <p className="p-0 m-0">Salary accrued on {formatDateTime(salaryAccruedDate())}.</p>
+                                        : <p className="p-0 m-0">Salary not accrued.</p>
+                                    }
+                                </div>
                                 <div>
-                                    <Button color="primary" onClick={onRunPayroll}>
-                                        <ArrowClockwise size={24} /> Run Payroll</Button>
+                                    <Button color="primary" onClick={onRefresh}>
+                                        <ArrowClockwise size={24} /></Button>
                                 </div>
                             </div>
                             <div height="200px" className="overflow-y:auto">
@@ -113,30 +122,26 @@ export default function Payroll() {
                                     <thead sticky-top className="table-light sticky-top">
                                         <tr>
                                             {rowData.map(col => (<th className={col.class}>{col.title}</th>))}
-                                            <th className="text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {dataSet
                                             .map(row => {
-                                                return <tr data-id={row.employee}
-                                                    onDoubleClickCapture={onPayrollDetails}
+                                                return <tr data-id={row.id}
+                                                    onDoubleClickCapture={onEdit}
                                                     onContextMenu={onRightClick}
                                                 >
                                                     {rowData.map((col) => { return <td className={col.class}>{row[col.field]}</td> })}
-                                                    <td className="text-center" data-id={row.employee}>
-                                                        <Pen className="mx-2 action" size={24} data-id={row.employee} onClick={onEditEmployee}/>
-                                                        <FileRuled className="mx-2 action" size={24} data-id={row.employee} onClick={onPayrollDetails} />
-                                                    </td>
                                                 </tr>
                                             })}
                                     </tbody>
                                     <thead sticky-top className="table-light sticky-top">
                                         <tr>
                                             {rowData.map(col => (<th className={col.class}>{
-                                                col.total ? dataSet.reduce((a, b) => a + parseInt(b[col.field] || 0), 0) || '' : ''
+                                                col.total ? dataSet.reduce((a, b) => {
+                                                    return a + parseInt(b[col.field] || 0) * (b.payment_class === 'Deductions' ? -1 : 1)
+                                                }, 0) || '' : ''
                                             }</th>))}
-                                            <th className="text-center"></th>
                                         </tr>
                                     </thead>
                                 </Table>

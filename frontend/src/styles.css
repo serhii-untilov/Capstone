@@ -141,3 +141,8 @@ thead tr:nth-child(1) th {
   top: 0;
   z-index: 10;
 }
+
+.action {
+  cursor: pointer;
+  color: var(--bs-primary);
+}

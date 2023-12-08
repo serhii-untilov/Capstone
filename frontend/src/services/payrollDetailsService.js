@@ -1,7 +1,10 @@
 import { request } from "../api"
 
-export async function getPayrollDetails() {
-    return await request('payroll-details/', 'get')
+export async function getPayrollDetails({ employee_id, period }) {
+    const params = employee_id
+            ? `?employee=${employee_id}&period=${period}`
+            : ''
+    return await request(`payroll-details/${params}`, 'get')
 }
 
 export async function getPayrollDetailsRecord(id) {
