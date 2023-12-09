@@ -362,7 +362,7 @@ export function Employee() {
                                 {employee ?
                                     <>
                                         <Label for="status">Employment Status</Label>
-                                        <div class="input-group">
+
                                             <Input type="select" id="status" name="status" className="form-select"
                                                 default="1"
                                                 valid={validated}
@@ -380,8 +380,6 @@ export function Employee() {
                                                 }) : null}
 
                                             </Input>
-                                            <a href="#" className="input-group-text" id="edit-departments" onClick={onEditDepartments}><Plus size={24} /></a>
-                                        </div>
                                     </> : null}
                             </FormGroup>
 
@@ -419,6 +417,7 @@ export function Employee() {
                                     <>
                                         <Label for="type">Wage</Label>
                                         <Input type="number" id="wage" name="wage"
+                                            min="0" step="50"
                                             valid={validated}
                                             value={employee?.wage}
                                             onChange={e => setEmployee({ ...employee, wage: e.target.value })}
