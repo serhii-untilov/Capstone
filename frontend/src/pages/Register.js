@@ -39,10 +39,10 @@ export default function Register() {
         e.preventDefault()
         if (!validate()) return false
         try {
-            const isAuth = register({ email, password, group_id: userGroup })
+            const isAuth = await register({ email, password, group_id: userGroup })
             authContext.setIsAuth(isAuth)
             if (isAuth) return navigate('/', { replace: true })
-            setMessages([...messages, "Registration failed."])
+            setMessages(["Registration failed."])
         } catch (error) {
             setMessages([error.message || 'Error'])
         }

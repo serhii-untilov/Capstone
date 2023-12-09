@@ -34,7 +34,7 @@ This project uses:
 |frontend\src\App.js     |Frontend application main file|
 |frontend\src\index.js   |React.js application entrypoint file|
 |frontend\src\styles.css |Main style sheet file|
-|frontend\\.gitignore |Lis of files and directories to skip in git synchronization|
+|frontend\\.gitignore |Lis of files and directories to skip in git synchronization|****
 |frontend\package.json |Frontend application config file for npm |
 |payroll          |Backend Django Rest Framework application directory|
 |payroll\lib\date_utils.py|Functions to manipulate with date and dataTime data types - format, convert, etc|

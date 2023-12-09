@@ -1,6 +1,8 @@
 from datetime import datetime
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import Group
+from django.db.models import FilteredRelation, Q
+from payroll.lib.run_payroll import run_payroll_company
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
@@ -10,7 +12,6 @@ from rest_framework.authentication import TokenAuthentication, BaseAuthenticatio
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
-from payroll.lib.run_payroll import run_payroll_company
 
 from .models import User, Law, Accounting, Company, Person, Employee, Department, Job, \
     EmploymentStatus, EmployeeType, WagePer, \
@@ -30,19 +31,21 @@ class ReadOnly(BasePermission):
 def register(request):
     if request.method == 'POST':
         if not 'group_id' in request.data:
-            return None
+            return Response(status=status.HTTP_400_BAD_REQUEST, data='User role not defined.')
         if not request.data['group_id']:
-            return None
+            return Response(status=status.HTTP_400_BAD_REQUEST, data='User role not defined.')
         group = Group.objects.get(id=request.data['group_id'])
         if not group:
-            return None
+            return Response(status=status.HTTP_400_BAD_REQUEST, data="User role is not defined.")
         if not 'username' in request.data:
             request.data['username'] = request.data['email']
+        if User.objects.filter(email=request.data['email']).exists():
+            return Response(status=status.HTTP_400_BAD_REQUEST, data="User already exists. Use login instead.")
         user = User.objects.create_user(username=request.data['username'],
                                         email=request.data['email'],
                                         password=request.data['password'])
         if not user:
-            return None
+            return Response(status=status.HTTP_400_BAD_REQUEST, data='User not created.')
         user.groups.add(group)
         user.save()
         refresh = RefreshToken.for_user(user)
@@ -51,7 +54,7 @@ def register(request):
             'access': str(refresh.access_token)
         })
     else:
-        return (Response(status=status.HTTP_400_BAD_REQUEST))
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 # @api_view(['POST', 'OPTIONS'])
@@ -200,6 +203,17 @@ class CompanyView(viewsets.ModelViewSet):
         request.data['owner'] = request.user.id
         return super().create(request, *args, **kwargs)
 
+    def get_queryset(self):
+        user = UserSerializer(self.request.user).data
+        if not user:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data='User not defined.')
+        if user['is_employer']:
+            return Company.objects.filter(owner_id=user['id'])
+        if user['is_employee']:
+            company_ids = [x['company_id'] for x in Employee.objects.filter(person__email=user['email']).values('company_id').distinct()]
+            return Company.objects.filter(id__in=company_ids)
+        return Response(status=status.HTTP_400_BAD_REQUEST, data='User role not defined.')
+
 
 class PersonView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
@@ -295,5 +309,3 @@ class PayrollDetailsView(viewsets.ModelViewSet):
         if employee:
             return PayrollDetails.objects.filter(employee_id=employee, pay_period=pay_period).order_by('payment_type_id')
         return PayrollDetails.objects.all()
-
-

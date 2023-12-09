@@ -2,9 +2,10 @@ import { request } from "../api"
 
 export async function register(credentials) {
     const data = await request('register/', 'post', credentials)
+    if (!data.access) throw new Error(`Error: Register failed`)
     localStorage.setItem('access_token', data.access)
     localStorage.setItem('refresh_token', data.refresh)
-    return data.access
+    return true
 }
 
 export async function login(credentials) {

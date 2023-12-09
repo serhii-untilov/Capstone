@@ -35,7 +35,7 @@ function AppSidenav(args) {
         if (authContext.isAuth) {
             fetchData().catch(console.error)
         }
-    }, [authContext, companyContext])
+    }, [authContext, userContext])
 
     const onLogout = async (e) => {
         e.preventDefault()
@@ -154,7 +154,7 @@ function AppSidenav(args) {
                         </NavLink>
                         : null}
 
-                    {authContext?.isAuth && userContext?.user?.is_employer
+                    {authContext?.isAuth && userContext?.user?.is_employer && companyContext.company
                         ? <>
 
                             {/* <Delimiter /> */}
@@ -174,7 +174,7 @@ function AppSidenav(args) {
                         : null}
                     {/* <Delimiter /> */}
 
-                    {authContext?.isAuth && userContext?.user?.is_employee
+                    {authContext?.isAuth && userContext?.user?.is_employee && companyContext.company
                         ? <>
                             <NavLink to="/personal-card" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PersonVcard size={24} className="me-4" />Personal card</NavLink>
