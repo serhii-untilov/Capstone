@@ -179,7 +179,7 @@ function AppSidenav(args) {
                             <NavLink to="/personal-card" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <PersonVcard size={24} className="me-4" />Personal card</NavLink>
 
-                            <NavLink to="/payroll" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
+                            <NavLink to="/employee-payroll" className={({ isActive, isPending }) => isPending ? "m-0 p-2 pending" : isActive ? "m-0 p-2 active" : "m-0 p-2"}>
                                 <FileRuled size={24} className="me-4" />Payroll</NavLink>
                         </>
                         : null}

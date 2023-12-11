@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { PageHeader } from "../components/PageHeader";
 import { CompanyContext } from "../context/CompanyContext";
-import { getPayroll } from "../services/payrollService";
 import { dateMin, dateToTime, getPeriodName, formatDateTime } from "../services/dateService";
 import { Table } from "reactstrap";
 import { Toast } from "../components/Toast";
@@ -12,8 +11,8 @@ import { getPayrollDetails } from "../services/payrollDetailsService";
 import { getEmployee } from "../services/employeeService";
 import { getPerson } from "../services/personService";
 
-export default function PayrollDetails() {
-    const { id, period } = useParams()
+export default function PayrollDetails({ ...props }) {
+    const { id, period } = { ...useParams(), ...props }
     const companyContext = useContext(CompanyContext)
     const [pay_period, setPayPeriod] = useState(period)
     const [employee, setEmployee] = useState()
@@ -22,7 +21,7 @@ export default function PayrollDetails() {
     const [messages, setMessages] = useState([])
 
     const rowData = [
-        { title: 'Payment type', class: '', field: 'payment_name' },
+        { title: 'Payment type', class: '', field: 'payment_name', total_title: 'Net pay' },
         // { title: 'Days', class: '', field: 'days' },
         // { title: 'Hours', class: '', field: 'hours' },
         { title: 'Amount', class: 'text-end', field: 'amount', total: true },
@@ -140,7 +139,8 @@ export default function PayrollDetails() {
                                             {rowData.map(col => (<th className={col.class}>{
                                                 col.total ? dataSet.reduce((a, b) => {
                                                     return a + parseInt(b[col.field] || 0) * (b.payment_class === 'Deductions' ? -1 : 1)
-                                                }, 0) || '' : ''
+                                                }, 0) || ''
+                                                : col.total_title || ''
                                             }</th>))}
                                         </tr>
                                     </thead>

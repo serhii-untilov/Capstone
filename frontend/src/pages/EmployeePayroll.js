@@ -8,18 +8,22 @@ import { Toast } from "../components/Toast";
 import { Button } from "../components/Button";
 import { ArrowClockwise, FileRuled, Pen, Person, PersonGear } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+import { getEmployeeByUserId } from "../services/employeeService";
 
-export default function Payroll() {
+export default function EmployeePayroll() {
+    const userContext = useContext(UserContext)
     const companyContext = useContext(CompanyContext)
-    const [period, setPeriod] = useState()
+    const [employee, setEmployee] = useState()
     const [dataSet, setDataSet] = useState([])
     const [messages, setMessages] = useState([])
     const navigate = useNavigate()
 
     const rowData = [
-        { title: 'Name', class: '', field: 'full_name' },
+        // { title: 'Name', class: '', field: 'full_name' },
         // { title: 'Days', class: '', field: 'days' },
         // { title: 'Hours', class: '', field: 'hours' },
+        { title: 'Pay period', class: '', field: 'pay_period' },
         { title: 'Wage', class: 'text-end', field: 'wage', total: true },
         { title: 'Bonus', class: 'text-end', field: 'bonus', total: true },
         { title: 'Taxes', class: 'text-end', field: 'taxes', total: true },
@@ -28,54 +32,35 @@ export default function Payroll() {
         { title: 'Net pay', class: 'text-end', field: 'net_pay', total: true },
     ]
 
-    const fetchPayroll = async (company_id, period) => {
-        getPayroll({ company_id, period })
-            .then(payroll => {
-                console.log(payroll)
+    const fetchData = async (company_id, user_id) => {
+        getEmployeeByUserId(company_id, user_id)
+            .then(data => {
+                setEmployee(data[0])
+                return data[0]
+            }).then(employee => {
+                return getPayroll({ employee_id: employee.id })
+            }).then(payroll => {
                 setDataSet(payroll)
             })
             .catch(error => setMessages([error.message || 'Error']))
     }
 
     useEffect(() => {
-        if (companyContext?.company?.id && period) {
-            fetchPayroll(companyContext?.company?.id, period)
+        if (companyContext.company?.id && userContext.user?.id) {
+            fetchData(companyContext.company.id, userContext.user.id)
         }
-    }, [companyContext, period])
-
-    useEffect(() => {
-        if (companyContext?.company?.id) {
-            setPeriod(companyContext.company.pay_period)
-        }
-    }, [companyContext])
-
-    const salaryAccruedDate = () => {
-        return dataSet && dataSet.length ? dataSet.reduce((a, b) => {
-            return dateToTime(a.created) < dateToTime(b.created) ? b : a
-        }, { created: dateMin() }).created
-            : null
-    }
+    }, [companyContext, userContext])
 
     const onPayrollDetails = (e) => {
         e.preventDefault()
         const id = e.target.dataset.id || e.target.parentElement.dataset.id
+        const period = e.target.dataset.period || e.target.parentElement.dataset.period
         navigate(`/payroll-details/${id}/${period}`)
-    }
-
-    const onEditEmployee = (e) => {
-        e.preventDefault()
-        const id = e.target.dataset.id || e.target.parentElement.dataset.id
-        navigate(`/employee/${id}`)
     }
 
     const onRightClick = (e) => {
         e.preventDefault()
         // TODO
-    }
-
-    const onRunPayroll = (e) => {
-        e.preventDefault()
-        fetchPayroll(companyContext?.company?.id, period)
     }
 
     return (
@@ -87,21 +72,8 @@ export default function Payroll() {
                             <div className="d-flex justify-content-center flex-wrap">
                                 <PageHeader text="Payroll" className="col-4 p-0 mb-2" />
                             </div>
-                            {/* <h4 className="text-center text-primary mb-2 p-0">{companyContext?.company?.name}</h4> */}
-                            <div className="d-flex justify-content-center flex-wrap p-0 m-0">
-                                {period ? <p className="">Pay period: {getPeriodName(period, 'my')}</p> : null}
-                            </div>
+                            <h4 className="text-center text-primary mb-2 p-0">{employee?.full_name}</h4>
 
-                            <div className="d-flex flex-row justify-content-between">
-                                {dataSet && salaryAccruedDate()
-                                    ? <p className="p-0 m-0">Salary accrued on {formatDateTime(salaryAccruedDate())}.</p>
-                                    : <p className="p-0 m-0">Salary not accrued.</p>
-                                }
-                                <div>
-                                    <Button color="primary" className="mb-1" onClick={onRunPayroll}>
-                                        <ArrowClockwise size={24} /> Run Payroll</Button>
-                                </div>
-                            </div>
                             <div height="200px" className="overflow-y:auto">
                                 <Table
                                     // height="200"
@@ -125,9 +97,8 @@ export default function Payroll() {
                                                     onContextMenu={onRightClick}
                                                 >
                                                     {rowData.map((col) => { return <td className={col.class}>{row[col.field]}</td> })}
-                                                    <td className="text-center" data-id={row.employee}>
-                                                        <Pen className="mx-2 action" size={20} data-id={row.employee} onClick={onEditEmployee} />
-                                                        <FileRuled className="mx-2 action" size={20} data-id={row.employee} onClick={onPayrollDetails} />
+                                                    <td className="text-center" data-id={row.employee} data-period={row.pay_period}>
+                                                        <FileRuled className="mx-2 action" size={20} data-id={row.employee}  data-period={row.pay_period} onClick={onPayrollDetails} />
                                                     </td>
                                                 </tr>
                                             })}

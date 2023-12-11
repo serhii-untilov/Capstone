@@ -14,6 +14,7 @@ import Staff from "../pages/Staff"
 import { RequireAuth } from "./RequireAuth"
 import { Employee } from "../pages/Employee"
 import PayrollDetails from "../pages/PayrollDetails"
+import EmployeePayroll from "../pages/EmployeePayroll"
 
 export default function Router() {
 
@@ -37,6 +38,7 @@ export default function Router() {
             <Route path="/payroll-sheet" element={<RequireAuth children={<PayrollSheet />} />} />
             <Route path="/personal-card" element={<RequireAuth children={<PersonalCard />} />} />
             <Route path="/payroll-details/:id/:period" element={<RequireAuth children={<PayrollDetails />} />} />
+            <Route path="/employee-payroll" element={<RequireAuth children={<EmployeePayroll />} />} />
             <Route path="/settings" element={<RequireAuth children={<Settings />} />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />

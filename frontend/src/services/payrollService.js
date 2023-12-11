@@ -4,7 +4,7 @@ export async function getPayroll({ company_id, employee_id, period }) {
     const params = company_id
         ? `?company=${company_id}&period=${period}`
         : employee_id
-            ? `?employee=${employee_id}&period=${period}`
+            ? `?employee=${employee_id}`
             : ''
     return await request(`payroll/${params}`, 'get')
 }

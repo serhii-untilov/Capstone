@@ -4,6 +4,7 @@ import { getEmployeeByUserId } from "../services/employeeService";
 import { Navigate } from "react-router-dom";
 import { Toast } from "../components/Toast";
 import { CompanyContext } from "../context/CompanyContext";
+import { Employee } from "./Employee";
 
 export default function PersonalCard() {
     const userContext = useContext(UserContext)
@@ -24,7 +25,9 @@ export default function PersonalCard() {
         }
     }, [userContext, companyContext])
 
-    return (employee ? <Navigate to={`/employee/${employee.id}`} /> :
+    return (
+        // employee ? <Navigate to={`/employee/${employee.id}`} /> :
+        employee ? <Employee id={employee.id} /> :
         <>
             <h3>Loading...</h3>
             <Toast

@@ -126,6 +126,7 @@ class PayrollSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField('get_full_name')
     tax_id = serializers.SerializerMethodField('get_tax_id')
     email = serializers.SerializerMethodField('get_email')
+    net_pay = serializers.SerializerMethodField('get_net_pay')
 
     def get_full_name(self, obj):
         return obj.employee.person.first_name + ' ' + obj.employee.person.last_name
@@ -135,6 +136,9 @@ class PayrollSerializer(serializers.ModelSerializer):
 
     def get_email(self, obj):
         return obj.employee.person.email
+
+    def get_net_pay(self, obj):
+        return obj.wage + obj.bonus - obj.taxes - obj.deductions
 
     class Meta:
         model = Payroll
