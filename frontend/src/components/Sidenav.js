@@ -6,7 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { NavLink as NavLinkStrap } from "reactstrap"
 import {
     BoxArrowInRight, BoxArrowLeft, PersonPlus, Person, Briefcase,
-    FileRuled, PersonVcard, Gear, CaretDownFill, People
+    FileRuled, PersonVcard, CaretDownFill, People
 } from 'react-bootstrap-icons'
 
 import { AuthContext } from '../context/AuthContext'

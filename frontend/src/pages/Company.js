@@ -289,7 +289,7 @@ export default function Company() {
                                     })
                                 }}
                             />
-                            <small id="emailHelp" class="form-text text-muted">The timeframe in which your employee worked.</small>
+                            <small id="emailHelp" class="form-text text-muted">The time frame in which your employee worked.</small>
                             <div className="invalid-feedback">
                                 Please provide pay period.
                             </div>

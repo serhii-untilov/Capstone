@@ -12,7 +12,6 @@ import { getDepartments } from "../services/departmentService"
 import { UserContext } from "../context/UserContext"
 import { getJobs } from "../services/jobService"
 import { Spinner } from "../components/Spinner"
-import { Plus } from "react-bootstrap-icons"
 import { dateToTime } from "../services/dateService"
 import { getEmployeeTypes, getEmploymentStatuses, getWagePerList } from "../services/dictService"
 
@@ -182,15 +181,15 @@ export function Employee({ ...props }) {
         return navigate(-1)
     }
 
-    const onEditDepartments = (e) => {
-        e.preventDefault()
-        console.log(e.target)
-    }
+    // const onEditDepartments = (e) => {
+    //     e.preventDefault()
+    //     console.log(e.target)
+    // }
 
-    const onEditJobs = (e) => {
-        e.preventDefault()
-        console.log(e.target)
-    }
+    // const onEditJobs = (e) => {
+    //     e.preventDefault()
+    //     console.log(e.target)
+    // }
 
     return (
         <>

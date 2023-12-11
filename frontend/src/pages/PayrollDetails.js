@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader } from "../components/PageHeader";
-import { CompanyContext } from "../context/CompanyContext";
 import { dateMin, dateToTime, getPeriodName, formatDateTime } from "../services/dateService";
 import { Table } from "reactstrap";
 import { Toast } from "../components/Toast";
@@ -13,10 +12,9 @@ import { getPerson } from "../services/personService";
 
 export default function PayrollDetails({ ...props }) {
     const { id, period } = { ...useParams(), ...props }
-    const companyContext = useContext(CompanyContext)
     const [pay_period, setPayPeriod] = useState(period)
     const [employee, setEmployee] = useState()
-    const [person, setPerson] = useState()
+    // const [person, setPerson] = useState()
     const [dataSet, setDataSet] = useState([])
     const [messages, setMessages] = useState([])
 
@@ -48,14 +46,14 @@ export default function PayrollDetails({ ...props }) {
                     .then((employee) => {
                         setEmployee(employee)
                         return getPerson(employee.person)
-                    }).then((person) => {
-                        setPerson(person)
+                    // }).then((person) => {
+                    //     setPerson(person)
                     }).catch(error => {
                         setMessages([error.message || 'Error'])
                     })
             } else {
                 setEmployee({})
-                setPerson({})
+                // setPerson({})
             }
         }
         fetchEmployee()

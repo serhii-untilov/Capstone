@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { getEmployeeByUserId } from "../services/employeeService";
-import { Navigate } from "react-router-dom";
 import { Toast } from "../components/Toast";
 import { CompanyContext } from "../context/CompanyContext";
 import { Employee } from "./Employee";
@@ -26,7 +25,6 @@ export default function PersonalCard() {
     }, [userContext, companyContext])
 
     return (
-        // employee ? <Navigate to={`/employee/${employee.id}`} /> :
         employee ? <Employee id={employee.id} /> :
         <>
             <h3>Loading...</h3>

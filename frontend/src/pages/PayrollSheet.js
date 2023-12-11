@@ -6,7 +6,7 @@ import { dateMin, dateToTime, getPeriodName, formatDateTime } from "../services/
 import { Table } from "reactstrap";
 import { Toast } from "../components/Toast";
 import { Button } from "../components/Button";
-import { ArrowClockwise, FileRuled, Pen, Person, PersonGear } from "react-bootstrap-icons";
+import { ArrowClockwise, FileRuled, Pen } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 
 export default function Payroll() {
