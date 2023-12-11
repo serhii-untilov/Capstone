@@ -12,6 +12,10 @@ export async function getEmployee(id) {
     return await request(`employees/${id}/`, 'get' )
 }
 
+export async function getEmployeeByUserId(company_id, user_id) {
+    return await request(`employees/?company=${company_id}&user=${user_id}`, 'get')
+}
+
 export function postEmployee(employee) {
     return request('employees/', 'post', employee)
 }

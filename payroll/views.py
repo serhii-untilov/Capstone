@@ -12,6 +12,7 @@ from rest_framework.authentication import TokenAuthentication, BaseAuthenticatio
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny, IsAdminUser, SAFE_METHODS
 from rest_framework.response import Response
+from payroll.lib.date_utils import month_end
 
 from .models import User, Law, Accounting, Company, Person, Employee, Department, Job, \
     EmploymentStatus, EmployeeType, WagePer, \
@@ -227,9 +228,35 @@ class EmployeeView(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
 
     def get_queryset(self):
-        company = self.request.query_params.get('company')
-        if company:
-            return Employee.objects.filter(company_id=company)
+        company_id = self.request.query_params.get('company')
+        user_id = self.request.query_params.get('user')
+        if user_id:
+            user = User.objects.get(pk=user_id)
+            company = Company.objects.get(pk=company_id)
+            employee = Employee.objects.filter(
+                company_id=company_id,
+                person__email=user.email,
+                date_from__lte=month_end(company.pay_period),
+                date_to__gte=company.pay_period,
+            ).first()
+            if employee:
+                return [employee]
+            employee = Employee.objects.filter(
+                company_id=company_id,
+                person__email=user.email,
+                date_from__lte=month_end(company.pay_period),
+            ).first()
+            if employee:
+                return [employee]
+            employee = Employee.objects.filter(
+                company_id=company_id,
+                person__email=user.email,
+            ).first()
+            if employee:
+                return [employee]
+            return Response(status=status.HTTP_404_NOT_FOUND, data='Employee not found.')
+        if company_id:
+            return Employee.objects.filter(company_id=company_id)
         return Employee.objects.all()
 
 

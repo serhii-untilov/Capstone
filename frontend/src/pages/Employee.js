@@ -217,6 +217,7 @@ export function Employee() {
                                     <>
                                         <Label for="first_name">First name</Label>
                                         <Input id="first_name" name="first_name" type="text"
+                                            disabled={ userContext.user.is_employer ? "" : "disabled" }
                                             autoFocus
                                             required
                                             invalid={validated && !person?.first_name}
@@ -235,6 +236,7 @@ export function Employee() {
                             <FormGroup className="col-6">
                                 <Label for="last_name">Last name</Label>
                                 <Input id="last_name" name="last_name" type="text"
+                                    disabled={ userContext.user.is_employer ? "" : "disabled" }
                                     value={person?.last_name}
                                     onChange={e => setPerson({ ...person, last_name: e.target.value })}
                                 />
@@ -246,6 +248,7 @@ export function Employee() {
                             <FormGroup className="col-6">
                                 <Label for="birth_date">Birth date</Label>
                                 <Input id="birth_date" name="birth_date" type="date"
+                                    disabled={ userContext.user.is_employer ? "" : "disabled" }
                                     value={person?.birth_date}
                                     onChange={e => setPerson({ ...person, birth_date: e.target.value })}
                                 />
@@ -254,6 +257,7 @@ export function Employee() {
                             <FormGroup className="col-6">
                                 <Label for="tax_id">Tax ID</Label>
                                 <Input id="tax_id" name="tax_id" type="text"
+                                    disabled={ userContext.user.is_employer ? "" : "disabled" }
                                     value={person?.tax_id}
                                     onChange={e => setPerson({ ...person, tax_id: e.target.value })}
                                 />
@@ -266,6 +270,7 @@ export function Employee() {
                             <FormGroup className="col-6">
                                 <Label for="email">Email</Label>
                                 <Input id="email" name="email" type="text"
+                                    disabled={ userContext.user.is_employer ? "" : "disabled" }
                                     value={person?.email}
                                     onChange={e => onChangeEmail(e.target.value)}
                                 />
@@ -340,6 +345,7 @@ export function Employee() {
                             <FormGroup className="col-6">
                                 <Label for="employee_date_from">Start date</Label>
                                 <Input id="employee_date_from" name="employee_date_from" type="date"
+                                    disabled={ userContext.user.is_employer ? "" : "disabled" }
                                     value={employee?.date_from}
                                     onChange={e => setEmployee({ ...employee, date_from: e.target.value })}
                                 />
@@ -349,6 +355,7 @@ export function Employee() {
                                 <FormGroup className="col-6">
                                     <Label for="employee_date_to">Dismissal date</Label>
                                     <Input id="employee_date_to" name="employee_date_to" type="date"
+                                        disabled={ userContext.user.is_employer ? "" : "disabled" }
                                         value={employee?.date_to}
                                         onChange={e => setEmployee({ ...employee, date_to: e.target.value })}
                                     />
@@ -364,6 +371,7 @@ export function Employee() {
                                         <Label for="status">Employment Status</Label>
 
                                             <Input type="select" id="status" name="status" className="form-select"
+                                                disabled={ userContext.user.is_employer ? "" : "disabled" }
                                                 default="1"
                                                 valid={validated}
                                                 value={employee?.status}
@@ -388,6 +396,7 @@ export function Employee() {
                                     <>
                                         <Label for="type">Employee type</Label>
                                         <Input type="select" id="type" name="type" className="form-select"
+                                            disabled={ userContext.user.is_employer ? "" : "disabled" }
                                             default="1"
                                             valid={validated && employee?.type}
                                             invalid={validated && !employee?.type}
@@ -417,6 +426,7 @@ export function Employee() {
                                     <>
                                         <Label for="type">Wage</Label>
                                         <Input type="number" id="wage" name="wage"
+                                            disabled={ userContext.user.is_employer ? "" : "disabled" }
                                             min="0" step="50"
                                             valid={validated}
                                             value={employee?.wage}
@@ -430,6 +440,7 @@ export function Employee() {
                                     <>
                                         <Label for="wage_per">Wage Per</Label>
                                         <Input type="select" id="wage_per" name="wage_per" className="form-select"
+                                            disabled={ userContext.user.is_employer ? "" : "disabled" }
                                             default="3"
                                             valid={validated}
                                             value={employee?.wage_per}
@@ -451,14 +462,16 @@ export function Employee() {
 
                         </div>
 
+                        {employee && employee.id && userContext.user.is_employer ?
                         <div className="d-flex justify-content-center mt-3">
                             <Button color="primary" onClick={onSaveForm} className="me-2 btn-fixed-width-75">Save</Button>
                             <Button color="primary" onClick={onCancel} outline className="btn-fixed-width-75">Cancel</Button>
                         </div>
+                        : null }
                     </Form>
                 </div>
 
-                {employee && employee.id ?
+                {employee && employee.id && userContext.user.is_employer ?
                     <div className="p-3 m-0 col-lg-4 col-sm-11">
                         <div className="d-flex flex-column flex-wrap justify-content-center row
                             shadow-sm border border-light-subtle p-3 rounded-1 m-auto bg-white"
