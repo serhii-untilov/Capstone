@@ -170,7 +170,7 @@ export default function Employees() {
                                                     .map((col) => { return <td>{row[col.field]}</td> })
                                                 }
                                                 <td className="text-center" data-id={row.id}>
-                                                        <Pen className="mx-2 action" size={24} data-id={row.id} onClick={onEditEmployee}/>
+                                                        <Pen className="mx-2 action" size={20} data-id={row.id} onClick={onEditEmployee}/>
                                                         {/* <FileRuled className="mx-2 action" size={24} data-id={row.id} onClick={onPayrollDetails} /> */}
                                                     </td>
                                             </tr>

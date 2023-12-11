@@ -125,8 +125,8 @@ export default function Payroll() {
                                                 >
                                                     {rowData.map((col) => { return <td className={col.class}>{row[col.field]}</td> })}
                                                     <td className="text-center" data-id={row.employee}>
-                                                        <Pen className="mx-2 action" size={24} data-id={row.employee} onClick={onEditEmployee}/>
-                                                        <FileRuled className="mx-2 action" size={24} data-id={row.employee} onClick={onPayrollDetails} />
+                                                        <Pen className="mx-2 action" size={20} data-id={row.employee} onClick={onEditEmployee}/>
+                                                        <FileRuled className="mx-2 action" size={20} data-id={row.employee} onClick={onPayrollDetails} />
                                                     </td>
                                                 </tr>
                                             })}
