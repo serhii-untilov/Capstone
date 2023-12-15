@@ -146,7 +146,7 @@ Email: mary_lee@mail.com, Password: desired, User role: Employee
 
 - In the left sidebar choose *Personal card*, and you will see the employee's personal data.
 
-### 7. View the employee payroll
+### 8. View the employee payroll
 
 - In the left sidebar choose *Payroll*, and you will see the employee's payroll.
 - Each record in the table provide calculated amount of wage, bonus, taxes, and net pay by pay period.
