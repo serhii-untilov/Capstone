@@ -21,7 +21,7 @@ This project uses:
 
 ## Video screencast on Youtube
 
-[Link to Video screencast on Youtube](https://youtu.be/Hg5s5_6zE3o)
+[Link to the Video screencast on Youtube](https://youtu.be/Hg5s5_6zE3o)
 
 ## Files and directory structure
 
