@@ -141,4 +141,4 @@ Email: mary_lee@mail.com, Password: desired, User role: Employee
 ### 7. View the employee payroll
 
 - In the left sidebar choose *Payroll*, and you will see the employee's payroll.
-- Each record in the table provide calculated amount of wage, bonus, taxes, and net pay.
+- Each record in the table provide calculated amount of wage, bonus, taxes, and net pay by pay period.
