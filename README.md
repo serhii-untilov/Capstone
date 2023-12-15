@@ -51,7 +51,7 @@ This project uses:
 
 ## Getting Started
 
-To run application, in the project directory, execute the script:
+To launch the application, navigate to the project directory and run the script:
 
 ``` bash
 ./start.sh
