@@ -51,7 +51,7 @@ This project uses:
 
 ## Getting Started
 
-To run application in the project directory, you can run script:
+To run application, in the project directory, execute the script:
 
 ``` bash
 ./start.sh
@@ -61,7 +61,9 @@ This script will launch the backend and the frontend applications simultaneously
 
 ## Additional information
 
-To run the application host machine must have a development environment for Python and JavaScript. If it is not, try to install it:
+The host machine must have development environment for Python and JavaScript.
+
+If it is not, try to install it by execute the script:
 
 ``` bash
 ./install.sh
