@@ -15,6 +15,10 @@ This project uses:
 - Axios HTTP Client to make requests to a REST API on the backend server
 - React Router to organize frontend pages, routes and make context
 
+## Preview
+
+![Preview](./screenshot.png)
+
 ## Files and directory structure
 
 |File / directory        |Description|
