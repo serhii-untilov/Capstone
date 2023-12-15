@@ -1,4 +1,4 @@
-# Payroll for Small and Medium Business
+# Payroll for Small and Medium Businesses
 
 ## Distinctiveness
 
@@ -18,6 +18,10 @@ This project uses:
 ## Preview
 
 ![Preview](./screenshot.png)
+
+## Video screencast on Youtube
+
+![Screencast](https://youtu.be/Hg5s5_6zE3o)
 
 ## Files and directory structure
 
