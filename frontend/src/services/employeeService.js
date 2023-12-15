@@ -1,7 +1,18 @@
 import { request } from "../api"
+import { dateMax, formatDate } from "./dateService"
 
-export const newEmployee = {
-    person_id: null
+export function newEmployee() {
+    return {
+        person_id: null,
+        date_from: formatDate(Date.now()),
+        date_to: formatDate(dateMax()),
+        department: '',
+        job: '',
+        status: 1,
+        type: 1,
+        wage: 0,
+        wage_per: 3,
+    }
 }
 
 export async function getEmployees(company_id) {
@@ -17,7 +28,7 @@ export async function getEmployeeByUserId(company_id, user_id) {
 }
 
 export function postEmployee(employee) {
-    return request('employees/', 'post', employee)
+    return request('employees/', 'post', {...newEmployee(), ...employee})
 }
 
 export function updateEmployee(employee) {

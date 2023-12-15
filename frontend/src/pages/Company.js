@@ -34,9 +34,9 @@ export default function Company() {
         const fetchData = async () => {
             const company = id ? await getCompany(id) : {
                 name: '',
-                law: lawList.length ? lawList[0] : '',
+                law: lawList.length ? lawList[0].id : '',
                 tax_id: '',
-                accounting: accountingList.length ? accountingList[0] : '',
+                accounting: accountingList.length ? accountingList[0].id : '',
                 date_from: formatDate(monthBegin(Date.now())),
                 pay_period: formatDate(monthBegin(Date.now())),
                 check_date: formatDate(monthEnd(Date.now())),

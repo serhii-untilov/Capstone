@@ -7,13 +7,13 @@ The Payroll SMB application provides a **solution for employers and employees to
 ## Complexity
 
 This project uses:
-  - 14 Django models
-  - Django Rest Framework for Backend
-  - React.js for frontend, 15 interface pages
-  - Bootstrap 5 as a CSS library
-  - User authentication and JWT
-  - Axios HTTP Client to make requests to a REST API on the backend server
-  - React Router to organize frontend pages, routes and make context
+- 14 Django models
+- Django Rest Framework for Backend
+- React.js for frontend, 15 interface pages
+- Bootstrap 5 as a CSS library
+- User authentication and JWT
+- Axios HTTP Client to make requests to a REST API on the backend server
+- React Router to organize frontend pages, routes and make context
 
 ## Files and directory structure
 
@@ -51,15 +51,7 @@ This project uses:
 
 ## Getting Started
 
-To run the application host machine must have a development environment for Python and JavaScript. If it is not, try to install it:
-
-``` bash
-./install.sh
-```
-
-## To run application
-
-In the project directory, you can run application:
+To run application in the project directory, you can run script:
 
 ``` bash
 ./start.sh
@@ -68,6 +60,12 @@ In the project directory, you can run application:
 This script will launch the backend and the frontend applications simultaneously.
 
 ## Additional information
+
+To run the application host machine must have a development environment for Python and JavaScript. If it is not, try to install it:
+
+``` bash
+./install.sh
+```
 
 Another method to launch the application:
 
@@ -91,73 +89,54 @@ npm start
 
 ## Scenario
 
-### 1. Register as a new user
+### 1. Register as a new employer user
 
-   In the Register form enter *email*, *password*, select the *user role: Employer* and push the Register button.
+- In the left sidebar choose *Register*.
+- In the Register form enter *email*, *password*, select the *user role: Employer* and click the *Register* button.
 
 ### 2. Create a Company
 
-  In the left side bar choose *Company - Create a new company*.
-  On the new company form enter
+- In the left sidebar choose *Company - Create a new company*.
+- In the new company form, enter a company *Name* and click the *Create* button.
 
+### 3. Add the employees
 
-## The purpose of application
+- In the left sidebar choose *Employees* and in the right side click *Add a new employee* button.
+- In the new employee form, enter *First name*, *Last name*, *Email*, *Wage*.
 
-The **Payroll application** is designed for **calculating wages**.
+*For example:*
+```
+First name: Mary, Last Name: Lee, Email: mary_lee@mail.com, Wage: 5000.
+```
+*Later, at the specified e-mail address, the employee will see the employee card and the salary statement.*
 
-The users of the application are divided into two categories - employers and employees.
+- Click *Save* button.
+- The same method use to add the other employees.
 
-Each category has a user role. User role is defined during user registration.
+### 4. Run payroll
 
-According to the user's role, the program provides access to information about the input data and results of payroll, as well as the functions of calculating and paying wages to employees.
+- In the left sidebar choose *Payroll* and you will see employees calculated payment.
 
-### Users with the role "Employers"
+### 5. Logout the employer user
 
-They register the enterprise, form a staff list, form employee cards and assign them to positions.
+- In the left sidebar choose *Logout*, and confirm *Logout*.
 
-For each employee, the payment system (hourly or monthly), the amount of payment, the taxation system, the parameters of salary payment (bank, recipient's current account) are determined.
+### 6. Register as employee user
 
-Salary is calculated automatically.
+- In the left sidebar choose *Register*.
+- In the Register form enter *Email*, *Password*, select the *User role: Employee* and click the *Register* button.
 
-Wages are paid by transferring the lists of employees and the amount "To be paid" to bank institutions, according to the information about the payment in the employees' cards.
+*For example:*
+```
+Email: mary_lee@mail.com, Password: desired, User role: Employee
+```
+*At the specified e-mail address, the employee will see the employee card and salary statement if the employer had specified the e-mail when the employee card was created.*
 
-### Users with the role "Employees"
+### 7. View the employee card
 
-The user has the opportunity to view his personal account and salary statement.
+- In the left sidebar choose *Personal card*, and you will see the employee's personal data.
 
-The user's account is connected to the personal account of the payroll register after confirmation by e-mail. The key to connection is the employee's email address. Therefore, when registering, the user indicates his email.
+### 7. View the employee payroll
 
-
-## Site map
-
-- **Home** page
-  - About application
-  - Advantages
-    - for employers
-    - for employees
-  - Login
-  - Register
-- **Employer** page
-  - Dashboard
-  - Staff list
-  - Employees
-  - Payroll sheet
-  - Settings
-  - Logout
-- **Employee** page
-  - Personal card
-  - Payroll
-  - Logout
-
-## Main menu
-
-- Horizontal menu bar
-  - Logo and application's name - Payroll
-  - Name of the selected company and menu of companies that user has access
-  - Link to Home page
-  - Link to Register page
-  - Link to SignIn page
-  - Link to SignOut
-  - Language menu
-  - Link to User's profile
-- SideNav bar (see Site map for the Employer and Employee pages)
+- In the left sidebar choose *Payroll*, and you will see the employee's payroll.
+- Each record in the table provide calculated amount of wage, bonus, taxes, and net pay.

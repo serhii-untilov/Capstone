@@ -1,11 +1,14 @@
 import { request } from "../api"
 
-export const template = {
-    first_name: '',
-    last_name: '',
-    middle_name: '',
-    tax_id: '',
-    email: ''
+export function newPerson() {
+    return {
+        first_name: '',
+        last_name: '',
+        middle_name: '',
+        tax_id: '',
+        email: '',
+        user: null,
+    }
 }
 
 export async function getPersons() {
@@ -17,7 +20,7 @@ export async function getPerson(id) {
 }
 
 export function postPerson(person) {
-    return request('persons/', 'post', { ...template, ...person })
+    return request('persons/', 'post', { ...newPerson(), ...person })
 }
 
 export function updatePerson(person) {
